@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signup</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/signup.css">
+
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+       <div class="container2">
+            <h1>SIGN UP</h1>
+            <br />
+            <div class="form_signup">
+                <input type="text" placeholder="เลขบัตรประชาชน.." id="personal_id"/>
+                <br />
+                <div class="name_lastname">
+                    <input type="text" placeholder="ชื่อ.." id="first_name"/>
+                    <br />
+                    <input type="text" placeholder="นามสกุล.." id="last_name"/>
+                    <br />
+                </div>
+                <input type="text" placeholder="email.." id="email"/>
+                <br >
+                <input type="password" placeholder="รหัสผ่าน.." name="password"
+                id="password"/>
+                <br />
+                <select id="sex" name="sex">
+                    <option value="" disabled selected>ระบุเพศ</option>
+                    <option value="ชาย">ชาย</option>
+                    <option value="หญิง">หญิง</option>
+                </select>
+                <br />
+                <input type="text" placeholder="ที่อยู่.." id="address"></textarea>
+                <br />
+                <input type="tel" name="tel" placeholder="เบอร์ติดต่อ.." id="tel_number"/>
+                <br />
+                <input type="text" name="amountDeposit" id="amountDeposit" placeholder="จำนวนวงเงิน ที่ต้องการฝาก"/>
+                <button type="button" class="signup_btn" onclick="signup()"> sign up </button>
+                <br />
+            </div>
+            <div class="home" >
+                <a href="home.html">หน้าหลัก</a>
+            </div>
+       </div>
+    </div>
+    
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script  src="signup.js" ></script>
+    
+</body>
+</html>

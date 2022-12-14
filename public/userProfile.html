@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>userprofile</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/userprofile.css">
+    <link href="/font-awsome/css/all.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="container2">
+            <h3>Saving Management System</h3>
+            <h4>ข้อมูลส่วนตัว</h4>
+            <div class="balance">
+              <div class="user-profile-transaction">
+                <div class="user-transactions-date">
+                    <ul class="user-transactions-list-month">
+                      <li class="user-transactions-date">
+                        <p>มกราคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Jan" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>กุมภาพันธ์</p>
+                        <p class="title-underline"></p>
+                        <p id="Feb" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>มีนาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Mar" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>เมษายน</p>
+                        <p class="title-underline"></p>
+                        <p id="Apr" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>พฤษภาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="May" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>มิถุนายน</p>
+                        <p class="title-underline"></p>
+                        <p id="Jun" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>กรกฎาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Jul" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>สิงหาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Aug" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>กันยายน</p>
+                        <p class="title-underline"></p>
+                        <p id="Sep" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>ตุลาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Oct" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>พฤศจิกายน</p>
+                        <p class="title-underline"></p>
+                        <p id="Nov" class="month"></p>
+                      </li>
+                      <li class="user-transactions-date">
+                        <p>ธันวาคม</p>
+                        <p class="title-underline"></p>
+                        <p id="Dec" class="month"></p>
+                      </li>
+                    </ul>
+                </div>    
+              </div>   
+            </div>
+            <div class="details">
+              <div class="menu">
+                <div class="home" >
+                    <a href="home.html">หน้าหลัก</a>
+                </div>
+                <div class="diposit" >
+                    <a href="diposit.html" class="list-menu-img-admin">ฝากเงิน</a>
+                </div>
+                <div class="withdraw">
+                    <a href="withdraw.html" class="list-menu-img-admin">ถอนเงิน</a>
+                </div>
+                <div class="member">
+                    <a href="member.html" class="list-menu-img-admin">ข้อมูลสมาชิก</a>
+                </div>
+                <div class="signup">
+                    <a href="signup.html" class="list-menu-img-admin">สมัครสมาชิก</a>
+                </div>
+                <div class="borrow">
+                    <a href="borrow.html" class="list-menu-img-admin">กู้เงิน</a>
+                </div>
+                <div class="dividend">
+                    <a href="dividend.html" class="list-menu-img-admin">เงินปันผล</a>
+                </div>
+                <div class="book">
+                    <a href="book_a_loan.html" class="list-menu-img-user">จองคิวเงินกู้</a>
+                </div>
+              </div> 
+              <div class="user-profile-coatianer">
+                <div class="user-profile-card">
+                  <div class="user-profile-card-title">
+                    <i class="far fa-user-circle"></i>
+                  </div>
+                  <div class="user-profile-card-details">
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">ชื่อ-สกุล:</p>
+                      <p id="user-name"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เลขบัตรประชาชน:</p>
+                      <p id="user-personal-number"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">วันที่เข้าร่วม:</p>
+                      <p id="user-date"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">จำนวนเงินฝากสะสม:</p>
+                      <p id="user-amount"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">ที่อยู่:</p>
+                      <p id="user-address"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เบอร์ติดต่อ:</p>
+                      <p id="user-telnumber"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เพศ:</p>
+                      <p id="user-sex"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">จำนวนเงินปันผล:</p>
+                      <p id="user-dividend"></p>
+                    </div>
+                  </div>
+                  <div class="user-profile-card-status"></div>
+                </div>
+                  <!--button class="btn-list" onclick="listtrasactions()">
+                  <i class="fas fa-stream"></i>รายการผาก - ถอน
+                </!--button--> 
+                <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              </div>
+              <div class="list-menu hide">
+                <div class="input-group">
+                  <div class="all">
+                  </div>
+                </div>
+                <table class="table" id="myTable"> 
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">ชื่อ</th>
+                      <th scope="col">นามสกุล</th>
+                      <th scope="col">เวลาจอง</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <nav class="container-pagination">
+                  <ul class="pagination pagination-md" id="pagination"></ul>
+                </nav>
+              </div--> 
+              
+            </div>
+       </div>
+    </div>
+    
+    <script src="/dayjs.min.js"></script>
+    <script src="/th.js"></script>
+    <script src="/relativeTime.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('th');
+    </script>
+    <script src="/userprofile.js"></script>
+
+</body>
+</html>

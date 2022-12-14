@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>home</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/report.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link href="font-awsome/css/all.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div class="container">
+       <div class="container2">
+            <h3>Saving Management System</h3>
+            <div class="balance">
+                <h1 class="profile-username"></h1>
+                <span class="profile-email"></span>
+                <div class="profile-history">
+                    <!--i class="far fa-id-card"></i-->
+                    <div class="profile-history-detail">
+                      <span class="detail-title">ยอดเงินรวม</span>
+                      <p class="detail-amount"></p>
+                      
+                      <span class="detail-title-user">ยอดของคุณ</span>
+                      <p class="detail-amount-user"></p>
+                    </div>
+                  </div>
+                  <button class="btn-profile" onclick="listMemberPage()">
+                    <i class="fas fa-stream"></i>Transactions
+                  </button> 
+                <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+                <br />
+            </div>
+            <div class="list-menu">
+                <ui  class="list-menu-img">
+                        <a href="reportdiposit.html" class="list-menu-img-admin" id="reportdiposit">
+                            <li><img src="img/รายการฝากถอน.jpg"></li>
+                        </a>
+                        <a href="" class="list-menu-img-admin" id="reportborrow">
+                            <li><img src="img/รายการกู้เงิน.jpg"></li>
+                        </a>
+                        <a href="/dividend.html" class="list-menu-img-admin" id="dividend">
+                            <li><img src="img/เงินปันผล1.jpg"></li>
+                        </a>
+                        
+                        <a href="/member.html" class="list-menu-img-admin" id="member">
+                            <li><img src="img/ข้อมูลสม่ชิก1.jpg"></li> 
+                        </a>
+                        <button class="back" onclick="document.location='home.html'">หน้าหลัก</button>
+                </ui>
+            </div>
+            
+       </div>
+    </div>
+
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="/report.js" type ="text/javascript"></script>
+
+</body>
+</html>

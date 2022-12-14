@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>กู้เงิน</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/borrow.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link href="font-awsome/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="container2">
+            <h3>Saving Management System</h3>
+            <h4>กู้เงิน</h4>
+            <div class="balance">
+                <h2>ยอดเงินทั้งหมดที่กู้ได้ในปีนี้ : </h2>
+                <h3>1,000,000 บาท</h3>
+                <h2>ยอดเงินคงเหลือที่กู้ได้ : </h2>
+                <h3>123456 บาท</h3>
+                <button class="logout_btn" type="submit">ออกจากระบบ</button>
+                <br />
+            </div>
+            <div class="details">
+              <div class="menu">
+                <div class="home" >
+                    <a href="home.html">หน้าหลัก</a>
+                </div>
+                <div class="diposit" >
+                    <a href="diposit.html">ฝากเงิน</a>
+                </div>
+                <div class="withdraw">
+                    <a href="withdraw.html">ถอนเงิน</a>
+                </div>
+                <div class="member">
+                    <a href="member.html">ข้อมูลสมาชิก</a>
+                </div>
+                <div class="signup">
+                    <a href="signup.html">สมัครสมาชิก</a>
+                </div>
+                <div class="borrow">
+                    <a href="borrow.html">กู้เงิน</a>
+                </div>
+                <div class="dividend">
+                    <a href="dividend.html">เงินปันผล</a>
+                </div>
+                <div class="book">
+                    <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                </div>
+              </div> 
+              <div class="content">
+                <label for="personal_id">เลขบัตรประชาชน</label>
+                <input type="text" placeholder="Enter ID Card" id="personal_id" />
+                <div class="groups-field">
+                  <div class="group">
+                    <label for="personal_id" class="label-name">ชื่อ</label>
+                    <input type="text" placeholder="First name" id="first_name" />
+                  </div>
+                  <div class="group">
+                    <label for="personal_id" class="label-name">นามสกุล</label>
+                    <input type="text" placeholder="Lastname" id="last_name" />
+                  </div>
+                </div>
+                <label for="personal_id">จำนวนเงินกู้</label>
+                <input type="text" placeholder="Amount" id="amount" />
+                <button onclick="submit()">Submit</button>
+                <table id="table">
+                  <tr>
+                    <th>ชื่อ-สกุล</th>
+                    <th>เลขบัตรประชาชน</th>
+                    <th>จำนวนเงินกู้</th>
+                    <th>จำนวนเงินที่ต้องจ่าย+10%</th>
+                  </tr>
+                  <tr>
+                    <td id="username"></td>
+                    <td id="personal_id_table"></td>
+                    <td id="amount_table"></td>
+                    <td id="amount10_teble"></td>
+                  </tr>
+                </table>
+              </div>  
+            </div>
+       </div>
+    </div>
+
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="/borrow.js"></script>
+
+</body>
+</html>

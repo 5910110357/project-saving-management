@@ -1,0 +1,430 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,200&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit';
+    background-image: url(bg.jpg);
+}
+body {
+    height: 745px;
+    width: 1530px;
+    padding: 30px 45px;
+    background: url(../img/bg.jpg) no-repeat;
+}
+.container {
+    width: 1300px;
+    height: 640px;
+    margin-top:  30px;
+    margin-left: -30px;
+    margin-bottom: 10px;
+    margin-right: 3px;
+    padding: 5px 5px;
+    
+    border-radius: 70px;
+    outline: none;
+    color: black;
+    background-color: antiquewhite;
+}
+.container .container2 {
+    width: 100%;
+    text-align: center;
+}
+.container2 {
+    max-width: 1270px;
+    height: 600px;
+    border-radius: 50px;
+    padding:5px 5px;
+    margin-top:  10px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    outline: none;
+    color: black;
+    background-color: white;
+}
+.container2 h3 {
+    text-transform: uppercase;
+    margin-top:  3px;
+    color: rgb(255, 0, 230);
+    margin-right: 830px;
+    font-size: 15px;
+    padding:5px 5px;
+    font-family: 'Kanit';
+}
+.container2 h4 {
+    font-family: 'Kanit';
+    text-transform: uppercase;
+    margin-top:  -10px;
+    color: rgb(34, 0, 255);
+    margin-right: 950px;
+    font-size: 25px;
+    padding:5px 5px;
+}
+.container2 .balance {
+    width: 300px;
+    height: 500px;
+    margin-top:  15px;
+    margin-left: 10px;
+    padding: 10px 5px;
+    border-radius: 70px;
+    outline: none;
+    color: black;
+    background-color: #fef2f2;
+}
+.balance h1 {
+    font-family: 'Kanit';
+    text-transform: uppercase;
+    margin-top:  30px;
+    color: rgb(1, 1, 1);  
+}
+.balance .queue {
+    background-color: #f9b5b5;
+    width: 70%;
+    height: 50%;
+    border-radius: 70px;
+    margin-top: -400px;
+    margin-left: 40px;
+}
+.balance .queue h5 {
+    color: aquamarine;
+    font-size: 1500%;
+    text-align: center;
+}
+.container2 .balance h2 {
+    text-transform: uppercase;
+    margin-top:  20px;
+    color: rgb(0, 25, 247);
+      
+}
+.container2 .balance h3 {
+    text-transform: uppercase;
+    margin-top:  20px;
+    color: rgb(1, 1, 1); 
+    width: 300px;
+    margin-left: 10px;
+    font-size: 25px;
+}
+.logout_btn {
+    width: 50%;
+    padding: 12px 1px;
+    margin-top: 100px;
+    margin-left: 110px;
+    border-radius: 15px;
+    outline: none;
+    background-color: #f50303;
+    color: aliceblue;
+    border: none;
+    text-transform: uppercase;
+    font: bold 'Montserrat' 2em;
+  }
+  .logout_btn:hover {
+    background-color: rgb(245, 160, 160);
+  }
+  .profile-detail .btn-primary {
+    width: 70%;
+    border-radius: 15px;
+    outline: none;
+    margin-top: 20px;
+  }
+.container2 .details {
+    width: 800px;
+    height: 500px;
+    margin-top:  -500px;
+    margin-left: 323px;
+    margin-bottom: -100px;
+    margin-right: 30px;
+    padding: 5px 50px;
+    border-radius: 70px;
+    outline: none;
+    color: black;
+    background-color: #fae2e2;
+}
+.container2 .menu {
+    margin-left: -20px;
+}
+.menu .home {
+    width: 120px;
+    height: 40px;
+    margin-top:  -50px;
+    margin-left: -50px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    
+}
+.home a {
+    text-transform: uppercase;
+    margin-top:  20px;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.home a:hover {
+    color: rgb(46, 0, 250);
+  }
+.menu .diposit {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 50px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    
+}
+.diposit a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.diposit a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .withdraw {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 145px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    
+}
+.withdraw a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.withdraw a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .borrow {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 230px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+}
+.borrow a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.borrow a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .dividend {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 310px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+}
+.dividend a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.dividend a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .book {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 420px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    background-color: #8499f7;
+}
+.book a {
+    text-transform: uppercase;
+    color: rgb(245, 244, 244);
+    font-size: 20px;
+}
+.book a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .member {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 535px;
+    margin-right: 200px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    
+
+}
+.member a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.member a:hover {
+    color: rgb(46, 0, 250);
+}
+.menu .signup {
+    width: 120px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 650px;
+    margin-right: 20px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+}
+.signup a {
+    text-transform: uppercase;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.signup a:hover {
+    color: rgb(46, 0, 250);
+}
+.order-form {
+    width: 100%;
+    height: 100%;
+}
+.order-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px;
+    
+  }
+  
+.order-form .group-field {
+    display: inline;
+}
+.order-form input {
+    margin-bottom: 2em;
+    padding: 10px 10px;
+    outline: rgb(101, 101, 245);
+    border: solid 1px rgb(105, 104, 104);
+    border-radius: 15px;
+}
+.groups-field {
+    display: flex;
+    width: 100%;
+    margin-top: -14px;
+}
+  .groups-field .group {
+    margin-right: 1em;
+    width: 50%;
+}
+  .groups-field .group .label-name {
+    display: block;
+}
+  .groups-field .group input {
+    width: 100%;
+}
+.order-form button {
+    width: 30%;
+    align-self: flex-end;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    border: 1px solid #2196f3;
+    color: #2196f3;
+    outline: none;
+    background-color: white;
+    cursor: pointer;
+    margin-top: -10px;
+}
+.order-form button:hover {
+    background-color: #2196f3;
+    color: white;
+}
+
+table i {
+    color: rgb(101, 101, 245);
+    cursor: pointer;
+  }
+table i:hover {
+    transform: scale(1.2, 1.2);
+  }
+  
+.order-form .input-group {
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    padding: 12px 1px;
+    margin-left: 130px;
+    outline: none;
+  }
+.order-form .btn-primary {
+    border-radius: 30px 30px 30px 30px;
+    width: 50px;
+    color: rgb(255, 255, 255);
+  }
+.all {
+    display: flex;
+    margin-right: 10px;
+    margin-top: 20px;
+    color: rgb(55, 64, 246);
+}
+
+.order-number {
+    padding: 1em 1em;
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .order-number-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .order-number-layout {
+    width: 50%;
+    height: 63.25%;
+    /* background-color: rgb(101, 101, 245); */
+    border: 3px dashed rgb(101, 101, 245);
+  }
+  .order-number-layout:hover {
+    border: 3px solid rgb(101, 101, 245);
+  }
+  .order-number .number {
+    font-size: 5em;
+  
+    color: rgb(101, 101, 245);
+    /* border-radius: 50%; */
+  }
+  .order-number p {
+    font-family: 'Kanit';
+    font-weight: bold;
+    font-size: 1.5em;
+    color: rgb(101, 101, 245);
+  }
+  
+  .active-user {
+    background-color: rgb(247, 167, 182);
+    color: rgb(81, 74, 74);
+    border-radius: 5px;
+  }
+
+
+
+
+
+
+

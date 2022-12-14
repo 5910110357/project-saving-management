@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>เงินปันผล</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/dividend.css">
+    <link href="font-awsome/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+       <div class="container2">
+            <h3>Saving Management System</h3>
+            <h4>เงินปันผล</h4>
+            <div class="balance">
+              <h1 class="profile-username"></h1>
+              <span class="profile-email"></span>
+              <div class="profile-history">
+                  <!--i class="far fa-id-card"></i-->
+                  <div class="profile-history-detail">
+                    <span class="detail-title">ยอดเงินรวม</span>
+                    <p class="detail-amount"></p>
+                    <span class="detail-title-user">ยอดของคุณ</span>
+                    <p class="detail-amount-user"></p>
+                  </div>
+                </div>
+                <button class="btn-profile" onclick="listMemberPage()">
+                  <i class="fas fa-stream"></i>Transactions
+                </button> 
+              <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              <br />
+          </div>
+            <div class="details">
+              <div class="menu">
+                <div class="home" >
+                    <a href="home.html">หน้าหลัก</a>
+                </div>
+                <div class="diposit" >
+                    <a href="diposit.html">ฝากเงิน</a>
+                </div>
+                <div class="withdraw">
+                    <a href="withdraw.html">ถอนเงิน</a>
+                </div>
+                <div class="member">
+                    <a href="member.html">ข้อมูลสมาชิก</a>
+                </div>
+                <div class="signup">
+                    <a href="signup.html">สมัครสมาชิก</a>
+                </div>
+                <div class="borrow">
+                    <a href="borrow.html">กู้เงิน</a>
+                </div>
+                <div class="dividend">
+                    <a href="dividend.html">เงินปันผล</a>
+                </div>
+                <div class="book">
+                    <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                </div>
+              </div> 
+              <div class="content">
+                <div class="input-group">
+                    <div class="all">
+                      <div class="form-outline">
+                        <input 
+                           type="search" 
+                           id="form1" 
+                           class="form-control" 
+                           placeholder="Search"/>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="searchByPersonalId()"
+                      >
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ชื่อ</th>
+                        <th scope="col">นามสกุล</th>
+                        <th scope="col">ยอดสะสม</th>
+                        <th scope="col">เงินปันผล</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <nav class="container-pagination">
+                    <ul class="pagination pagination-md" id="pagination"></ul>
+                  </nav>
+                </div>
+              </div>  
+            </div>
+      </div>
+      <script src="/dayjs.min.js"></script>
+      <script src="/th.js"></script>
+      <script src="/relativeTime.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+      <script>
+          var firebaseConfig = {
+              apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+              authDomain: "testproject-ff9d6.firebaseapp.com",
+              projectId: "testproject-ff9d6",
+              storageBucket: "testproject-ff9d6.appspot.com",
+              messagingSenderId: "902874923267",
+              appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+              measurementId: "G-GMTV6MGHV0"
+          };
+
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const db = firebase.firestore();
+          dayjs.extend(window.dayjs_plugin_relativeTime);
+          dayjs.locale('th');
+      </script>
+      <script src="/dividend.js"></script>
+</body>
+</html>
