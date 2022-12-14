@@ -66,8 +66,8 @@ window.addEventListener('load', function () {
     let updateData = {};
     let updateTotal = {};
     let date = new Date();
-    //let year = date.getFullYear();
-    let year = 2021;
+    let year = date.getFullYear();
+    //let year = 2021;
 
   
     if (!errors.valid) {
@@ -85,14 +85,14 @@ window.addEventListener('load', function () {
       personalId: userDetail.personal_id,
       type: 'deposited',
       amount: userDetail.amount * 1,
-      date: new Date("Dec, 15, 2021").toISOString()
+      date: new Date().toISOString()
     };
   
     const userDocument = db.doc(`/users/${userDetail.personal_id}`);
     const budgetsDoc = db.doc(`/budgets/${year}`);
     const budgetYear = { 
       total: 0 + userDetail.amount * 1,
-      updatedAt: new Date("Dec, 15, 2021").toISOString()
+      updatedAt: new Date().toISOString()
     };
   
     userDocument
@@ -103,7 +103,7 @@ window.addEventListener('load', function () {
           return userDocument.update({
             amount: userData.amount + userDetail.amount * 1,
             dividend: (userData.amount + userDetail.amount* 1) * 0.1 ,
-            updatedAt: new Date("Dec, 15, 2021").toISOString()
+            updatedAt: new Date().toISOString()
           });
         }
         window.alert(`ไม่ปรากฎข้อมูลหมายเลข ${userDetail.personal_id}`);
@@ -128,7 +128,7 @@ window.addEventListener('load', function () {
         //userData = data.data();
         return budgetsDoc.update({
           total: data.data().total + userDetail.amount * 1,
-          updatedAt: new Date("Dec, 15, 2021 ").toISOString()
+          updatedAt: new Date().toISOString()
         });
        } 
        return  db.doc(`/budgets/${year}`).set(budgetYear);

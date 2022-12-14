@@ -11,6 +11,7 @@ window.addEventListener('load', function () {
 
   setUserDetail(name, email, amount);
   initailUserTable();
+  dropdownYear();
 });
 
 function changeValueSearch() {
@@ -18,6 +19,7 @@ function changeValueSearch() {
     clearListElement();
     clearListPaginationElement();
     initailUserTable();
+    dropdownYear();
   }
 }
 
@@ -65,25 +67,36 @@ function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
     });
 }
 
+
 function initailUserTable(perPage = 8) {
     let transactions = [];
     //const year = document.getElementsById('year');
     //const month = document.getElementById('month');
-    let years = 2019;
+    //let years = '2019-04-14';
+    let date = 2021;
+    let date1 = new Date("2021-12-14");
+    let years = date1.getFullYear();
+    let months = date1.getMonth() + 1;
+    console.log(years);
+    console.log(months);
   
     db.collection('transactions')
-      .where('date', '==', '')
+      .where('type', 'in', ['deposited', 'withdrawn'])
+      .orderBy('date')
+      .startAt(`${years}`)
       .get()
       .then((snap) => {
         total = snap.size;
         paginate = Math.ceil(total / perPage);
         console.log(total);
+        //console.log(years);
         createPaginateButton(paginate);
   
         return db
           .collection('transactions')
-          .where('date', '==', '')
+          .where('type', 'in', ['deposited', 'withdrawn'])
           .orderBy('date', 'asc')
+          .startAt(`${years}`)
           .limit(`${perPage}`)
           .get();
       })
@@ -150,10 +163,13 @@ function queryFromFirbaseWithOffset(i) {
       let last;
       let transactions = [];
       let perPage = 8;
+      let date1 = new Date("2021-12-14");
+      let years = date1.getFullYear();
   
       db.collection('transactions')
-        .where('type', '==', 'deposited')
+        .where('type', 'in', ['deposited', 'withdrawn'])
         .orderBy('date', 'asc')
+        .startAt(`${years}`)
         .get()
         .then((data) => {
           last = data.docs[indexOf];
@@ -161,8 +177,9 @@ function queryFromFirbaseWithOffset(i) {
         })
         .then(() => {
           db.collection('transactions')
-            .where('type', '==', 'deposited')
+            .where('type', 'in', ['deposited', 'withdrawn'])
             .orderBy('date', 'asc')
+            .startAt(`${years}`)
             .startAt(last)
             .limit(8)
             .get()
@@ -194,36 +211,39 @@ function queryFromFirbaseWithOffset(i) {
     };
   }
 
-function insertTable(users, id) {
-  let cell1, cell2, cell3, cell4, cell5, cell6, cell7;
-  let row;
-  var tbodyRef = document
-    .getElementById('myTable')
-    .getElementsByTagName('tbody')[0];
-
-  for (let i = 0; i < users.length; i++, id++) {
-    let icon = document.createElement('i');
-    icon.classList.add('far');
-    icon.classList.add('fa-eye');
-    row = tbodyRef.insertRow(tbodyRef.rows.length);
-    cell1 = row.insertCell(0);
-    cell2 = row.insertCell(1);
-    cell3 = row.insertCell(2);
-    cell4 = row.insertCell(3);
-    cell5 = row.insertCell(4);
-    cell6 = row.insertCell(5);
-    //cell7 = row.insertCell(6);
-
-    cell1.innerHTML = `${id + 1}`;
-    cell2.innerHTML = `${users[i].firstName}`;
-    cell3.innerHTML = `${users[i].lastName}`;
-    cell4.innerHTML = `${users[i].amount}`;
-    cell5.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
-    cell6.append(icon);
-    cell6.onclick = getUserProfile(users[i]);
-    //cell7.innerHTML = `${users[i].address}`;
+  function insertTable(transactions, id) {
+    let cell1, cell2, cell3, cell4, cell5, cell6, cell7;
+    let row;
+    var tbodyRef = document
+      .getElementById('myTable')
+      .getElementsByTagName('tbody')[0];
+  
+    for (let i = 0; i < transactions.length; i++, id++) {
+      /*let icon = document.createElement('i');
+      icon.classList.add('far');
+      icon.classList.add('fa-eye'); */
+      row = tbodyRef.insertRow(tbodyRef.rows.length);
+      cell1 = row.insertCell(0);
+      cell2 = row.insertCell(1);
+      cell3 = row.insertCell(2);
+      cell4 = row.insertCell(3);
+      cell5 = row.insertCell(4);
+      cell6 = row.insertCell(5);
+      cell7 = row.insertCell(6);
+  
+      cell1.innerHTML = `${id + 1}`;
+      cell2.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+      cell3.innerHTML = `${transactions[i].personalId}`;
+      cell4.innerHTML = `${transactions[i].firstName}`;
+      cell5.innerHTML = `${transactions[i].lastName}`;
+      cell6.innerHTML = `${transactions[i].type}`;
+      cell7.innerHTML = `${transactions[i].amount}`;
+      
+      //cell6.append(icon);
+      //cell6.onclick = getUserProfile(users[i]);
+  
+    }
   }
-}
 
 function getUserProfile(user) {
   const personal_id = document.getElementById('form1');
@@ -275,7 +295,8 @@ function listMemberPage() {
     window.location.href = '/member.html';
   }
 }
-function createDropdown() {
-  const selectYear = document.querySelector('year');
+function dropdownYear() {
+  //const selectYear = document.getElementById('year').value;
+  //selectYear = db.doc(`/transactions/${years}`);
 
 }
