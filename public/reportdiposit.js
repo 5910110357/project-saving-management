@@ -7,11 +7,11 @@ window.addEventListener('load', function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
   const amount = document.getElementsByClassName('detail-amount');
+  //document.getElementsById('txtMonth').addEventListener('input',changeValueSearch);
   //document.getElementById('form1').addEventListener('input', changeValueSearch);
 
   setUserDetail(name, email, amount);
   initailUserTable();
-  dropdownYear();
 });
 
 function changeValueSearch() {
@@ -19,7 +19,6 @@ function changeValueSearch() {
     clearListElement();
     clearListPaginationElement();
     initailUserTable();
-    dropdownYear();
   }
 }
 
@@ -67,23 +66,47 @@ function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
     });
 }
 
-
-function initailUserTable(perPage = 8) {
+function submit() {
+  const dateStart = document.querySelector('#dateStart').value;
+  const dateEnd = document.getElementById('#dateEnd').value;
+  
+  //console.log(dateStart);
+  //console.log(dateEnd);
+  //initailUserTable(dateStart, dateEnd);
+  return {dateStart, dateEnd}; 
+}
+function myFunction() {
+  var dateStart = document.getElementById("myDateStart").value;
+  document.getElementById("demoStart").innerHTML = dateStart;
+  var dateEnd = document.getElementById("myDateEnd").value;
+  document.getElementById("demoEnd").innerHTML = dateEnd;
+  console.log(dateStart);
+  console.log(dateEnd);
+  clearListElement();
+  initailUserTable(8, dateStart, dateEnd);
+}
+function initailUserTable(perPage = 8, dateStart, dateEnd) {
     let transactions = [];
-    //const year = document.getElementsById('year');
-    //const month = document.getElementById('month');
-    //let years = '2019-04-14';
-    let date = 2021;
-    let date1 = new Date("2021-12-14");
+    //let dateStart;
+    //let dateEnd;
+    //let x;
+    console.log(dateStart);
+    console.log(dateEnd);
+    let date1 = new Date(dateStart);
+    let date2 = new Date(dateEnd);
     let years = date1.getFullYear();
+    let year2 = date2.getFullYear();
     let months = date1.getMonth() + 1;
-    console.log(years);
+    console.log(date1);
+    console.log(year2);
     console.log(months);
+
   
     db.collection('transactions')
       .where('type', 'in', ['deposited', 'withdrawn'])
       .orderBy('date')
-      .startAt(`${years}`)
+      .startAt(`${date1.toISOString()}`)
+      .endAt(`${date2.toISOString()}`)
       .get()
       .then((snap) => {
         total = snap.size;
@@ -96,7 +119,8 @@ function initailUserTable(perPage = 8) {
           .collection('transactions')
           .where('type', 'in', ['deposited', 'withdrawn'])
           .orderBy('date', 'asc')
-          .startAt(`${years}`)
+          .startAt(`${date1.toISOString()}`)
+          .endAt(`${date2.toISOString()}`)
           .limit(`${perPage}`)
           .get();
       })
@@ -163,13 +187,16 @@ function queryFromFirbaseWithOffset(i) {
       let last;
       let transactions = [];
       let perPage = 8;
-      let date1 = new Date("2021-12-14");
+      let date1 = new Date("2019-08-14");
+      let date2 = new Date("2020-02-14");
       let years = date1.getFullYear();
+      let year2 = date2.getFullYear();
   
       db.collection('transactions')
         .where('type', 'in', ['deposited', 'withdrawn'])
         .orderBy('date', 'asc')
-        .startAt(`${years}`)
+        .startAt(`${date1.toISOString()}`)
+        .endAt(`${date2.toISOString()}`)
         .get()
         .then((data) => {
           last = data.docs[indexOf];
@@ -180,6 +207,7 @@ function queryFromFirbaseWithOffset(i) {
             .where('type', 'in', ['deposited', 'withdrawn'])
             .orderBy('date', 'asc')
             .startAt(`${years}`)
+            .endAt(`${year2}`)
             .startAt(last)
             .limit(8)
             .get()
@@ -294,9 +322,4 @@ function listMemberPage() {
   } else if (localStorage.FBIdToken) {
     window.location.href = '/member.html';
   }
-}
-function dropdownYear() {
-  //const selectYear = document.getElementById('year').value;
-  //selectYear = db.doc(`/transactions/${years}`);
-
 }

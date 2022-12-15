@@ -64,15 +64,28 @@
                 </div>
               </!--div--> 
               <div class="content">
-                <form name="form1" id="form1"> 
+                <!--form name="form1" id="form1"> 
                   <select name="year" id="year" onchange="dropdownYear()">
                     <option value="" selected="selected">เลือกปี</option>
                   </select>
-                  <select name="month" id="month" onchange="dropdownMonth()">
+                  <select-- name="month" id="month" onchange="dropdownMonth()">
                     <option value="" selected="selected">เลือกเดือน</option>
-                  </select>
-                  <!--button class="submit" onclick="submit()">Submit</!--button-->
-                </form>
+                    <option>01</option>
+                    <option>02</option>
+                  </select-->
+                  <!--input type="date" class="from-control" value=""
+                    id="dateStart" name="dateStart">
+                  <input type="date" class="from-control" value=""
+                    id="dateEnd" name="dateEnd">
+                    
+                    <button onclick="submit()">submit</button>
+                </form-->
+
+                  <input type="date" id="myDateStart" value="">
+                  <input type="date" id="myDateEnd" value="">
+                  <button onclick="myFunction()">Try it</button>
+                  <p id="demoStart"></p><p id="demoEnd"></p>
+                  
                 <div class="input-group">
 
                     <!--div class="all">
@@ -94,6 +107,7 @@
                   </div>
                   <table class="table" id="myTable">
                     <thead>
+                      <p id="demo"></p>
                       <!--tr>
                         <th scope="col">#</th>
                         <th scope="col">ชื่อ</th>
