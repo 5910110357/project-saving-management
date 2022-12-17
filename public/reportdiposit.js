@@ -66,24 +66,16 @@ function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
     });
 }
 
-function submit() {
-  const dateStart = document.querySelector('#dateStart').value;
-  const dateEnd = document.getElementById('#dateEnd').value;
-  
-  //console.log(dateStart);
-  //console.log(dateEnd);
-  //initailUserTable(dateStart, dateEnd);
-  return {dateStart, dateEnd}; 
-}
 function myFunction() {
+  let perPage;
   var dateStart = document.getElementById("myDateStart").value;
-  document.getElementById("demoStart").innerHTML = dateStart;
+  //document.getElementById("demoStart").innerHTML = dateStart;
   var dateEnd = document.getElementById("myDateEnd").value;
-  document.getElementById("demoEnd").innerHTML = dateEnd;
+  //document.getElementById("demoEnd").innerHTML = dateEnd;
   console.log(dateStart);
   console.log(dateEnd);
   clearListElement();
-  initailUserTable(8, dateStart, dateEnd);
+  initailUserTable(perPage, dateStart, dateEnd);
 }
 function initailUserTable(perPage = 8, dateStart, dateEnd) {
     let transactions = [];
@@ -187,8 +179,8 @@ function queryFromFirbaseWithOffset(i) {
       let last;
       let transactions = [];
       let perPage = 8;
-      let date1 = new Date("2019-08-14");
-      let date2 = new Date("2020-02-14");
+      let date1 = new Date(dateStart);
+      let date2 = new Date(dateEnd);
       let years = date1.getFullYear();
       let year2 = date2.getFullYear();
   
@@ -206,8 +198,8 @@ function queryFromFirbaseWithOffset(i) {
           db.collection('transactions')
             .where('type', 'in', ['deposited', 'withdrawn'])
             .orderBy('date', 'asc')
-            .startAt(`${years}`)
-            .endAt(`${year2}`)
+            .startAt(`${date1.toISOString()}`)
+            .endAt(`${date2.toISOString()}`)
             .startAt(last)
             .limit(8)
             .get()
