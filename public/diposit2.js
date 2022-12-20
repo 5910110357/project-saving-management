@@ -46,12 +46,35 @@ window.addEventListener('load', function () {
   
   function getUserValueTable() {
     let personal_id = document.getElementById('personal_id').value;
-    let firstName = document.getElementById('first_name').value;
-    let lastName = document.getElementById('last_name').value;
-    let amount = document.getElementById('amount').value;
-  
+    let firstName = document.getElementById('first_name');
+    let lastName ;
+    let amount ;
+    let names ;
+    let name = db.collection('users').doc(personal_id);
+    name.get().then((doc) => {
+      if(doc.exists) {
+        console.log("data=", doc.data());
+        console.log("name=", doc.data().firstName);
+        
+      }
+      names =doc.data().firstName;
+      console.log(names);
+      firstName.value  =doc.data().firstName;
+      lastName = document.getElementById('last_name').value = doc.data().lastName;
+      amount = document.getElementById('amount').value = doc.data().amountDeposit;
+     //return { personal_id, firstName, lastName, amount};
+    })
+     //console.log(firstName.firstName);
+    //document.getElementById('demo').innerHTML=personal_id;
+    //firstName = document.getElementById('first_name');
+    //let lastName = document.getElementById('last_name').value=personal_id;
+    //let amount = document.getElementById('amount').value;
+
+    
+    
     return { personal_id, firstName, lastName, amount };
   }
+  
   function format(mask, number) {
     var s = '' + number,
       r = '';
