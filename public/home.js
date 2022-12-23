@@ -1,21 +1,25 @@
 window.addEventListener('load', function () {
     const name = document.getElementsByClassName('profile-username');
     const email = document.getElementsByClassName('profile-email');
-    const amount = document.getElementsByClassName('detail-amount');
-    const userTotal = document.getElementsByClassName('detail-amount-user');
+    const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
+    const amountuser = document.getElementsByClassName('detail-amount-user'); //ยอดเงินของคุณ
+    const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
+    const amountYear = document.getElementsByClassName('detail-amount-year'); //ยอดเงินปี
   
     const elements = document.getElementsByClassName('list-menu-img-admin');
     const userMenu = document.getElementsByClassName('list-menu-img-user');
-    const userTotalLabel = document.getElementsByClassName('detail-title-user');
+    const adminTotalLabel = document.getElementsByClassName('detail-title'); //เมนูยอดเงิน แอดมิน
+    const userTotalLabel = document.getElementsByClassName('detail-title-user'); //เมนูยอดเงินของคุณ
   
     if (!localStorage.user && !localStorage.FBIdToken) {
       window.location.href = './home.html';
       //window.alert('ท่านไม่ใช่เจ้าหน้าที่');
     }
+    //user
     if (localStorage.user && !localStorage.budgets) {
       const userDetail = JSON.parse(localStorage.user);
   
-      getBudgetsTotal(name, email, amount, userTotal, userDetail);
+      getBudgetsUsers(name, email,  amountuser, userDetail);
       userTotalLabel[0].classList.add('active');
   
       visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
@@ -28,22 +32,28 @@ window.addEventListener('load', function () {
       }`;
       email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
       //amount[0].innerHTML = `${budgets.total} บาท`;
-      userTotal[0].innerHTML = `${userDetail.amount} บาท`;
+      amountuser[0].innerHTML = `${userDetail.amount} บาท`;
       userTotalLabel[0].classList.add('active');
       visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     }
-  
+   
+    //แอดมิน
+    
     if (localStorage.FBIdToken && !localStorage.budgets) {
       // const token = localStorage.FBIdToken;
       const userCreadentail = JSON.parse(localStorage.AutenticatedUser);
       // const decodedToken = parseJwt(token);
       let budgets = {};
   
-      getBudgetsTotal(name, email, amount, null, userCreadentail);
+      getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
   
       visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
       visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
+      visibleItems(adminTotalLabel, 'detail-title','detail-title-active');
     } else if (localStorage.FBIdToken && localStorage.budgets) {
+      let date = new Date();
+      let year = date.getFullYear();
+      console.log(year);
       const userDetail = JSON.parse(localStorage.AutenticatedUser);
       const budgets = JSON.parse(localStorage.budgets);
   
@@ -51,14 +61,14 @@ window.addEventListener('load', function () {
         userDetail.lastName ? userDetail.lastName : ''
       }`;
       email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-      amount[0].innerHTML = `${budgets.total} บาท`;
+      amountTotal[0].innerHTML = `${budgets.year} บาท`;
   
       visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
       visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
     }
   });
   
-  function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
+  function getBudgetsUsers(name, email,  amountuser, userDetail) {
     let budgets = {};
     db.collection('budgets')
       .get()
@@ -68,11 +78,34 @@ window.addEventListener('load', function () {
           userDetail.lastName ? userDetail.lastName : ''
         }`;
         email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-        amount[0].innerHTML = `${data.docs[0].data().total} บาท`;
+        //amount[0].innerHTML = `${data.docs[0].data().total} บาท`;
   
-        if (userTotal) {
-          userTotal[0].innerHTML = `${userDetail.amount} บาท`;
+        if (amountuser) {
+          amountuser[0].innerHTML = `${userDetail.amount} บาท`;
         }
+  
+        budgets = data.docs[0].data();
+        budgets.id = data.id;
+  
+        localStorage.setItem('budgets', JSON.stringify(budgets));
+      });
+  }
+
+  function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userDetail) {
+    let budgets = {};
+    db.collection('budgets')
+      .get()
+      .then((data) => {
+        // console.log();
+        name[0].innerHTML = `${userDetail.firstName} ${
+          userDetail.lastName ? userDetail.lastName : ''
+        }`;
+        email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
+        amountTotal[0].innerHTML = `${data.docs[0].data().total} บาท`;
+  
+        /*if (userTotal) {
+          userTotal[0].innerHTML = `${userDetail.amount} บาท`;
+        } */
   
         budgets = data.docs[0].data();
         budgets.id = data.id;

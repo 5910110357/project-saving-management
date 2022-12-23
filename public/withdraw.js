@@ -278,7 +278,7 @@ db.collection('transactions')
    return db
      .collection('transactions')
      .where('type', '==', 'withdrawn')
-     .orderBy('date', 'asc')
+     .orderBy('date', 'DESC')
      .limit(`${perPage}`)
      .get();
  })
@@ -347,7 +347,7 @@ return function () {
 
  db.collection('transactions')
    .where('type', '==', 'withdrawn')
-   .orderBy('date', 'asc')
+   .orderBy('date', 'DESC')
    .get()
    .then((data) => {
      last = data.docs[indexOf];
@@ -356,7 +356,7 @@ return function () {
    .then(() => {
      db.collection('transactions')
        .where('type', '==', 'withdrawn')
-       .orderBy('date', 'asc')
+       .orderBy('date', 'DESC')
        .startAt(last)
        .limit(8)
        .get()

@@ -418,15 +418,16 @@ table i:hover {
     outline: rgb(101, 101, 245);
     border: solid 1px rgb(105, 104, 104);
     border-radius: 15px;
+    width: 95%;
 }
 .groups-field {
     display: flex;
     width: 100%;
-    margin-top: -14px;
+    margin-top: -24px;
 }
   .groups-field .group {
     margin-right: 1em;
-    width: 50%;
+    width: 33%;
 }
   .groups-field .group .label-name {
     display: block;

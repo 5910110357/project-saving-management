@@ -44,37 +44,24 @@ window.addEventListener('load', function () {
     window.location.href = '/login.html';
   }
   
-  function getUserValueTable() {
+  async function getUserValueTable() {
     let personal_id = document.getElementById('personal_id').value;
-    let firstName = document.getElementById('first_name');
-    let lastName ;
-    let amount ;
-    let names ;
-    let name = db.collection('users').doc(personal_id);
-    name.get().then((doc) => {
-      if(doc.exists) {
-        console.log("data=", doc.data());
-        console.log("name=", doc.data().firstName);
-        
-      }
-      names =doc.data().firstName;
-      console.log(names);
-      firstName.value  =doc.data().firstName;
-      lastName = document.getElementById('last_name').value = doc.data().lastName;
-      amount = document.getElementById('amount').value = doc.data().amountDeposit;
-     //return { personal_id, firstName, lastName, amount};
-    })
-     //console.log(firstName.firstName);
-    //document.getElementById('demo').innerHTML=personal_id;
-    //firstName = document.getElementById('first_name');
-    //let lastName = document.getElementById('last_name').value=personal_id;
-    //let amount = document.getElementById('amount').value;
+    let collection = await db.collection('users').doc(personal_id).get();
+    if(collection.exists) {
+      console.log("data=", collection.data());
+      console.log("name=", collection.data().firstName);  
+    }
+    //firstName = collection.data().firstName;
+    let firstName = document.getElementById('first_name').value=collection.data().firstName;
+    let lastName = document.getElementById('last_name').value=collection.data().lastName;
+    let amount = document.getElementById('amount').value=collection.data().amountDeposit;
+    console.log(firstName);
+    console.log(personal_id);
 
-    
-    
     return { personal_id, firstName, lastName, amount };
   }
-  
+
+
   function format(mask, number) {
     var s = '' + number,
       r = '';
@@ -83,8 +70,8 @@ window.addEventListener('load', function () {
     }
     return r;
   }
-  function submit() {
-    let userDetail = getUserValueTable();
+  async function submit() {
+    let userDetail = await getUserValueTable();
     let errors = validation(userDetail);
     let updateData = {};
     let updateTotal = {};
@@ -135,17 +122,6 @@ window.addEventListener('load', function () {
         console.log(year);
         return db.doc(`/budgets/${year}`).get();
       })
-      /*.then((doc) => {
-          const budgetYear = {
-          
-          total: 0 + userDetail.amount * 1,
-          updatedAt: new Date().toISOString()
-        }
-          return  db.doc(`/budgets/${year}`).set(budgetYear);
-        }
-         return;
-         
-      })*/
       .then((data) => {
         if (data.exists) {
         //userData = data.data();
@@ -220,14 +196,21 @@ window.addEventListener('load', function () {
   }
   
   function setTable(userData) {
+    /*let date = document.getElementById('date');
+    date.insertAdjacentText("afterbegin",`${dayjs(userData.date).format('DD/MM/YYYY')}`);
+
     let username = document.getElementById('username');
-    username.innerText = `${userData.firstName} ${userData.lastName}`;
-  
+    username.insertAdjacentText("afterbegin",`${userData.firstName} ${userData.lastName}`);
+    
     let personal_id = document.getElementById('personal_id_table');
-    personal_id.innerText = `${userData.id}`;
+    personal_id.insertAdjacentText("afterbegin",`${userData.id}`);
+
+    let amountDeposit = document.getElementById('amountDeposit_teble');
+    amountDeposit.insertAdjacentText("afterbegin",`${userData.amountDeposit}`);
   
     let amount = document.getElementById('amount_table');
-    amount.innerText = userData.amount;
+    amount.insertAdjacentText("afterbegin",userData.amount); */
+
   }
   
   function validation(user) {
@@ -329,8 +312,8 @@ function initailUserTable(perPage = 8) {
 
       return db
         .collection('transactions')
-        .where('type', '==', 'deposited')
-        .orderBy('date', 'asc')
+        .where('type', '==', 'deposited' )
+        .orderBy('date', 'desc')
         .limit(`${perPage}`)
         .get();
     })
@@ -400,7 +383,7 @@ function queryFromFirbaseWithOffset(i) {
 
     db.collection('transactions')
       .where('type', '==', 'deposited')
-      .orderBy('date', 'asc')
+      .orderBy('date', 'desc')
       .get()
       .then((data) => {
         last = data.docs[indexOf];
@@ -409,7 +392,7 @@ function queryFromFirbaseWithOffset(i) {
       .then(() => {
         db.collection('transactions')
           .where('type', '==', 'deposited')
-          .orderBy('date', 'asc')
+          .orderBy('date', 'desc')
           .startAt(last)
           .limit(8)
           .get()

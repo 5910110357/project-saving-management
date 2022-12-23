@@ -65,32 +65,38 @@
               <div class="content">
                 <label for="personal_id">เลขบัตรประชาชน</label>
                 <input type="text" placeholder="Enter ID Card" id="personal_id" onchange="getUserValueTable()"/>
-                <p id="demo"></p>
                 <div class="groups-field">
                   <div class="group">
                     <label for="personal_id" class="label-name">ชื่อ</label>
-                    <input type="text" placeholder="First name" id="first_name"/>
+                    <input type="text" placeholder="First name" id="first_name" readonly/>
                   </div>
                   <div class="group">
                     <label for="personal_id" class="label-name">นามสกุล</label>
-                    <input type="text" placeholder="Lastname" id="last_name" />
+                    <input type="text" placeholder="Lastname" id="last_name" readonly/>
+                  </div>
+                  <div class="group">
+                    <label for="personal_id">จำนวนเงินฝาก</label>
+                    <input type="text" placeholder="Amount" id="amount" readonly/>
                   </div>
                 </div>
-                <label for="personal_id">จำนวนเงินฝาก</label>
-                <input type="text" placeholder="Amount" id="amount" />
+                
                 <button onclick="submit()">Submit</button>
                 <button class="btn-list" onclick="listtrasactions()">
                   <i class="fas fa-stream"></i>List
                 </button>
                 <table id="table">
                   <tr>
+                    <th>วันที่</th>
                     <th>ชื่อ-สกุล</th>
                     <th>เลขบัตรประชาชน</th>
+                    <th>จำนวนเงินฝาก</th>
                     <th>จำนวนเงินคงเหลือ</th>
                   </tr>
                   <tr>
+                    <td id="date"></td>
                     <td id="username"></td>
                     <td id="personal_id_table"></td>
+                    <td id="amountDeposit_teble"></td>
                     <td id="amount_table"></td>
                   </tr>
                 </table>
@@ -117,14 +123,16 @@
                   </div>
                 </div>
                 <table class="table" id="myTable"> 
-                  <!--thead>
+                  <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">ชื่อ</th>
+                      <th>#</th>
+                      <th scope="col">เลขบัตรประชาชน</th>
                       <th scope="col">นามสกุล</th>
-                      <th scope="col">เวลาจอง</th>
+                      <th scope="col">ประเภท</th>
+                      <th scope="col">จำนวนเงิน</th>
+                      <th scope="col">วันที่</th>
                     </tr>
-                  </!--thead-->
+                  </thead>
                   <tbody></tbody>
                 </table>
                 <nav class="container-pagination">
