@@ -36,20 +36,29 @@ window.addEventListener('load', function () {
     window.location.href = '/login.html';
   }
   
-  function getUserValueTable() {
+  async function getUserValueTable() {
     let personal_id = document.getElementById('personal_id').value;
-    let firstName = document.getElementById('first_name').value;
-    let lastName = document.getElementById('last_name').value;
-    let amount = document.getElementById('amount').value;
-  
+    let collection = await db.collection('users').doc(personal_id).get();
+    if(collection.exists) {
+      console.log("data=", collection.data());
+      console.log("name=", collection.data().firstName);  
+    }
+    //firstName = collection.data().firstName;
+    let firstName = document.getElementById('first_name').value=collection.data().firstName;
+    let lastName = document.getElementById('last_name').value=collection.data().lastName;
+    let amount = document.getElementById('amount').value=collection.data().amountDeposit;
+    console.log(firstName);
+    console.log(personal_id);
+
     return { personal_id, firstName, lastName, amount };
   }
-  
-  function submit() {
-    let userDetail = getUserValueTable();
+  async function submit() {
+    let userDetail = await getUserValueTable();
     let errors = validation(userDetail);
     let updateData = {};
     let updateTotal = {};
+    let date = new Date();
+    let year = date.getFullYear();
 
     if (!errors.valid) {
       let textError = '\n';
@@ -71,7 +80,11 @@ window.addEventListener('load', function () {
     };
   
     const userDocument = db.doc(`/users/${userDetail.personal_id}`);
-    const budgetsDoc = db.collection('budgets');
+    const budgetsDoc = db.doc(`/budgets/${year}`);
+    const budgetYear = { 
+        total: 0 - userDetail.amount * 1,
+        updatedAt: new Date().toISOString()
+    };
   
     userDocument
       .get()
@@ -92,12 +105,17 @@ window.addEventListener('load', function () {
         window.alert(`ไม่ปรากฎข้อมูลหมายเลข ${userDetail.personal_id}`);
       })
       .then(() => {
-        return budgetsDoc.get();
+        console.log(year);
+        return db.doc(`/budgets/${year}`).get();
       })
       .then((data) => {
-        return budgetsDoc.doc(data.docs[0].id).update({
-          total: data.docs[0].data().total - userDetail.amount * 1
-        });
+        if (data.exists) {
+          return budgetsDoc.update({
+            total: data.data().total - userDetail.amount * 1,
+            updatedAt: new Date().toISOString()
+          });
+        }
+        return  db.doc(`/budgets/${year}`).set(budgetYear);
       })
       .then(() => {
         return userDocument.get();
@@ -159,14 +177,28 @@ window.addEventListener('load', function () {
   }
   
   function setTable(userData) {
-    let username = document.getElementById('username');
-    username.innerText = `${userData.firstName} ${userData.lastName}`;
-  
-    let personal_id = document.getElementById('personal_id_table');
-    personal_id.innerText = `${userData.id}`;
-  
-    let amount = document.getElementById('amount_table');
-    amount.innerText = userData.amount;
+    let table = document.getElementById('table');
+    let row = table.insertRow(1);
+    let row_length = table.rows.length;
+    console.log(row_length);
+    let date = `${dayjs(userData.date).format('DD/MM/YYYY')}`;
+    let username = `${userData.firstName} ${userData.lastName}`;
+    let personal_id = `${userData.id}`;
+    let amountDeposit = `${userData.amountDeposit}`;
+    let amount = userData.amount;
+
+    if(row_length > 7) {
+      table.deleteRow(7);
+    }
+      
+    let newTable = [date, username, personal_id, amountDeposit, amount];
+    newTable.forEach((item) => {
+      var td = document.createElement("td");
+      var text = document.createTextNode(item);
+      td.appendChild(text);
+      row.appendChild(td);
+    })
+    
   }
   
   function validation(user) {
@@ -278,7 +310,7 @@ db.collection('transactions')
    return db
      .collection('transactions')
      .where('type', '==', 'withdrawn')
-     .orderBy('date', 'DESC')
+     .orderBy('date', 'desc')
      .limit(`${perPage}`)
      .get();
  })
@@ -347,7 +379,7 @@ return function () {
 
  db.collection('transactions')
    .where('type', '==', 'withdrawn')
-   .orderBy('date', 'DESC')
+   .orderBy('date', 'desc')
    .get()
    .then((data) => {
      last = data.docs[indexOf];
@@ -356,7 +388,7 @@ return function () {
    .then(() => {
      db.collection('transactions')
        .where('type', '==', 'withdrawn')
-       .orderBy('date', 'DESC')
+       .orderBy('date', 'desc')
        .startAt(last)
        .limit(8)
        .get()
@@ -458,4 +490,30 @@ function searchByPersonalId() {
   }
 }
 
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}
   

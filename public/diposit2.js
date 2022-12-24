@@ -125,10 +125,10 @@ window.addEventListener('load', function () {
       .then((data) => {
         if (data.exists) {
         //userData = data.data();
-        return budgetsDoc.update({
-          total: data.data().total + userDetail.amount * 1,
-          updatedAt: new Date().toISOString()
-        });
+          return budgetsDoc.update({
+            total: data.data().total + userDetail.amount * 1,
+            updatedAt: new Date().toISOString()
+          });
        } 
        return  db.doc(`/budgets/${year}`).set(budgetYear);
       })

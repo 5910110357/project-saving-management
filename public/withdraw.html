@@ -41,58 +41,69 @@
                 <div class="home" >
                     <a href="home.html">หน้าหลัก</a>
                 </div>
-                <div class="diposit" >
-                    <a href="diposit.html">ฝากเงิน</a>
+                <div class="trans" >
+                    <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="transaction" id="myTransaction">
+                      <a href="diposit.html">ฝากเงิน</a>
+                      <a href="withdraw.html">ถอนเงิน</a>
+                      <a href="signup.html">สมัครสมาชิก</a>
+                      <a href="borrow.html">กู้เงิน</a>
+                      <a href="borrow_pay.html">ชำระเงินกู้</a>
+                    </div>
                 </div>
-                <div class="withdraw">
-                    <a href="withdraw.html">ถอนเงิน</a>
-                </div>
-                <div class="member">
+                <div class="report">
+                  <button class="dropdown_report" onclick="dropdownReport()">รายงาน
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="menu_report" id="myReport">
                     <a href="member.html">ข้อมูลสมาชิก</a>
-                </div>
-                <div class="signup">
-                    <a href="signup.html">สมัครสมาชิก</a>
-                </div>
-                <div class="borrow">
-                    <a href="borrow.html">กู้เงิน</a>
-                </div>
-                <div class="dividend">
                     <a href="dividend.html">เงินปันผล</a>
-                </div>
-                <div class="book">
                     <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                    <a href="reportdiposit.html">รายการฝากถอน</a>
+                    <a href="">รายการกู้เงิน</a>
+                  </div>
                 </div>
               </div> 
               <div class="content">
                 <label for="personal_id">เลขบัตรประชาชน</label>
-                <input type="text" placeholder="Enter ID Card" id="personal_id" />
+                <input type="text" placeholder="กรอกเลขบัตรประชาชน" id="personal_id" onchange="getUserValueTable()"/>
                 <div class="groups-field">
                   <div class="group">
                     <label for="personal_id" class="label-name">ชื่อ</label>
-                    <input type="text" placeholder="First name" id="first_name" />
+                    <input type="text" placeholder="ชื่อ" id="first_name" readonly/>
                   </div>
                   <div class="group">
                     <label for="personal_id" class="label-name">นามสกุล</label>
-                    <input type="text" placeholder="Lastname" id="last_name" />
+                    <input type="text" placeholder="นามสกุล" id="last_name" readonly/>
+                  </div>
+                  <div class="group">
+                    <label for="personal_id">จำนวนเงินฝาก</label>
+                    <input type="text" placeholder="จำนวนเงินฝาก" id="amount" readonly/>
                   </div>
                 </div>
-                <label for="personal_id">จำนวนเงินถอน</label>
-                <input type="text" placeholder="Amount" id="amount" />
                 <button onclick="submit()">Submit</button>
                 <button class="btn-list" onclick="listtrasactions()">
                   <i class="fas fa-stream"></i>List
                 </button>
                 <table id="table">
                   <tr>
+                    <th>วันที่</th>
                     <th>ชื่อ-สกุล</th>
                     <th>เลขบัตรประชาชน</th>
+                    <th>จำนวนเงินฝาก</th>
                     <th>จำนวนเงินคงเหลือ</th>
                   </tr>
-                  <tr>
+                  <tr id="updateTable">
+                    <!--td id="date"></!--td>
                     <td id="username"></td>
                     <td id="personal_id_table"></td>
-                    <td id="amount_table"></td>
+                    <td id="amountDeposit_teble"></td>
+                    <td-- id="amount_table"></td-->
+                  
                   </tr>
+                
                 </table>
               </div>  
               <div class="list-menu hide">
@@ -116,14 +127,16 @@
                   </div>
                 </div>
                 <table class="table" id="myTable"> 
-                  <!--thead>
+                  <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">ชื่อ</th>
-                      <th scope="col">นามสกุล</th>
-                      <th scope="col">เวลาจอง</th>
+                      <th>#</th>
+                      <th>เลขบัตรประชาชน</th>
+                      <th>นามสกุล</th>
+                      <th>ประเภท</th>
+                      <th>จำนวนเงิน</th>
+                      <th>วันที่</th>
                     </tr>
-                  </!--thead-->
+                  </thead>
                   <tbody></tbody>
                 </table>
                 <nav class="container-pagination">
