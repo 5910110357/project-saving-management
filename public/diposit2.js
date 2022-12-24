@@ -196,21 +196,28 @@ window.addEventListener('load', function () {
   }
   
   function setTable(userData) {
-    /*let date = document.getElementById('date');
-    date.insertAdjacentText("afterbegin",`${dayjs(userData.date).format('DD/MM/YYYY')}`);
+    let table = document.getElementById('table');
+    let row = table.insertRow(1);
+    let row_length = table.rows.length;
+    console.log(row_length);
+    let date = `${dayjs(userData.date).format('DD/MM/YYYY')}`;
+    let username = `${userData.firstName} ${userData.lastName}`;
+    let personal_id = `${userData.id}`;
+    let amountDeposit = `${userData.amountDeposit}`;
+    let amount = userData.amount;
 
-    let username = document.getElementById('username');
-    username.insertAdjacentText("afterbegin",`${userData.firstName} ${userData.lastName}`);
+    if(row_length > 7) {
+      table.deleteRow(7);
+    }
+      
+    let newTable = [date, username, personal_id, amountDeposit, amount];
+    newTable.forEach((item) => {
+      var td = document.createElement("td");
+      var text = document.createTextNode(item);
+      td.appendChild(text);
+      row.appendChild(td);
+    })
     
-    let personal_id = document.getElementById('personal_id_table');
-    personal_id.insertAdjacentText("afterbegin",`${userData.id}`);
-
-    let amountDeposit = document.getElementById('amountDeposit_teble');
-    amountDeposit.insertAdjacentText("afterbegin",`${userData.amountDeposit}`);
-  
-    let amount = document.getElementById('amount_table');
-    amount.insertAdjacentText("afterbegin",userData.amount); */
-
   }
   
   function validation(user) {
@@ -493,4 +500,30 @@ function searchByPersonalId() {
   }
 }
 
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}
   
