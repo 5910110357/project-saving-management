@@ -157,7 +157,7 @@ body {
 .logout_btn {
     width: 50%;
     padding: 12px 1px;
-    margin-top: 130px;
+    margin-top: 60px;
     margin-left: 110px;
     border-radius: 15px;
     outline: none;
@@ -187,7 +187,7 @@ body {
     margin-left: -20px;
 }
 .menu .home {
-    width: 120px;
+    width: 220px;
     height: 40px;
     margin-top:  -50px;
     margin-left: -50px;
@@ -206,137 +206,117 @@ body {
 .home a:hover {
     color: rgb(46, 0, 250);
   }
-.menu .diposit {
-    width: 120px;
+.menu .trans {
+    width: 220px;
     height: 40px;
     margin-top:  -40px;
-    margin-left: 50px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
-    
-}
-.diposit a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
-}
-.diposit a:hover {
-    color: rgb(46, 0, 250);
-}
-.menu .withdraw {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 145px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
-}
-.withdraw a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
-}
-.withdraw a:hover {
-    color: rgb(46, 0, 250);
-}
-.menu .borrow {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 230px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
-}
-.borrow a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
-}
-.borrow a:hover {
-    color: rgb(46, 0, 250);
-}
-.menu .dividend {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 310px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
-}
-.dividend a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
-}
-.dividend a:hover {
-    color: rgb(46, 0, 250);
-}
-.menu .book {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 420px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
-    
-}
-.book a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
-}
-.book a:hover {
-    color: rgb(46, 0, 250);
-}
-.menu .member {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 535px;
-    margin-right: 200px;
+    margin-left: 150px;
     padding: 5px 5px;
     border-radius: 30px;
     outline: none;
     color: black;
     background-color: #8499f7;
+    overflow: hidden;
+}
+.trans .dropdown {
+  cursor: pointer;
+  font-size: 20px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 5px 5px;
+  width: 120px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: inherit;
+  font-family: 'Kanit';
+  margin: 0;
+}
+
+.navbar a:hover, .trans:hover .dropdown, .dropdown:focus {
+  background-color:  #4767f4;
+  border-radius: 30px;
 
 }
-.member a {
-    text-transform: uppercase;
-    color: rgb(245, 244, 244);
-    font-size: 20px;
+
+.transaction {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
-.member a:hover {
-    color: rgb(46, 0, 250);
+
+.transaction a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
 }
-.menu .signup {
-    width: 120px;
-    height: 40px;
-    margin-top:  -40px;
-    margin-left: 650px;
-    margin-right: 20px;
-    padding: 5px 5px;
-    border-radius: 30px;
-    outline: none;
-    color: black;
+
+.transaction a:hover {
+  background-color: rgb(182, 221, 252);
 }
-.signup a {
-    text-transform: uppercase;
-    color: rgb(3, 3, 3);
-    font-size: 20px;
+
+.show {
+  display: block;
 }
-.signup a:hover {
-    color: rgb(46, 0, 250);
+.menu .report {
+  width: 220px;
+  height: 40px;
+  margin-top:  -40px;
+  margin-left: 390px;
+  padding: 5px 5px;
+  border-radius: 30px;
+  outline: none;
+  color: black;
+  background-color: #8499f7;
+  overflow: hidden;
+}
+.report .dropdown_report {
+cursor: pointer;
+font-size: 20px;  
+border: none;
+outline: none;
+color: white;
+padding: 5px 5px;
+width: 120px;
+height: 40px;
+border-radius: 30px;
+background-color: inherit;
+font-family: 'Kanit';
+background-color: #8499f7;
+}
+
+.navbar a:hover, .trans:hover .dropdown_report, .dropdown_report:focus {
+  background-color:  #4767f4;
+  border-radius: 30px;
+
+}
+
+.menu_report {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.menu_report a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.menu_report a:hover {
+  background-color: rgb(182, 221, 252);
 }
 
 table i {

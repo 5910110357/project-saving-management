@@ -3,14 +3,18 @@ let currentPage = 1;
 let total;
 let paginate;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
-  const amount = document.getElementsByClassName('detail-amount');
+  const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
   document.getElementById('form1').addEventListener('input', changeValueSearch);
 
-  setUserDetail(name, email, amount);
+  
+  setUserDetail(name, email, amountTotal);
   initailUserTable();
+  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getYearsBudget()  //เงินรวมยอดรายปี
+  await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
 
 function changeValueSearch() {
@@ -305,6 +309,35 @@ function listMemberPage() {
   }
 }
 
+//Dropdown
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}
+
+//Budgets
 async function getMonthlyBudget() {
   const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
 

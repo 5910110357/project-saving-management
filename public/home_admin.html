@@ -21,16 +21,17 @@
                 <div class="profile-history">
                     <!--i class="far fa-id-card"></i-->
                     <div class="profile-history-detail">
-                      <span class="detail-title">ยอดเงินรวม</span>
-                      <p class="detail-amount"></p>
-                      
-                      <span class="detail-title-user">ยอดของคุณ</span>
-                      <p class="detail-amount-user"></p>
-                    </div>
+                        <span class="detail-title">งบประมาณเดือนนี้</span>
+                        <p class="detail-amount-month"></p>
+                        <span class="detail-title">งบประมาณปีนี้ <p id="year"></p></span>
+                        <p class="detail-amount-year"></p>
+                        <span class="detail-title">งบประมาณทั้งหมด</span>
+                        <p class="detail-amount"></p>
+                      </div>
                   </div>
-                  <button class="btn-profile" onclick="listMemberPage()">
+                  <!--button class="btn-profile" onclick="listMemberPage()">
                     <i class="fas fa-stream"></i>Transactions
-                  </button> 
+                  </!--button--> 
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
@@ -64,20 +65,20 @@
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
     <script>
         var firebaseConfig = {
-            apiKey: "AIzaSyCDafl3qZB0-Y2f1Wjaow-3eSlS09aaXwU",
-            authDomain: "projectii-7b828.firebaseapp.com",
-            projectId: "projectii-7b828",
-            storageBucket: "projectii-7b828.appspot.com",
-            messagingSenderId: "824978545958",
-            appId: "1:824978545958:web:0462862056fd33853eb5e7",
-            measurementId: "G-W3Q8PWFL5Z"
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
     </script>
-    <script src="/home_admin.js" type ="text/javascript"></script>
+    <script src="/home.js" type ="text/javascript"></script>
 
 </body>
 </html>

@@ -46,14 +46,16 @@ body {
     background-color: white;
 }
 .container2 h3 {
+    font-family: 'Kanit';
     text-transform: uppercase;
     margin-top:  3px;
     color: rgb(255, 0, 230);
-    margin-right: 90px;
+    margin-right: 830px;
     font-size: 15px;
-    padding:3px 5px;
+    padding:5px 5px;
 }
 .container2 h4 {
+    font-family: 'Kanit';
     text-transform: uppercase;
     margin-top:  -10px;
     color: rgb(34, 0, 255);
@@ -73,6 +75,7 @@ body {
     background-color: #fef2f2;
 }
 .balance h1 {
+    font-family: 'Kanit';
     text-transform: uppercase;
     margin-top:  30px;
     color: rgb(1, 1, 1);  
@@ -140,6 +143,55 @@ body {
     border: solid 1px rgb(28, 28, 230);
     color: whitesmoke;
   }
+  .content .btn-list {
+    margin-top: -37px;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-family: 'Quicksand';
+    background-color: whitesmoke;
+    border: solid 1px rgb(28, 230, 28);
+    border-radius: 15px;
+    color: rgb(101, 245, 127);
+    outline: none;
+    padding: 0.5em 0.5em;
+  }
+  .content .btn-list i {
+    margin-right: 10px;
+  }
+  .content .btn-list:hover {
+    background-color: rgb(101, 245, 101);
+    border: solid 1px rgb(28, 230, 68);
+    color: whitesmoke;
+  }
+  table i {
+    color: rgb(101, 101, 245);
+    cursor: pointer;
+  }
+  table i:hover {
+    transform: scale(1.2, 1.2);
+  }
+  
+  .list-menu .input-group {
+    display: flex;
+    position: relative;
+    justify-content: flex;
+    margin-top: 20px;;
+  }
+  .list-menu .btn-primary {
+    border-radius: 0 5px 5px 0;
+  }
+  .list-menu tr {
+    color: #060606;
+  }
+  .all {
+    display: flex;
+    margin-right: 2.5em;
+  }
+  
+  .hide {
+    display: none;
+  }
+
 .container2 .balance h2 {
     text-transform: uppercase;
     margin-top:  20px;
@@ -157,7 +209,7 @@ body {
 .logout_btn {
     width: 50%;
     padding: 12px 1px;
-    margin-top: 130px;
+    margin-top: 60px;
     margin-left: 110px;
     border-radius: 15px;
     outline: none;
@@ -186,32 +238,219 @@ body {
 .container2 .menu {
     margin-left: -20px;
 }
-table i {
-    color: rgb(111, 111, 244);
-    cursor: pointer;
+.menu .home {
+    width: 220px;
+    height: 40px;
+    margin-top:  -50px;
+    margin-left: -50px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    
+}
+.home a {
+    text-transform: uppercase;
+    margin-top:  20px;
+    color: rgb(3, 3, 3);
+    font-size: 20px;
+}
+.home a:hover {
+    color: rgb(46, 0, 250);
   }
+.menu .trans {
+    width: 220px;
+    height: 40px;
+    margin-top:  -40px;
+    margin-left: 150px;
+    padding: 5px 5px;
+    border-radius: 30px;
+    outline: none;
+    color: black;
+    background-color: #8499f7;
+    overflow: hidden;
+}
+.trans .dropdown {
+  cursor: pointer;
+  font-size: 20px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 5px 5px;
+  width: 120px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: inherit;
+  font-family: 'Kanit';
+  margin: 0;
+}
+
+.navbar a:hover, .trans:hover .dropdown, .dropdown:focus {
+  background-color:  #4767f4;
+  border-radius: 30px;
+
+}
+
+.transaction {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.transaction a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.transaction a:hover {
+  background-color: rgb(182, 221, 252);
+}
+
+.show {
+  display: block;
+}
+.menu .report {
+  width: 220px;
+  height: 40px;
+  margin-top:  -40px;
+  margin-left: 390px;
+  padding: 5px 5px;
+  border-radius: 30px;
+  outline: none;
+  color: black;
+  background-color: #8499f7;
+  overflow: hidden;
+}
+.report .dropdown_report {
+cursor: pointer;
+font-size: 20px;  
+border: none;
+outline: none;
+color: white;
+padding: 5px 5px;
+width: 120px;
+height: 40px;
+border-radius: 30px;
+background-color: inherit;
+font-family: 'Kanit';
+background-color: #8499f7;
+}
+
+.navbar a:hover, .trans:hover .dropdown_report, .dropdown_report:focus {
+  background-color:  #4767f4;
+  border-radius: 30px;
+
+}
+
+.menu_report {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.menu_report a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.menu_report a:hover {
+  background-color: rgb(182, 221, 252);
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px;
+    
+  }
+table i {
+    color: rgb(101, 101, 245);
+    cursor: pointer;
+}
 table i:hover {
     transform: scale(1.2, 1.2);
-  }
-.content .table tr {
-    text-align: left;
 }
   
-.content .input-group {
+.content .group-field {
+    display: inline;
+}
+.content input {
+    margin-bottom: 2em;
+    padding: 10px 10px;
+    outline: rgb(101, 101, 245);
+    border: solid 1px rgb(105, 104, 104);
+    border-radius: 15px;
+    width: 95%;
+}
+.groups-field {
     display: flex;
-    position: relative;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    padding: 12px 1px;
-    margin-left: 130px;
-    outline: none;
-  }
-.content .btn-primary {
-    border-radius: 30px 30px 30px 30px;
-    width: 50px;
-    color: rgb(16, 16, 16);
-  }
+    width: 100%;
+    margin-top: -24px;
+    
+    
+}
+  .groups-field .group {
+    margin-right: 1em;
+    width: 33%;
+}
+  .groups-field .group .label-name {
+    display: block;
+}
+  .groups-field .group input {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid red;
+    background-color: #fdebeb;
+}
 
+table {
+    width: 100%;
+    margin-top: 14px;
+    font-family: 'Kanit';
+    visibility: hidden;
+    
+  }
+  table tbody {
+    padding: 0.5em 0.5em;
+  }
+  table tbody tr th,
+  table tbody tr td {
+    padding: 0.5em 0.5em;
+    border: 1px solid rgb(148, 149, 156);
+  }
+  
+  table tbody tr th {
+    background-color: #F5C6C6;
+    color: rgb(5, 5, 5);
+  }
+  table tbody tr th,
+  table tbody tr td {
+    visibility: visible;
+    border: 2px solid rgb(83, 84, 87);
+  }
+  .set_table {
+    visibility: visible;
+  }
+  
 .content #year {
     width: 40%;
     color: rgb(14, 14, 15);
@@ -232,7 +471,8 @@ table i:hover {
     color: rgb(11, 11, 11);
     border-radius: 15px;
     background-color: rgb(243, 243, 125);
-    margin-left: 10px;
+    margin-left: 380px;
+    margin-top: -58px;
 }
 .content #myDateStart {
     background-color: #fef2f2;
@@ -246,23 +486,9 @@ table i:hover {
     border-radius: 15px;
     width: 25%;
     height: 30px;
-    margin-right: 20px;
+    margin-left: 180px;
+    margin-top: -58px;
 }
-.details .back {
-    width: 10%;
-    padding: 0px 1px;
-    margin-top: 0px;
-    margin-bottom: 20px;
-    margin-left: -560px;
-    border-radius: 15px;
-    outline: none;
-    background-color: #645862;
-    color: aliceblue;
-    border: none;
-    text-transform: uppercase;
-    font: bold 'Montserrat' 2em;
-    cursor: pointer;
-  }
 
 
 

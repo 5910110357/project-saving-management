@@ -3,15 +3,18 @@ let currentPage = 1;
 let total;
 let paginate;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
-  const amount = document.getElementsByClassName('detail-amount');
-  //document.getElementsById('txtMonth').addEventListener('input',changeValueSearch);
+  const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
   //document.getElementById('form1').addEventListener('input', changeValueSearch);
 
-  setUserDetail(name, email, amount);
+  
+  setUserDetail(name, email, amountTotal);
   initailUserTable();
+  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getYearsBudget()  //เงินรวมยอดรายปี
+  await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
 
 function changeValueSearch() {
@@ -97,8 +100,8 @@ function initailUserTable(perPage = 8, dateStart, dateEnd) {
     db.collection('transactions')
       .where('type', 'in', ['deposited', 'withdrawn'])
       .orderBy('date')
-      .startAt(`${date1.toISOString()}`)
-      .endAt(`${date2.toISOString()}`)
+      .startAt(`${dateStart}`)
+      .endAt(`${dateEnd}`)
       .get()
       .then((snap) => {
         total = snap.size;
@@ -110,9 +113,9 @@ function initailUserTable(perPage = 8, dateStart, dateEnd) {
         return db
           .collection('transactions')
           .where('type', 'in', ['deposited', 'withdrawn'])
-          .orderBy('date', 'asc')
-          .startAt(`${date1.toISOString()}`)
-          .endAt(`${date2.toISOString()}`)
+          .orderBy('date')
+          .startAt(`${dateStart}`)
+          .endAt(`${dateEnd}`)
           .limit(`${perPage}`)
           .get();
       })
@@ -186,9 +189,9 @@ function queryFromFirbaseWithOffset(i) {
   
       db.collection('transactions')
         .where('type', 'in', ['deposited', 'withdrawn'])
-        .orderBy('date', 'asc')
-        .startAt(`${date1.toISOString()}`)
-        .endAt(`${date2.toISOString()}`)
+        .orderBy('date', 'desc')
+        .startAt(`${dateStart.toISOString()}`)
+        .endAt(`${dateEnd.toISOString()}`)
         .get()
         .then((data) => {
           last = data.docs[indexOf];
@@ -197,9 +200,9 @@ function queryFromFirbaseWithOffset(i) {
         .then(() => {
           db.collection('transactions')
             .where('type', 'in', ['deposited', 'withdrawn'])
-            .orderBy('date', 'asc')
-            .startAt(`${date1.toISOString()}`)
-            .endAt(`${date2.toISOString()}`)
+            .orderBy('date', 'desc')
+            .startAt(`${dateStart.toISOString()}`)
+            .endAt(`${dateEnd.toISOString()}`)
             .startAt(last)
             .limit(8)
             .get()
@@ -314,4 +317,116 @@ function listMemberPage() {
   } else if (localStorage.FBIdToken) {
     window.location.href = '/member.html';
   }
+}
+
+//Dropdown
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}
+
+//Budgets
+async function getMonthlyBudget() {
+  const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
+
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
+
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "deposited")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+
+    for(const collection of collections.docs) {
+      sum += collection.data().amount * 1
+      //console.log(collection.data().date.split("T")[0]);
+      console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum + " บาท"
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+function getDate() {
+
+  // Get moth and years
+  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+
+  const [month, day, year] = dateString.trim().split(",")[0].split("/")
+
+  const totalDays =  new Date(year, month, 0).getDate()
+
+  return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
+
+}
+
+async function getYearsBudget() {
+  const amountYear = document.getElementsByClassName('detail-amount-year'); //ยอดเงินปี
+
+  let date = new Date();
+  let year = date.getFullYear();
+  //let year = 2019
+  try {
+    const collections = await db.doc(`/budgets/${year}`).get();
+    let sum = collections.data().total * 1;
+    console.log(year);
+    
+      //console.log(collection.data().date.split("T")[0]);
+      console.log(sum);
+    
+    amountYear[0].innerHTML  = sum + " บาท"
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+async function getTotalBudget() {
+  const amountTotal = document.getElementsByClassName('detail-amount'); //ยอดเงินรวมทั้งหมด
+
+  try {
+    const collections = await  db.collection('budgets').get()
+    let sum = 0
+
+    for(const collection of collections.docs) {
+      sum += collection.data().total * 1
+      //console.log(sum);
+    }
+    amountTotal[0].innerHTML  = sum + " บาท"
+  } 
+  catch (error) {
+    console.log(error);
+  }
+
 }

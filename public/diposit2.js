@@ -3,16 +3,21 @@ let currentPage = 1;
 let total;
 let paginate;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
     const name = document.getElementsByClassName('profile-username');
     const email = document.getElementsByClassName('profile-email');
-    const amount = document.getElementsByClassName('detail-amount');
+    const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
     document.getElementById('form1').addEventListener('input', changeValueSearch);
+
     
-  
-    setUserDetail(name, email, amount);
+    setUserDetail(name, email, amountTotal);
     initailUserTable();
-  });
+    await getMonthlyBudget() // เงินรวมยอดรายเดือน
+    await getYearsBudget()  //เงินรวมยอดรายปี
+    await getTotalBudget() //ยอดเงินรวมทั้งหมด
+});
+  
+
   function getProperty() {
     const name = document.getElementsByClassName('profile-username');
     const email = document.getElementsByClassName('profile-email');
@@ -500,6 +505,8 @@ function searchByPersonalId() {
   }
 }
 
+
+//Dropdown
 function dropdown() {
   document.getElementById("myTransaction").classList.toggle("show");
 }
@@ -527,6 +534,7 @@ window.onclick = function(e) {
   }
 }
 
+//Budgets
 async function getMonthlyBudget() {
   const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
 
