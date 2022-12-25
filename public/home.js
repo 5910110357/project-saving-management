@@ -53,7 +53,7 @@ window.addEventListener('load', async function () {
   } else if (localStorage.FBIdToken && localStorage.budgets) {
     let date = new Date();
     let year = date.getFullYear();
-    console.log(year);
+    //console.log(year);
     const userDetail = JSON.parse(localStorage.AutenticatedUser);
     const budgets = JSON.parse(localStorage.budgets);
 
@@ -67,8 +67,10 @@ window.addEventListener('load', async function () {
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
   }
 
-  // เงินรวมยอดรายเดือน
-  await getMonthlyBudget()
+  
+  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getYearsBudget()  //เงินรวมยอดรายปี
+  await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
 
 function getBudgetsUsers(name, email,  amountuser, userDetail) {
@@ -167,19 +169,23 @@ async function getMonthlyBudget() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
   try {
-    const collections = await  db.collection('transactions').where("date", ">=", startOfMonthDate ).where("date", "<=", endOfMonthDate ).get()
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "deposited")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
     let sum = 0
 
-
     for(const collection of collections.docs) {
-
       sum += collection.data().amount * 1
-      // console.log(collection.data().date.split("T")[0]);
+      //console.log(collection.data().date.split("T")[0]);
+      //console.log(sum);
     }
     amountMonth[0].innerHTML  = sum + " บาท"
-
-    // console.log("transactions", collection.docs[0].data());
-  } catch (error) {
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  catch (error) {
     console.log(error);
   }
 
@@ -195,5 +201,47 @@ function getDate() {
   const totalDays =  new Date(year, month, 0).getDate()
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
+
+}
+
+async function getYearsBudget() {
+  const amountYear = document.getElementsByClassName('detail-amount-year'); //ยอดเงินปี
+
+  let date = new Date();
+  let year = date.getFullYear();
+  //let year = 2019
+  try {
+    const collections = await db.doc(`/budgets/${year}`).get();
+    let sum = collections.data().total * 1;
+    console.log(year);
+    
+      //console.log(collection.data().date.split("T")[0]);
+      console.log(sum);
+    
+    amountYear[0].innerHTML  = sum + " บาท"
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+async function getTotalBudget() {
+  const amountTotal = document.getElementsByClassName('detail-amount'); //ยอดเงินรวมทั้งหมด
+
+  try {
+    const collections = await  db.collection('budgets').get()
+    let sum = 0
+
+    for(const collection of collections.docs) {
+      sum += collection.data().total * 1
+      //console.log(sum);
+    }
+    amountTotal[0].innerHTML  = sum + " บาท"
+  } 
+  catch (error) {
+    console.log(error);
+  }
 
 }
