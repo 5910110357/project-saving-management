@@ -40,34 +40,36 @@ window.addEventListener('load', function () {
     let personal_id = document.getElementById('personal_id').value;
     let collection = await db.collection('users').doc(personal_id).get();
     if(collection.exists) {
-      console.log("data=", collection.data());
+      //console.log("data=", collection.data());
       console.log("name=", collection.data().firstName);  
     }
     //firstName = collection.data().firstName;
     let firstName = document.getElementById('first_name').value=collection.data().firstName;
     let lastName = document.getElementById('last_name').value=collection.data().lastName;
-    let amount = document.getElementById('amount').value=collection.data().amountDeposit;
-    console.log(firstName);
-    console.log(personal_id);
+    let amount = document.getElementById('amount').value=collection.data().amount;
+    let amount_withdraw = document.getElementById('amount_withdraw').value;
+    let note = document.getElementById('note').value;
+    //console.log(firstName);
+    //console.log(personal_id);
 
-    return { personal_id, firstName, lastName, amount };
+    return { personal_id, firstName, lastName, amount, amount_withdraw, note };
   }
   async function submit() {
     let userDetail = await getUserValueTable();
-    let errors = validation(userDetail);
+    //let errors = validation(userDetail);
     let updateData = {};
     let updateTotal = {};
     let date = new Date();
     let year = date.getFullYear();
 
-    if (!errors.valid) {
+    /*if (!errors.valid) {
       let textError = '\n';
       for (const error in errors.errors) {
         textError += errors.errors[error] + '\n';
       }
       window.alert('Error : ' + textError);
       return;
-    }
+    }*/
   
     let userData = {};
     
@@ -75,14 +77,15 @@ window.addEventListener('load', function () {
     const newTransaction = {
       personalId: userDetail.personal_id,
       type: 'withdrawn',
-      amount: userDetail.amount * 1,
-      date: new Date().toISOString()
+      amount_withdraw: userDetail.amount_withdraw * 1,
+      date: new Date().toISOString(),
+      note: userDetail.note
     };
   
     const userDocument = db.doc(`/users/${userDetail.personal_id}`);
     const budgetsDoc = db.doc(`/budgets/${year}`);
     const budgetYear = { 
-        total: 0 - userDetail.amount * 1,
+        total: 0 - userDetail.amount_withdraw * 1,
         updatedAt: new Date().toISOString()
     };
   
@@ -91,13 +94,13 @@ window.addEventListener('load', function () {
       .then((data) => {
         if (data.exists) {
           userData = data.data();
-          if (userData.amount < userDetail.amount) {
+          if (userData.amount < userDetail.amount_withdraw) {
             window.alert('จำนวนเงินถอน มากกว่าเงินนำฝาก');
             throw 'จำนวนเงินถอน มากกว่าเงินนำฝาก!';
           } else {
             return userDocument.update({
-              amount: userData.amount - userDetail.amount * 1,
-              dividend: (userData.amount - userDetail.amount * 1) * 0.1 ,
+              amount: userData.amount - userDetail.amount_withdraw * 1,
+              dividend: (userData.amount - userDetail.amount_withdraw * 1) * 0.1 ,
               updatedAt: new Date().toISOString()
             });
           }
@@ -111,7 +114,7 @@ window.addEventListener('load', function () {
       .then((data) => {
         if (data.exists) {
           return budgetsDoc.update({
-            total: data.data().total - userDetail.amount * 1,
+            total: data.data().total - userDetail.amount_withdraw * 1,
             updatedAt: new Date().toISOString()
           });
         }
@@ -131,8 +134,8 @@ window.addEventListener('load', function () {
         return budgetsDoc.get();
       })
       .then((data) => {
-        updateTotal = data.docs[0].data();
-        updateTotal.id = data.docs[0].id;
+        updateTotal = data.data();
+        updateTotal.id = data.id;
   
         localStorage.removeItem('budgets');
         localStorage.setItem('budgets', JSON.stringify(updateTotal));
@@ -146,7 +149,7 @@ window.addEventListener('load', function () {
         element.classList.add('set_table');
   
         // set Value in table
-        setTable(updateData);
+        setTable(updateData, newTransaction);
   
         // Reset fields
         resetFields();
@@ -176,27 +179,30 @@ window.addEventListener('load', function () {
     return { name, email, amount };
   }
   
-  function setTable(userData) {
+  function setTable(userData, newTransaction) {
     let table = document.getElementById('table');
     let row = table.insertRow(1);
     let row_length = table.rows.length;
-    console.log(row_length);
+    //console.log(row_length);
     let date = `${dayjs(userData.date).format('DD/MM/YYYY')}`;
     let username = `${userData.firstName} ${userData.lastName}`;
     let personal_id = `${userData.id}`;
-    let amountDeposit = `${userData.amountDeposit}`;
-    let amount = userData.amount;
+    let amount_withdraws = table.rows[1].cells[3];
+    amount_withdraws = newTransaction.amount_withdraw;
+    console.log(amount_withdraws);
+    let amount = userData.amount; 
 
-    if(row_length > 7) {
-      table.deleteRow(7);
+    if(row_length > 5) {
+      table.deleteRow(5);
     }
       
-    let newTable = [date, username, personal_id, amountDeposit, amount];
+    let newTable = [date, username, personal_id, amount_withdraws, amount];
     newTable.forEach((item) => {
       var td = document.createElement("td");
       var text = document.createTextNode(item);
       td.appendChild(text);
       row.appendChild(td);
+      
     })
     
   }
@@ -208,13 +214,15 @@ window.addEventListener('load', function () {
       isEmpty(user.personal_id) ||
       isEmpty(user.firstName) ||
       isEmpty(user.lastName) ||
-      isEmpty(user.amount)
+      isEmpty(user.amount) ||
+      isEmpty(user.amount_withdraw) ||
+      isEmpty(user.note)
     ) {
       errors.field = 'กรุณากรอกข้อมูล ให้ครบถ้วน';
     } else if (!isPersonalNumber(user.personal_id)) {
       errors.id = 'หมายเลขบัตรประชาชนไม่ถูกต้อง ไม่ถูกต้อง';
-    } else if (!isNumber(user.amount)) {
-      errors.amount = 'จำนวนเงินถอนไม่ถูกต้อง';
+    } else if (!isNumber(user.amount_withdraw)) {
+      errors.amount_withdraw = 'จำนวนเงินถอนไม่ถูกต้อง';
     }
   
     return {
@@ -228,12 +236,16 @@ window.addEventListener('load', function () {
     let firstName = document.getElementById('first_name');
     let lastName = document.getElementById('last_name');
     let amount = document.getElementById('amount');
+    let amount_withdraw = document.getElementById('amount_withdraw');
+    let not = document.getElementById('note');
   
     personal_id.value = '';
     firstName.value = '';
     lastName.value = '';
     amount.value = '';
-  }
+    amount_withdraw.value = '';
+    not.value = '';
+   }
   
   const isPersonalNumber = (number) => {
     // let digit = number *1

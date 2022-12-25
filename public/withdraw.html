@@ -79,10 +79,21 @@
                     <input type="text" placeholder="นามสกุล" id="last_name" readonly/>
                   </div>
                   <div class="group">
-                    <label for="personal_id">จำนวนเงินฝาก</label>
-                    <input type="text" placeholder="จำนวนเงินฝาก" id="amount" readonly/>
+                    <label for="personal_id">จำนวนเงินที่สามารถถอนได้</label>
+                    <input type="text" placeholder="จำนวนเงินที่สามารถถอนได้" id="amount" readonly/>
+                  </div> 
+                </div>
+                <div class="groups-field2">
+                  <div class="group2">
+                    <label for="personal_id">จำนวนเงินที่ต้องการถอน</label>
+                    <input type="text" placeholder="ระบุจำนวนเงินที่ต้องการถอน" id="amount_withdraw"/>
+                  </div>
+                  <div class="group2">
+                    <label for="personal_id">หมายเหตุ</label>
+                    <input type="text" placeholder="ระบุหมายเหตุการถอน" id="note"/>
                   </div>
                 </div>
+                    
                 <button onclick="submit()">Submit</button>
                 <button class="btn-list" onclick="listtrasactions()">
                   <i class="fas fa-stream"></i>List
@@ -92,14 +103,15 @@
                     <th>วันที่</th>
                     <th>ชื่อ-สกุล</th>
                     <th>เลขบัตรประชาชน</th>
-                    <th>จำนวนเงินฝาก</th>
+                    <th>จำนวนเงินถอน</th>
                     <th>จำนวนเงินคงเหลือ</th>
                   </tr>
                   <tr id="updateTable">
+                    
                     <!--td id="date"></!--td>
                     <td id="username"></td>
                     <td id="personal_id_table"></td>
-                    <td id="amountDeposit_teble"></td>
+                    <td id="amountWithdraw_teble"></td>
                     <td-- id="amount_table"></td-->
                   
                   </tr>

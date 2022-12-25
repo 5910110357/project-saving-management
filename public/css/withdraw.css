@@ -374,6 +374,25 @@ table i:hover {
     border-bottom: 2px solid red;
     background-color: #fdebeb;
 }
+.groups-field2 {
+  display: flex;
+  width: 100%;
+  margin-top: -14px;
+}
+.groups-field2 .group2 {
+  margin-right: 1em;
+  width: 50%;
+}
+.groups-field2 .group2 .label-name {
+  display: block;
+}
+.groups-field2 .group2 input {
+  width: 100%;
+  box-sizing: border-box;
+  border: solid 1px rgb(105, 104, 104);
+  border-radius: 15px;
+  
+}
 .content button {
     width: 30%;
     align-self: flex-end;
