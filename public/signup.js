@@ -16,15 +16,6 @@ function signup() {
       window.alert('Error : ' + textError);
       return;
     }
-    /*firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      //var errorMessage = error.message;
-      //window.alert("Error : " + errorMessage);
-      // ...
-      return db.doc(`/users/${userDetail.personal_id}`).set({
-        UserId: userDetail.uid });
-  
-    });*/
     db.doc(`users/${userDetail.personal_id}`)
       .get()
       .then((doc) => {
@@ -33,10 +24,6 @@ function signup() {
         }
         return;
       })
-      //.then((data) => {
-       //  userId = data.user.uid;
-        // return data.user.getIdToken();
-       //})
       .then(() => {
         const userCredentials = {
           firstName: userDetail.firstName,

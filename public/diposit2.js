@@ -49,6 +49,21 @@ window.addEventListener('load', async function () {
     window.location.href = '/login.html';
   }
   
+ 
+async function  CheckPersonalNumber(event) {
+  let personal_id = document.getElementById('personal_id').value;
+  if (event.key === "Enter") {
+     if(personal_id.length != 13) {
+      alert('กรุณากรอกข้อมูลให้ถูกต้อง');
+    }
+    else if (personal_id.length = 13) {
+      await getUserValueTable();
+      
+   }
+  
+  }  
+}
+
   async function getUserValueTable() {
     let personal_id = document.getElementById('personal_id').value;
     let collection = await db.collection('users').doc(personal_id).get();
@@ -56,25 +71,20 @@ window.addEventListener('load', async function () {
       console.log("data=", collection.data());
       console.log("name=", collection.data().firstName);  
     }
+    else {
+      return {};
+    }
+    let userDetail = collection.data();
     //firstName = collection.data().firstName;
-    let firstName = document.getElementById('first_name').value=collection.data().firstName;
-    let lastName = document.getElementById('last_name').value=collection.data().lastName;
-    let amount = document.getElementById('amount').value=collection.data().amountDeposit;
+    let firstName = document.getElementById('first_name').value=userDetail.firstName;
+    let lastName = document.getElementById('last_name').value=userDetail.lastName;
+    let amount = document.getElementById('amount').value=userDetail.amountDeposit;
     console.log(firstName);
     console.log(personal_id);
 
-    return { personal_id, firstName, lastName, amount };
+    return {userDetail, personal_id, firstName,lastName,amount};
   }
 
-
-  function format(mask, number) {
-    var s = '' + number,
-      r = '';
-    for (var im = 0, is = 0; im < mask.length && is < s.length; im++) {
-      r += mask.charAt(im) == 'X' ? s.charAt(is++) : mask.charAt(im);
-    }
-    return r;
-  }
   async function submit() {
     let userDetail = await getUserValueTable();
     let errors = validation(userDetail);
@@ -94,7 +104,7 @@ window.addEventListener('load', async function () {
       return;
     }
   
-    let userData = {};
+    
   
     const newTransaction = {
       personalId: userDetail.personal_id,
@@ -102,8 +112,11 @@ window.addEventListener('load', async function () {
       amount: userDetail.amount * 1,
       date: new Date().toISOString()
     };
-  
+   console.log(userDetail);
+   
     const userDocument = db.doc(`/users/${userDetail.personal_id}`);
+    //const userDocument = userDetail
+    //console.log(userDocument);
     const budgetsDoc = db.doc(`/budgets/${year}`);
     const budgetYear = { 
       total: 0 + userDetail.amount * 1,
@@ -114,6 +127,7 @@ window.addEventListener('load', async function () {
       .get()
       .then((data) => {
         if (data.exists) {
+          let userData = {};
           userData = data.data();
           return userDocument.update({
             amount: userData.amount + userDetail.amount * 1,
@@ -172,8 +186,6 @@ window.addEventListener('load', async function () {
         resetFields();
       })
       .then(() => {
-        //document.getElementById('personal_id').value = '';
-        //document.getElementById('total').value = '';
         clearListElement();
         clearListPaginationElement();
         initailUserTable();
@@ -235,9 +247,11 @@ window.addEventListener('load', async function () {
       isEmpty(user.amount)
     ) {
       errors.field = 'กรุณากรอกข้อมูล ให้ครบถ้วน';
-    } else if (!isPersonalNumber(user.personal_id)) {
+    } 
+    else if (!isPersonalNumber(user.personal_id)) {
       errors.id = 'หมายเลขบัตรประชาชนไม่ถูกต้อง ไม่ถูกต้อง';
-    } else if (!isNumber(user.amount)) {
+    } 
+    else if (!isNumber(user.amount)) {
       errors.amount = 'จำนวนเงินฝากไม่ถูกต้อง';
     }
   
@@ -250,32 +264,27 @@ window.addEventListener('load', async function () {
   const isPersonalNumber = (number) => {
     // let digit = number *1
   
-    if (number.length > 13) {
-      return false;
+    if (number.length != 13) {
+      //return false;
+      alert("no");
     }
-    let sum = 0,
-      j = 0,
-      check,
-      lastDigit;
-  
+    let sum = 0, j = 0, check, lastDigit;
     for (let i = 13; i >= 2; i--) {
       sum += number[j] * 1 * i;
       j++;
     }
- 
     // Check if sum is not a number
     if (!sum) {
       return false;
     }
-  
     check = 11 - (sum % 11);
     lastDigit = check + '';
   
     if (lastDigit[lastDigit.length - 1] === number[number.length - 1]) {
-      return true;
+      return getUserValueTable();
     }
     return false;
-  };
+  }; 
   
   const isNumber = (number) => {
     const regEx = /^\d+$/;

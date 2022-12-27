@@ -46,7 +46,7 @@ window.addEventListener('load', async function () {
     let budgets = {};
 
     getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
-
+    userTotalLabel[0].classList.add('non-active');
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
     visibleItems(adminTotalLabel, 'detail-title','detail-title-active');
@@ -62,9 +62,10 @@ window.addEventListener('load', async function () {
     }`;
     email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
     amountTotal[0].innerHTML = `${budgets.year} บาท`;
-
+    //userTotalLabel[0].classList.remove('active');
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
+  
   }
 
   
