@@ -19,24 +19,33 @@
                 <h1 class="profile-username"></h1>
                 <span class="profile-email"></span>
                 <div class="profile-history">
-                    <!--i class="far fa-id-card"></i-->
-                    <div class="profile-history-detail">
-                        <span class="detail-title">งบประมาณเดือนนี้</span>
-                        <p class="detail-amount-month"></p>
-                        <span class="detail-title">งบประมาณปีนี้ <p id="year"></p></span>
-                        <p class="detail-amount-year"></p>
-                        <span class="detail-title">งบประมาณทั้งหมด</span>
-                        <p class="detail-amount"></p>
-                      </div>
+                    <h2>งบประมาณ</h2>
+                    <table class="profile-history-detail">
+                        <tr>
+                            <th>รายการ</th>
+                            <th>จำนวนเงิน (บาท)</th>
+                        </tr>
+                        <tr>
+                            <td class="detail-title">งบประมาณเดือนนี้</td>
+                            <td  class="detail-amount-month"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title" >งบประมาณปีนี้</td>
+                            <td class="detail-amount-year" id="year"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title">งบประมาณทั้งหมด</td>
+                            <td class="detail-amount"></td>
+                        </tr>
+        
+                    </table>
                   </div>
-                  <!--button class="btn-profile" onclick="listMemberPage()">
-                    <i class="fas fa-stream"></i>Transactions
-                  </!--button--> 
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
             <div class="list-menu">
                 <ui  class="list-menu-img">
+                    
                         <a href="/diposit.html" class="list-menu-img-admin" id="diposit">
                             <li><img src="img/ฝากเงิน.jpg"></li>
                         </a>
@@ -53,8 +62,9 @@
                         <a href="/borrow_pay.html" class="list-menu-img-admin" id="borrowpay">
                             <li><img src="img/ชำระเงินกู้.jpg"></li>
                         </a> 
-                        <button class="back" onclick="document.location='home.html'">หน้าหลัก</button>
+                        
                 </ui>
+                <button class="back" onclick="document.location='home.html'">หน้าหลัก</button>
             </div>
             
        </div>

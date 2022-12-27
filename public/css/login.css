@@ -6,37 +6,35 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kanit';
-    background-image: url(bg.jpg);
 }
 body {
-    height: 745px;
-    width: 1530px;
-    padding: 30px 45px;
-    background: url(../img/bg.jpg) no-repeat;
-}
-.container {
-    max-width: 1243px;
-    margin-top:  40px;
-    margin-left: 70px;
-    padding: 15px 15px;
-    max-height: 1024;
-    border-radius: 70px;
-    outline: none;
-    color: black;
-    background-color: antiquewhite;
-}
-.container .container2 {
     width: 100%;
-    text-align: center;
+    height:100%;
+    padding: 30px 30px;
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center; 
 }
-.container2 {
-    max-width: 1140px;
-    max-height: 635px;
+
+.container {
+    float: center;
+    width: 100%;
+    height:100%;
+    padding: 23px 25px;
+    border-radius: 70px;
+    background-color: antiquewhite;
+    
+}
+
+.container .container2 {
+    float: center;
+    width: 100%;
+    height:auto;
     border-radius: 50px;
-    padding:5px 5px;
-    outline: none;
-    color: black;
+    text-align:center;
+    padding: 30px;
     background-color: white;
+    text-align: center;
 }
 .container2 h1 {
     text-transform: uppercase;
@@ -44,7 +42,7 @@ body {
 }
 .form_login {
     margin: 15px;
-    padding: 80px 160px;
+    padding: 40px 20px;
 }
 .form_login input {
     margin-top: 10px;
@@ -71,4 +69,14 @@ body {
   }
   .login_signup h4 {
     font-size: 15px;
+  }
+  @media only screen and (max-width: 800px) {
+    .form_login input {
+        width: 80%;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .container2 h1 {
+        font-size: 20px;
+    }
   }

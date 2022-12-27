@@ -463,15 +463,15 @@ function insertTable(transactions, id) {
     cell4 = row.insertCell(3);
     cell5 = row.insertCell(4);
     cell6 = row.insertCell(5);
-    cell7 = row.insertCell(6);
+    //cell7 = row.insertCell(6);
 
     cell1.innerHTML = `${id + 1}`;
     cell2.innerHTML = `${transactions[i].personalId}`;
     cell3.innerHTML = `${transactions[i].firstName}`;
-    cell4.innerHTML = `${transactions[i].lastName}`;
-    cell5.innerHTML = `${transactions[i].type}`;
-    cell6.innerHTML = `${transactions[i].amount}`;
-    cell7.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+    cell4.innerHTML = `${transactions[i].type}`;
+    cell5.innerHTML = `${transactions[i].amount}`;
+    cell6.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+   
     //cell6.append(icon);
     //cell6.onclick = getUserProfile(users[i]);
 

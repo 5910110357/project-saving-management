@@ -46,6 +46,7 @@ window.addEventListener('load', async function () {
     let budgets = {};
 
     getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
+    amountuser[0].classList.add('non-active')
     userTotalLabel[0].classList.add('non-active');
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
@@ -183,7 +184,7 @@ async function getMonthlyBudget() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum + " บาท"
+    amountMonth[0].innerHTML  = sum 
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
@@ -219,7 +220,7 @@ async function getYearsBudget() {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     
-    amountYear[0].innerHTML  = sum + " บาท"
+    amountYear[0].innerHTML  = sum
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
@@ -239,7 +240,7 @@ async function getTotalBudget() {
       sum += collection.data().total * 1
       //console.log(sum);
     }
-    amountTotal[0].innerHTML  = sum + " บาท"
+    amountTotal[0].innerHTML  = sum 
   } 
   catch (error) {
     console.log(error);
