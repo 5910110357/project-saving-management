@@ -22,17 +22,26 @@
               <h1 class="profile-username"></h1>
               <span class="profile-email"></span>
               <div class="profile-history">
-                  <!--i class="far fa-id-card"></i-->
-                  <div class="profile-history-detail">
-                    <span class="detail-title">ยอดเงินรวม</span>
-                    <p class="detail-amount"></p>
-                    <span class="detail-title-user">ยอดของคุณ</span>
-                    <p class="detail-amount-user"></p>
-                  </div>
-                </div>
-                <button class="btn-profile" onclick="listMemberPage()">
-                  <i class="fas fa-stream"></i>Transactions
-                </button> 
+                <h2>งบประมาณ</h2>
+                <table class="profile-history-detail">
+                    <tr>
+                        <th>รายการ</th>
+                        <th>จำนวนเงิน (บาท)</th>
+                    </tr>
+                    <tr>
+                        <td class="detail-title">งบประมาณเดือนนี้</td>
+                        <td  class="detail-amount-month"></td>
+                    </tr>
+                    <tr>
+                        <td class="detail-title" >งบประมาณปีนี้</td>
+                        <td class="detail-amount-year" id="year"></td>
+                    </tr>
+                    <tr>
+                        <td class="detail-title">งบประมาณทั้งหมด</td>
+                        <td class="detail-amount"></td>
+                    </tr>
+                </table>
+              </div> 
               <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
               <br />
           </div>
@@ -68,7 +77,7 @@
               </div> 
               <div class="content">
                 <label for="personal_id">เลขบัตรประชาชน</label>
-                <input type="text" placeholder="กรอกเลขบัตรประชาชน" id="personal_id" onchange="getUserValueTable()"/>
+                <input type="text" placeholder="กรอกเลขบัตรประชาชน" id="personal_id" onkeydown="CheckPersonalNumber(event)"/>
                 <div class="groups-field">
                   <div class="group">
                     <label for="personal_id" class="label-name">ชื่อ</label>
@@ -79,17 +88,17 @@
                     <input type="text" placeholder="นามสกุล" id="last_name" readonly/>
                   </div>
                   <div class="group">
-                    <label for="personal_id">จำนวนเงินที่สามารถถอนได้</label>
+                    <label for="personal_id" class="label-name">จำนวนเงินที่สามารถถอนได้</label>
                     <input type="text" placeholder="จำนวนเงินที่สามารถถอนได้" id="amount" readonly/>
                   </div> 
                 </div>
                 <div class="groups-field2">
                   <div class="group2">
-                    <label for="personal_id">จำนวนเงินที่ต้องการถอน</label>
+                    <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการถอน</label>
                     <input type="text" placeholder="ระบุจำนวนเงินที่ต้องการถอน" id="amount_withdraw"/>
                   </div>
                   <div class="group2">
-                    <label for="personal_id">หมายเหตุ</label>
+                    <label for="personal_id" class="label-name">หมายเหตุ</label>
                     <input type="text" placeholder="ระบุหมายเหตุการถอน" id="note"/>
                   </div>
                 </div>

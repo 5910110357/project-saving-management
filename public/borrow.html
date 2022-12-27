@@ -16,39 +16,67 @@
         <div class="container2">
             <h3>Saving Management System</h3>
             <h4>กู้เงิน</h4>
-            <div class="balance">
+            <!--div class="balance">
                 <h2>ยอดเงินทั้งหมดที่กู้ได้ในปีนี้ : </h2>
                 <h3>1,000,000 บาท</h3>
                 <h2>ยอดเงินคงเหลือที่กู้ได้ : </h2>
                 <h3>123456 บาท</h3>
                 <button class="logout_btn" type="submit">ออกจากระบบ</button>
                 <br />
-            </div>
+            </+div-->
+            <div class="balance">
+              <div class="profile-history">
+                <h2>งบประมาณ</h2>
+                <table class="profile-history-detail">
+                    <tr>
+                        <th>รายการ</th>
+                        <th>จำนวนเงิน (บาท)</th>
+                    </tr>
+                    <tr>
+                        <td class="detail-title">งบประมาณเดือนนี้</td>
+                        <td  class="detail-amount-month"></td>
+                    </tr>
+                    <tr>
+                        <td class="detail-title" >งบประมาณปีนี้</td>
+                        <td class="detail-amount-year" id="year"></td>
+                    </tr>
+                    <tr>
+                        <td class="detail-title">งบประมาณทั้งหมด</td>
+                        <td class="detail-amount"></td>
+                    </tr>
+                </table>
+              </div> 
+              <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              <br />
+          </div>
             <div class="details">
               <div class="menu">
                 <div class="home" >
                     <a href="home.html">หน้าหลัก</a>
                 </div>
-                <div class="diposit" >
-                    <a href="diposit.html">ฝากเงิน</a>
+                <div class="trans" >
+                    <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="transaction" id="myTransaction">
+                      <a href="diposit.html">ฝากเงิน</a>
+                      <a href="withdraw.html">ถอนเงิน</a>
+                      <a href="borrow_pay.html">ชำระเงินกู้</a>
+                      <a href="borrow.html">กู้เงิน</a>
+                      <a href="signup.html">สมัครสมาชิก</a>
+                    </div>
                 </div>
-                <div class="withdraw">
-                    <a href="withdraw.html">ถอนเงิน</a>
-                </div>
-                <div class="member">
-                    <a href="member.html">ข้อมูลสมาชิก</a>
-                </div>
-                <div class="signup">
-                    <a href="signup.html">สมัครสมาชิก</a>
-                </div>
-                <div class="borrow">
-                    <a href="borrow.html">กู้เงิน</a>
-                </div>
-                <div class="dividend">
-                    <a href="dividend.html">เงินปันผล</a>
-                </div>
-                <div class="book">
+                <div class="report">
+                  <button class="dropdown_report" onclick="dropdownReport()">รายงาน
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="menu_report" id="myReport">
+                    <a href="reportdiposit.html">รายการฝากถอน</a>
+                    <a href="">รายการกู้เงิน</a>
                     <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                    <a href="member.html">ข้อมูลสมาชิก</a>
+                    <a href="dividend.html">เงินปันผล</a>
+                  </div>
                 </div>
               </div> 
               <div class="content">
@@ -63,9 +91,12 @@
                     <label for="personal_id" class="label-name">นามสกุล</label>
                     <input type="text" placeholder="Lastname" id="last_name" />
                   </div>
+                  <div class="group">
+                    <label for="personal_id">จำนวนเงินที่ยื่นกู้</label>
+                    <input type="text" placeholder="Amount" id="amount" />
+                  </div>
                 </div>
-                <label for="personal_id">จำนวนเงินกู้</label>
-                <input type="text" placeholder="Amount" id="amount" />
+                
                 <button onclick="submit()">Submit</button>
                 <table id="table">
                   <tr>
