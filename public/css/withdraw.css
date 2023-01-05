@@ -125,7 +125,12 @@ text-align: left;
 padding: 8px;
 
 }
-.detail-amount-month,
+.detail-title-title {
+  background-color: #ffc0b9;
+  text-align: left;
+}
+.detail-amount-month-deposit,
+.detail-amount-month-withdraw,
 .detail-amount-year,
 .detail-amount {
 border: 1px solid #dddddd;

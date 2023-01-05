@@ -11,7 +11,8 @@ window.addEventListener('load', async function () {
 
     setUserDetail(name, email, amount);
     initailUserTable();
-    await getMonthlyBudget() // เงินรวมยอดรายเดือน
+    await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
+    await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
     await getYearsBudget()  //เงินรวมยอดรายปี
     await getTotalBudget() //ยอดเงินรวมทั้งหมด
   });
@@ -440,7 +441,7 @@ return function () {
 }
 
 function insertTable(transactions, id) {
-  let cell1, cell2, cell3, cell4, cell5, cell6, cell7;
+  let cell1, cell2, cell3, cell4, cell5, cell6;
   let row;
   var tbodyRef = document
     .getElementById('myTable')
@@ -457,15 +458,15 @@ function insertTable(transactions, id) {
     cell4 = row.insertCell(3);
     cell5 = row.insertCell(4);
     cell6 = row.insertCell(5);
-    cell7 = row.insertCell(6);
+    //cell7 = row.insertCell(6);
 
     cell1.innerHTML = `${id + 1}`;
     cell2.innerHTML = `${transactions[i].personalId}`;
     cell3.innerHTML = `${transactions[i].firstName}`;
-    cell4.innerHTML = `${transactions[i].lastName}`;
-    cell5.innerHTML = `${transactions[i].type}`;
-    cell6.innerHTML = `${transactions[i].amount}`;
-    cell7.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+    cell4.innerHTML = `${transactions[i].type}`;
+    cell5.innerHTML = `${transactions[i].amount}`;
+    cell6.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+    //cell7.innerHTML = 
     //cell6.append(icon);
     //cell6.onclick = getUserProfile(users[i]);
 
@@ -537,9 +538,7 @@ window.onclick = function(e) {
 }
 
 //แทบข้างซ้าย
-async function getMonthlyBudget() {
-  const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
-
+async function getMonthlyBudgetDeposit() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
   try {
@@ -550,29 +549,56 @@ async function getMonthlyBudget() {
                .where("date", "<=", endOfMonthDate )
                .get()
     let sum = 0
-
+    const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
     for(const collection of collections.docs) {
       sum += collection.data().amount * 1
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum + " บาท"
+    amountMonth[0].innerHTML  = sum 
     //console.log("transactions", collection.docs[0].data());
   } 
+  
   catch (error) {
     console.log(error);
   }
+}
+async function getMonthlyBudgetWithdraw() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
 
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "withdrawn")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount_withdraw * 1
+      //console.log(collection.data().date.split("T")[0]);
+      //console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
 }
 
 function getDate() {
 
   // Get moth and years
-  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
 
-  const [month, day, year] = dateString.trim().split(",")[0].split("/")
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
 
   const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 

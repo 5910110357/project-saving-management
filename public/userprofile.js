@@ -18,66 +18,6 @@ window.addEventListener('load', function () {
   }
 });
 
-/*function setUserDetail(name, email, amount, userTotal) {
-  const userTotalLabel = document.getElementsByClassName('detail-title-user');
-  if (!localStorage.FBIdToken && !localStorage.user) {
-    window.location.href = './login.html';
-  }
-  if (localStorage.FBIdToken && !localStorage.budgets) {
-    // const token = localStorage.FBIdToken;
-    const userCreadentail = JSON.parse(localStorage.AutenticatedUser);
-
-    getBudgetsTotal(name, email, amount, null, userCreadentail);
-  } else if (localStorage.FBIdToken && localStorage.budgets) {
-    const userDetail = JSON.parse(localStorage.AutenticatedUser);
-    const budgets = JSON.parse(localStorage.budgets);
-
-    name[0].innerHTML = `${userDetail.firstName} ${
-      userDetail.lastName ? userDetail.lastName : ''
-    }`;
-    email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    amount[0].innerHTML = `${budgets.total} บาท`;
-  }
-  if (localStorage.user && !localStorage.budgets) {
-    getBudgetsTotal(name, email, amount, userTotal, userDetail);
-    userTotalLabel[0].classList.add('active');
-  } else if (localStorage.user && localStorage.budgets) {
-    const userDetail = JSON.parse(localStorage.user);
-    const budgets = JSON.parse(localStorage.budgets);
-
-    name[0].innerHTML = `${userDetail.firstName} ${
-      userDetail.lastName ? userDetail.lastName : ''
-    }`;
-    email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    amount[0].innerHTML = `${budgets.total} บาท`;
-    userTotal[0].innerHTML = `${userDetail.amount} บาท`;
-    userTotalLabel[0].classList.add('active');
-  }
-} 
-
-function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
-  let budgets = {};
-  db.collection('budgets')
-    .get()
-    .then((data) => {
-      // console.log();
-      name[0].innerHTML = `${userDetail.firstName} ${
-        userDetail.lastName ? userDetail.lastName : ''
-      }`;
-      email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-      amount[0].innerHTML = `${data.docs[0].data().total} บาท`;
-
-      if (userTotal) {
-        userTotal[0].innerHTML = `${userDetail.amount} บาท`;
-      }
-
-      budgets = data.docs[0].data();
-      budgets.id = data.id;
-
-      localStorage.setItem('budgets', JSON.stringify(budgets));
-    });
-}*/
-
 function getUserProfile(user) {
   const pofile = JSON.parse(user);
   const name = document.getElementById('user-name');

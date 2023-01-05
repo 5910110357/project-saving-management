@@ -49,48 +49,32 @@
                 <div class="home" >
                     <a href="home.html">หน้าหลัก</a>
                 </div>
-                <div class="diposit" >
-                    <a href="diposit.html">ฝากเงิน</a>
+                <div class="trans" >
+                    <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="transaction" id="myTransaction">
+                      <a href="diposit.html">ฝากเงิน</a>
+                      <a href="withdraw.html">ถอนเงิน</a>
+                      <a href="borrow_pay.html">ชำระเงินกู้</a>
+                      <a href="borrow.html">กู้เงิน</a>
+                      <a href="signup.html">สมัครสมาชิก</a>
+                    </div>
                 </div>
-                <div class="withdraw">
-                    <a href="withdraw.html">ถอนเงิน</a>
-                </div>
-                <div class="member">
-                    <a href="member.html">ข้อมูลสมาชิก</a>
-                </div>
-                <div class="signup">
-                    <a href="signup.html">สมัครสมาชิก</a>
-                </div>
-                <div class="borrow">
-                    <a href="borrow.html">กู้เงิน</a>
-                </div>
-                <div class="dividend">
-                    <a href="dividend.html">เงินปันผล</a>
-                </div>
-                <div class="book">
+                <div class="report">
+                  <button class="dropdown_report" onclick="dropdownReport()">รายงาน
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="menu_report" id="myReport">
+                    <a href="reportdiposit.html">รายการฝากถอน</a>
+                    <a href="">รายการกู้เงิน</a>
                     <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                    <a href="member.html">ข้อมูลสมาชิก</a>
+                    <a href="dividend.html">เงินปันผล</a>
+                  </div>
                 </div>
               </div> 
               <div class="list-menu">
-                <div class="input-group">
-                  <div class="all">
-                    <div class="form-outline">
-                      <input
-                        type="search"
-                        id="form1"
-                        class="form-control"
-                        placeholder="Search"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      onclick="searchByPersonalId()"
-                    >
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
                 <table class="table" id="myTable">
                   <thead>
                     <tr>
@@ -107,19 +91,10 @@
                 </nav>
               </div>
               <div class="order-form hide">
-                <label for="personal_id">เลขบัตรประชาชน</label>
+                <label for="personal_id" class="label-name">เลขบัตรประชาชน</label>
                 <input type="text" placeholder="Enter ID Card" id="personal_id" />
-                <!--div class="groups-field">
-                  <div class="group">
-                    <label for="personal_id" class="label-name">ชื่อ</label>
-                    <input type="text" placeholder="First name" id="first_name" />
-                  </div>
-                  <div class="group">
-                    <label for="personal_id" class="label-name">นามสกุล</label>
-                    <input type="text" placeholder="Lastname" id="last_name" />
-                  </div>
-                </!--div-->
-                <label for="personal_id">จำนวนเงินที่ต้องการกู้</label>
+                
+                <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการกู้</label>
                 <input type="text" placeholder="Enter total money" id="amount" />
                 <button onclick="submit()">Submit</button>
               </div>  

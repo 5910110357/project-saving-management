@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
   const amount = document.getElementsByClassName('detail-amount');
-  document.getElementById('form1').addEventListener('input', changeValueSearch);
+  //document.getElementById('form1').addEventListener('input', changeValueSearch);
 
   //   setUserDetail(name, email, amount);
   // ลำดับของผู้ใช้
@@ -251,7 +251,7 @@ function insertTable(users, num) {
     cell2.innerHTML = `${users[i].firstName}`;
     cell3.innerHTML = `${users[i].lastName}`;
     cell4.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
-    cell5.appendChild(btn)
+    //cell5.appendChild(btn)
     if (localStorage.user) {
       if (users[i].userId === JSON.parse(localStorage.user).id) {
         row.classList.add('active-user');
@@ -420,3 +420,30 @@ const isNumber = (number) => {
     return false;
   }
 };
+
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}

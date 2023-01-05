@@ -8,8 +8,10 @@ window.addEventListener('load', async function () {
 
   const elements = document.getElementsByClassName('list-menu-img-admin');
   const userMenu = document.getElementsByClassName('list-menu-img-user');
-  const adminTotalLabel = document.getElementsByClassName('detail-title'); //เมนูยอดเงิน แอดมิน
+  const adminTotalLabel = document.getElementsByClassName('detail-title-title'); //เมนูยอดเงิน แอดมิน
   const userTotalLabel = document.getElementsByClassName('detail-title-user'); //เมนูยอดเงินของคุณ
+  const TableBudgets = document.getElementsByClassName('profile-history'); //ตารางงบประมาณ
+  const TableUser = document.getElementsByClassName('Profile-User'); //โปรไฟล์user
 
   if (!localStorage.user && !localStorage.FBIdToken) {
     window.location.href = './home.html';
@@ -17,40 +19,30 @@ window.addEventListener('load', async function () {
   }
   //user
   if (localStorage.user && !localStorage.budgets) {
-    const userDetail = JSON.parse(localStorage.user);
-
-    getBudgetsUsers(name, email,  amountuser, userDetail);
-    userTotalLabel[0].classList.add('active');
-
+    //const userDetail = JSON.parse(localStorage.user);
+    TableBudgets[0].classList.add('non-active');
+    getUserProfile(localStorage.user);
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
   } else if (localStorage.user && localStorage.budgets) {
     const userDetail = JSON.parse(localStorage.user);
     const budgets = JSON.parse(localStorage.budgets);
-
-    name[0].innerHTML = `${userDetail.firstName} ${
-      userDetail.lastName ? userDetail.lastName : ''
-    }`;
-    email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    //amount[0].innerHTML = `${budgets.total} บาท`;
-    amountuser[0].innerHTML = `${userDetail.amount} บาท`;
-    userTotalLabel[0].classList.add('active');
+    //amountuser[0].innerHTML = `${userDetail.amount} บาท`;
+    //userTotalLabel[0].classList.add('active');
+    TableBudgets[0].classList.add('non-active');
+    getUserProfile(localStorage.user);
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
   }
  
   //แอดมิน
   
   if (localStorage.FBIdToken && !localStorage.budgets) {
-    // const token = localStorage.FBIdToken;
     const userCreadentail = JSON.parse(localStorage.AutenticatedUser);
     // const decodedToken = parseJwt(token);
     let budgets = {};
-
-    getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
-    amountuser[0].classList.add('non-active')
-    userTotalLabel[0].classList.add('non-active');
+    TableUser[0].classList.add('non-active')
+    //getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
-    visibleItems(adminTotalLabel, 'detail-title','detail-title-active');
   } else if (localStorage.FBIdToken && localStorage.budgets) {
     let date = new Date();
     let year = date.getFullYear();
@@ -62,7 +54,9 @@ window.addEventListener('load', async function () {
       userDetail.lastName ? userDetail.lastName : ''
     }`;
     email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    amountTotal[0].innerHTML = `${budgets.year} บาท`;
+    //amountTotal[0].innerHTML = `${budgets.year} บาท`;
+    TableUser[0].classList.add('non-active')
+
     //userTotalLabel[0].classList.remove('active');
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
@@ -70,7 +64,8 @@ window.addEventListener('load', async function () {
   }
 
   
-  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
+  await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
   await getYearsBudget()  //เงินรวมยอดรายปี
   await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
@@ -165,9 +160,7 @@ function listMemberPage() {
 }
 
 
-async function getMonthlyBudget() {
-  const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
-
+async function getMonthlyBudgetDeposit() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
   try {
@@ -178,29 +171,55 @@ async function getMonthlyBudget() {
                .where("date", "<=", endOfMonthDate )
                .get()
     let sum = 0
-
+    const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
     for(const collection of collections.docs) {
       sum += collection.data().amount * 1
+      console.log(collection.data().date.split("T")[0]);
+      console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collections.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
+}
+async function getMonthlyBudgetWithdraw() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
+
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "withdrawn")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount_withdraw * 1
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
     amountMonth[0].innerHTML  = sum 
     //console.log("transactions", collection.docs[0].data());
   } 
+  
   catch (error) {
     console.log(error);
   }
-
 }
-
 function getDate() {
 
   // Get moth and years
-  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
 
-  const [month, day, year] = dateString.trim().split(",")[0].split("/")
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
 
   const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 
@@ -247,3 +266,36 @@ async function getTotalBudget() {
   }
 
 }
+
+//home users
+function getUserProfile(user) {
+  const pofile = JSON.parse(user);
+  const name = document.getElementById('user-name');
+  const personaml_id = document.getElementById('user-personal-number');
+  const date = document.getElementById('user-date');
+  const amount = document.getElementById('user-amount');
+  const address = document.getElementById('user-address');
+  const telnumber = document.getElementById('user-telnumber');
+  const sex = document.getElementById('user-sex');
+  const dividend = document.getElementById('user-dividend');
+
+
+  name.innerHTML = `${pofile.firstName} ${pofile.lastName}`;
+  personaml_id.innerHTML = `${format('X XXXX XXXXX XX X', pofile.id)}`;
+  date.innerHTML = `${dayjs(pofile.createdAt).format('D MMM YYYY')} `;
+  amount.innerHTML = `${pofile.amount} บาท`;
+  address.innerHTML = `${pofile.address}`;
+  telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
+  sex.innerHTML = `${pofile.sex}`;
+  dividend.innerHTML = `${pofile.dividend} บาท`;
+}
+
+function format(mask, number) {
+  var s = '' + number,
+    r = '';
+  for (var im = 0, is = 0; im < mask.length && is < s.length; im++) {
+    r += mask.charAt(im) == 'X' ? s.charAt(is++) : mask.charAt(im);
+  }
+  return r;
+}
+

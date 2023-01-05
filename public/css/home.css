@@ -96,13 +96,19 @@ body {
   tr:nth-child(even) {
     background-color: #f8f3c8;
   }
+
 .detail-title {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
   
 }
-.detail-amount-month,
+.detail-title-title {
+  background-color: #ffc0b9;
+  text-align: left;
+}
+.detail-amount-month-deposit,
+.detail-amount-month-withdraw,
 .detail-amount-year,
 .detail-amount {
   border: 1px solid #dddddd;
@@ -111,20 +117,29 @@ body {
   font-weight: bold;
 }
 .active {
-    visibility: visible;
     font-family: 'Kanit';
     font-size: 1.2em;
     color: rgb(101, 101, 245);
     font-weight: bold;
+    visibility: visible;
   }
-.non-active {
-  visibility: visible;
+.non-active , .user-profile-card-title i {
   font-family: 'Kanit';
   font-size: 1.2em;
-  color: #fef2f2;
+  color: #fef2f200;
   font-weight: bold;
-  background-color:  #fef2f2;
+  background-color:  #fef2f200;
+  display: none;
 }
+.no-active {
+  font-family: 'Kanit';
+  font-size: 1.2em;
+  color: rgba(249, 249, 249, 0);
+  font-weight: bold;
+  background-color:  #ffffff00;
+  display: none;
+}
+
 .logout_btn {
     width: 50%;
     padding: 12px 10px;
@@ -185,8 +200,72 @@ li {
   .list-menu-img-user-active {
     display: unset;
   }
+  .Profile-User .user-profile-card-title i {
+    font-size: 2em;
+    background-color: rgb(255, 232, 232);
+    padding: 0.25em 0.25em;
+    border-radius: 10px;
+    
+  }
+  .Profile-User {
+    width: 100%;
+    height: 50%;
+    /* background-color: rgb(160, 252, 252); */
+    border-radius: 20px;
+    padding: 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    float: top;
+  }
   
-  @media only screen and (max-width: 800px) {
+.Profile-User .user-profile-card-details {
+    width: 100%;
+    margin-top: 0em;
+    padding: 0em 0em;
+  }
+  .Profile-User,
+  .user-profile-card-details,
+  .user-profile-card-details-label {
+    border-radius: 20px;
+    background-color: rgba(255, 232, 232, 0);
+    padding: 0.3em 0.1em;
+    margin-top: -0.5em;
+    float: top;
+  }
+  .user-profile-card-details-label p {
+    margin: 10px;
+    font-family: 'Kanit';
+    font-weight: bold;
+    font-size: 15px;
+  }
+  
+  .user-profile-card-details-label {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: left;
+  }
+  .user-profile-card-details-label {
+    position: relative;
+  }
+  #user-name,
+  #user-personal-number,
+  #user-date,
+  #user-amount, 
+  #user-address,
+  #user-telnumber,
+  #user-sex,
+  #user-dividend{
+    color: blueviolet;
+    position: absolute;
+    left: 45%;
+    opacity: 1;
+    font-size: 15px;
+  }
+
+  /*respon*/
+  @media only screen and (max-width: 1000px) {
     .container {
       width: 100%;
       
@@ -201,6 +280,10 @@ li {
     .container2 .list-menu {
       width: 80%;
     }
+    .balance h1 {
+    font-size: 15px;
+    margin-top: 6px;
+    }
   }
   @media only screen and (max-width: 500px) {
     .balance , .list-menu {
@@ -212,4 +295,10 @@ li {
       height: 100%;
     }
   }
+  @media only screen and (max-width: 1400px) {
+    .list-menu .list-menu-img li img {
+      width: 190px;
+    }
+  }
+  
 

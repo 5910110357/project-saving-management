@@ -26,23 +26,73 @@
                             <th>จำนวนเงิน (บาท)</th>
                         </tr>
                         <tr>
-                            <td class="detail-title">งบประมาณเดือนนี้</td>
-                            <td  class="detail-amount-month"></td>
+                            <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i> งบประมาณเดือนนี้</td>
+                            <td class="detail-title-title" ></td>
                         </tr>
                         <tr>
-                            <td class="detail-title" >งบประมาณปีนี้</td>
+                            <td class="detail-title">การฝาก</td>
+                            <td  class="detail-amount-month-deposit"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title">การถอน</td>
+                            <td  class="detail-amount-month-withdraw"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title-title" ><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือปีนี้</td>
                             <td class="detail-amount-year" id="year"></td>
                         </tr>
                         <tr>
-                            <td class="detail-title">งบประมาณทั้งหมด</td>
+                            <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือทั้งหมด</td>
                             <td class="detail-amount"></td>
                         </tr>
-                        <tr>
+                        <!--tr>
                             <td class="detail-title-user">ยอดของคุณ</td>
                             <td class="detail-amount-user">0000</td>
-                        </tr>
+                        </!--tr-->
                     </table>
                   </div>
+                  <div class="Profile-User">
+                    <div class="user-profile-card-details">
+                        <div class="user-profile-card-title" >
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">ชื่อ-สกุล:</p>
+                          <p id="user-name"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เลขบัตรประชาชน:</p>
+                          <p id="user-personal-number"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">วันที่เข้าร่วม:</p>
+                          <p id="user-date"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">จำนวนเงินฝากสะสม:</p>
+                          <p id="user-amount"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">ที่อยู่:</p>
+                          <p id="user-address"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เบอร์ติดต่อ:</p>
+                          <p id="user-telnumber"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เพศ:</p>
+                          <p id="user-sex"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">จำนวนเงินปันผล:</p>
+                          <p id="user-dividend"></p>
+                        </div>
+                      </div>
+                  </div>
+                  <!--button class="btn-profile" onclick="listMemberPage()">
+                    <i class="fas fa-stream"></i>Transactions
+                  </!--button-->
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
@@ -62,7 +112,9 @@
             </div> 
        </div>
     </div>
-
+ 
+    <script src="/dayjs.min.js"></script>
+    <script src="/th.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
@@ -80,6 +132,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        dayjs.locale('th');
     </script>
     <script src="/home.js" type ="text/javascript"></script>
 

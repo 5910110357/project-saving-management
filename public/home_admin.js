@@ -68,7 +68,8 @@ window.addEventListener('load', async function () {
   }
 
   
-  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
+  await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
   await getYearsBudget()  //เงินรวมยอดรายปี
   await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
@@ -166,7 +167,31 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
     }
   
   }
+  async function getMonthlyBudgetWithdraw() {
+    const [startOfMonthDate, endOfMonthDate] =  getDate()
   
+    try {
+      const collections 
+      = await  db.collection('transactions')
+                 .where("type", "==", "withdrawn")
+                 .where("date", ">=", startOfMonthDate )
+                 .where("date", "<=", endOfMonthDate )
+                 .get()
+      let sum = 0
+      const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
+      for(const collection of collections.docs) {
+        sum += collection.data().amount_withdraw * 1
+        //console.log(collection.data().date.split("T")[0]);
+        //console.log(sum);
+      }
+      amountMonth[0].innerHTML  = sum 
+      //console.log("transactions", collection.docs[0].data());
+    } 
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
   function getDate() {
   
     // Get moth and years
