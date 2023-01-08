@@ -294,11 +294,27 @@ li {
       width: 100%;
       height: 100%;
     }
+    #user-name,
+  #user-personal-number,
+  #user-date,
+  #user-amount, 
+  #user-address,
+  #user-telnumber,
+  #user-sex,
+  #user-dividend{
+    font-size: 12px;
+  }
+  .user-profile-card-details-label p {
+    font-size: 12px;
+  }
+  
   }
   @media only screen and (max-width: 1400px) {
     .list-menu .list-menu-img li img {
       width: 190px;
     }
   }
+
+  
   
 

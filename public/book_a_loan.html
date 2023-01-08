@@ -17,30 +17,47 @@
             <h3>Saving Management System</h3>
             <h4>จองคิวเงินกู้</h4>
             <div class="balance">
-                <div class="profile-detail">
-                  <button
-                    type="button"
-                    class="btn btn-primary menu-order"
-                    onclick="listOrderButton()"
-                  >
-                    <i class="fas fa-list-ol"></i>ดูลำดับ
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary menu-order"
-                    onclick="formBotton()"
-                  >
-                    <i class="far fa-copy"></i>ขอกู้
-                  </button>
-                  <div class="order-number hide">
-                    <div class="order-number-title">
-                      <div class="order-number-layout">
-                        <h2 class="number"></h2>
-                        <p>ลำดับ</p>
-                      </div>
+              <div class="profile-history">
+                <h2>งบประมาณ</h2>
+                <table class="profile-history-detail">
+                    <tr>
+                        <th>รายการ</th>
+                        <th>จำนวนเงิน (บาท)</th>
+                    </tr>
+                    <tr>
+                      <td class="detail-title-title">งบประมาณเงินกู้ทั้งหมด</td>
+                      <td class="detail-amount-total" ></td>
+                  </tr>
+                  <tr>
+                      <td class="detail-title-title" >งบประมาณเงินกู้คงเหลือ</td>
+                      <td class="detail-amount"></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="profile-detail">
+                <button
+                  type="button"
+                  class="btn btn-primary menu-order"
+                  onclick="listOrderButton()"
+                >
+                  <i class="fas fa-list-ol"></i>คิวของฉัน
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary menu-order"
+                  onclick="formBotton()"
+                >
+                  <i class="far fa-copy"></i>ขอกู้
+                </button>
+                <!--div class="order-number hide">
+                  <div class="order-number-title">
+                    <div class="order-number-layout">
+                      <h2 class="number"></h2>
+                      <p>ลำดับ</p>
                     </div>
                   </div>
-                </div>
+                </!--div-->
+              </div>
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
@@ -50,52 +67,72 @@
                     <a href="home.html">หน้าหลัก</a>
                 </div>
                 <div class="trans" >
-                    <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                    <button class="dropdown" onclick="dropdown()">เมนู
                       <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="transaction" id="myTransaction">
-                      <a href="diposit.html">ฝากเงิน</a>
-                      <a href="withdraw.html">ถอนเงิน</a>
-                      <a href="borrow_pay.html">ชำระเงินกู้</a>
-                      <a href="borrow.html">กู้เงิน</a>
-                      <a href="signup.html">สมัครสมาชิก</a>
+                      <a href="">รายการฝาก-ถอน</a>
+                      <a href="">รายการเงินกู้</a>
+                      <a href="">ประวัติส่วนตัว</a>
+                      <a href="book_a_loan.html">จองคิวเงินกู้</a>
                     </div>
-                </div>
-                <div class="report">
-                  <button class="dropdown_report" onclick="dropdownReport()">รายงาน
-                    <i class="fa fa-caret-down"></i>
-                  </button>
-                  <div class="menu_report" id="myReport">
-                    <a href="reportdiposit.html">รายการฝากถอน</a>
-                    <a href="">รายการกู้เงิน</a>
-                    <a href="book_a_loan.html">จองคิวเงินกู้</a>
-                    <a href="member.html">ข้อมูลสมาชิก</a>
-                    <a href="dividend.html">เงินปันผล</a>
-                  </div>
                 </div>
               </div> 
               <div class="list-menu">
-                <table class="table" id="myTable">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">ชื่อ</th>
-                      <th scope="col">นามสกุล</th>
-                      <th scope="col">เวลาจอง</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-                <nav class="container-pagination">
-                  <ul class="pagination pagination-md" id="pagination"></ul>
-                </nav>
+                <div class="Profile-User">
+                  <div class="user-profile-card-details">
+                      <div class="user-profile-card-title" >
+                          <i class="fa fa-calendar-check-o"></i>
+                      </div>
+                      <div class="user-profile-card-details-label">
+                        <p class="user-name-label">ชื่อ-สกุล:</p>
+                        <p id="user-name"></p>
+                      </div>
+                      <div class="user-profile-card-details-label">
+                        <p class="user-name-label">เลขบัตรประชาชน:</p>
+                        <p id="user-personal-number"></p>
+                      </div>
+                      <div class="user-profile-card-details-label">
+                        <p class="user-name-label">เบอร์ติดต่อ:</p>
+                        <p id="user-telnumber"></p>
+                      </div>
+                      <div class="user-profile-card-details-label">
+                        <p class="user-name-label">จำนวนเงินที่จอง:</p>
+                        <p id="user-queue"></p>
+                      </div>
+                      <div class="user-profile-card-details-label">
+                        <p class="user-name-label">วันที่ทำการจอง:</p>
+                        <p id="user-queue-date"></p>
+                      </div>
+                    </div> 
+                </div>
+                <div class="order-number">
+                  <div class="order-number-title">
+                    <div class="order-number-layout">
+                      <p>ลำดับ</p>
+                      <h2 class="number"></h2>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="order-form hide">
-                <label for="personal_id" class="label-name">เลขบัตรประชาชน</label>
-                <input type="text" placeholder="Enter ID Card" id="personal_id" />
                 
-                <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการกู้</label>
-                <input type="text" placeholder="Enter total money" id="amount" />
+                <div class="groups-field">
+                  <div class="group">
+                    <label for="personal_id" class="label-name">เลขบัตรประชาชน</label>
+                    <input type="text" placeholder="Enter ID Card" id="personal_id" />
+                  </div>
+                  <div class="group">
+                    <label for="personal_id" class="label-name">ชื่อ</label>
+                    <input type="text" placeholder="ชื่อ" id="first_name" readonly/>
+                  </div>
+                  <div class="group">
+                    <label for="personal_id" class="label-name">นามสกุล</label>
+                    <input type="text" placeholder="นามสกุล" id="last_name" readonly/>
+                  </div>
+                </div>
+                <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการกู้ </label>
+                <input type="text" placeholder="จำนวนเงินที่ต้องการกู้ (ขั้นต่ำ 500 บาท)" id="amount" />
                 <button onclick="submit()">Submit</button>
               </div>  
             </div>

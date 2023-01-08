@@ -3,7 +3,7 @@ let currentPage = 1;
 let total;
 let paginate;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
   const amount = document.getElementsByClassName('detail-amount');
@@ -11,8 +11,13 @@ window.addEventListener('load', function () {
 
   //   setUserDetail(name, email, amount);
   // ลำดับของผู้ใช้
+  //initailUserTable();
+  await getTotalBudgetQueue(); //ยอดเงินรวมทั้งหมดเงินกู้
+  if(localStorage.user) {
+    await getUserProfile(localStorage.user);
+    await getUserValueTable(localStorage.user);
 
-  initailUserTable();
+  }
 });
 function logout() {
   firebase.auth().signOut();
@@ -27,285 +32,6 @@ function changeValueSearch() {
   }
 }
 
-function setUserOrdernumber() {
-  if (localStorage.user) {
-    const displayOrder = document.getElementsByClassName('order-number')[0];
-    const numberOrder = document.getElementsByClassName('number')[0];
-    let orderNumer = 0;
-    let exist = false;
-    const userOrder = JSON.parse(localStorage.user);
-
-    db.collection('queues')
-      .orderBy('createdAt', 'asc')
-      .get()
-      .then((data) => {
-        const { docs } = data;
-
-        for (let i = 0; i < docs.length; i++) {
-          orderNumer++;
-          if (docs[i].data().userId === userOrder.id) {
-            exist = true;
-            break;
-          }
-        }
-        if (exist) {
-          numberOrder.innerHTML = orderNumer;
-          displayOrder.classList.remove('hide');
-        }
-      });
-  }
-}
-
-function setUserDetail(name, email, amount) {
-  if (!localStorage.FBIdToken) {
-    window.location.href = './login.html';
-  }
-  if (localStorage.FBIdToken && !localStorage.budgets) {
-    // const token = localStorage.FBIdToken;
-    const userCreadentail = JSON.parse(localStorage.AutenticatedUser);
-
-    getBudgetsTotal(name, email, amount, null, userCreadentail);
-  } else if (localStorage.FBIdToken && localStorage.budgets) {
-    const userDetail = JSON.parse(localStorage.AutenticatedUser);
-    const budgets = JSON.parse(localStorage.budgets);
-
-    name[0].innerHTML = `${userDetail.firstName} ${
-      userDetail.lastName ? userDetail.lastName : ''
-    }`;
-    email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    amount[0].innerHTML = `${budgets.total} บาท`;
-  }
-}
-
-function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
-  let budgets = {};
-  db.collection('budgets')
-    .get()
-    .then((data) => {
-      // console.log();
-      name[0].innerHTML = `${userDetail.firstName} ${
-        userDetail.lastName ? userDetail.lastName : ''
-      }`;
-      email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-      amount[0].innerHTML = `${data.docs[0].data().total} บาท`;
-
-      if (userTotal) {
-        userTotal[0].innerHTML = `${userDetail.amount} บาท`;
-      }
-
-      budgets = data.docs[0].data();
-      budgets.id = data.id;
-
-      localStorage.setItem('budgets', JSON.stringify(budgets));
-    });
-}
-
-function initailUserTable(perPage = 8) {
-  //   let users = [];
-  let queues = [];
-
-  //   const ordersCollection = db.collection('users');
-
-  db.collection('queues')
-    .get()
-    .then((snap) => {
-      total = snap.size;
-      paginate = Math.ceil(total / perPage);
-      // console.log(total);
-      createPaginateButton(paginate);
-
-      return db
-        .collection('queues')
-        .orderBy('createdAt', 'asc')
-        .limit(`${perPage}`)
-        .get();
-    })
-    .then((data) => {
-      // console.log(data.size);
-      data.docs.forEach((doc) => {
-        queues.push({
-          id: doc.id,
-          personalId: doc.data().personalId,
-          createdAt: doc.data().createdAt
-        });
-        // console.log(orders);
-      });
-      return;
-    })
-    .then(async () => {
-      for (let i = 0; i < queues.length; i++) {
-        // console.log(orders[i].userId);
-        let user = await db.doc(`users/${queues[i].personalId}`).get();
-        queues[i].firstName = user.data().firstName;
-        queues[i].lastName = user.data().lastName;
-      }
-    })
-    .then(() => {
-      insertTable(queues, 0);
-      setUserOrdernumber();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function createPaginateButton(totalPage) {
-  for (let i = 1; i <= totalPage; i++) {
-    let el = document.createElement('li');
-    let a = document.createElement('a');
-
-    setListElement(el, a, i);
-  }
-}
-
-function clearListElement() {
-  let el = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-  el.innerHTML = '';
-}
-
-function setListElement(el, a, i) {
-  el.classList.add('page-item');
-  el.onclick = queryFromFirbaseWithOffset(i);
-  a.classList.add('page-link');
-  a.innerText = `${i}`;
-  a.href = '#';
-  el.append(a);
-  document.getElementById('pagination').appendChild(el);
-}
-
-function clearListPaginationElement() {
-  document.getElementById('pagination').innerHTML = '';
-}
-
-function queryFromFirbaseWithOffset(i) {
-  return function () {
-    let indexOf = (i - 1) * pageSize;
-    let last;
-    let queues = [];
-
-    db.collection('queues')
-      .orderBy('createdAt', 'asc')
-      .get()
-      .then((data) => {
-        last = data.docs[indexOf];
-        return;
-      })
-      .then(() => {
-        db.collection('queues')
-          .orderBy('createdAt', 'asc')
-          .startAt(last)
-          .limit(8)
-          .get()
-          .then((data) => {
-            clearListElement();
-            data.docs.forEach((doc) => {
-              queues.push({
-                id: doc.id,
-                personalId: doc.data().personalId,
-                createdAt: doc.data().createdAt
-              });
-            });
-            return;
-          })
-          .then(async () => {
-            for (let i = 0; i < queues.length; i++) {
-              //   console.log(orders[i].userId);
-              let user = await db.doc(`users/${queues[i].personalId.trim()}`).get();
-              queues[i].firstName = user.data().firstName;
-              queues[i].lastName = user.data().lastName;
-            }
-          })
-          .then(() => {
-            insertTable(queues, indexOf);
-          });
-      });
-  };
-}
-
-function insertTable(users, num) {
-  let cell1, cell2, cell3, cell4, cell5;
-  let row;
-  var tbodyRef = document
-    .getElementById('myTable')
-    .getElementsByTagName('tbody')[0];
-  //let btn = document.createElement('button')
-  //btn.textContent="ลบข้อมูล"
- // btn.setAttribute('class', 'btn btn-danger')
-  //btn.setAttribute('id',orders.id)
-  
-
-  for (let i = 0; i < users.length; i++, num++) {
-    // let icon = document.createElement('i');
-    // icon.classList.add('far');
-    // icon.classList.add('fa-eye');
-
-    row = tbodyRef.insertRow(tbodyRef.rows.length);
-
-    cell1 = row.insertCell(0);
-    cell2 = row.insertCell(1);
-    cell3 = row.insertCell(2);
-    cell4 = row.insertCell(3);
-    cell5 = row.insertCell(4);
-
-    cell1.innerHTML = `${num + 1}`;
-    cell2.innerHTML = `${users[i].firstName}`;
-    cell3.innerHTML = `${users[i].lastName}`;
-    cell4.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
-    //cell5.appendChild(btn)
-    if (localStorage.user) {
-      if (users[i].userId === JSON.parse(localStorage.user).id) {
-        row.classList.add('active-user');
-      }
-    }
-  }
-}
-
-function searchByPersonalId() {
-  const personal_id = document.getElementById('form1').value;
-  let user = [];
-  if (!personal_id.trim()) {
-    // กรณี ไม่มีการกรอกข้อมูล
-    return;
-  }
-  //   console.log(personal_id);
-  if (isPersonalNumber(personal_id)) {
-    const userDocument = db.doc(`/users/${personal_id}`);
-    userDocument
-      .get()
-      .then((doc) => {
-        console.log(doc);
-        if (doc.exists) {
-          user.push({
-            id: doc.id,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName
-          });
-        }
-        // console.log(user);
-        return db.collection('queues').where('userId', '==', doc.id).get();
-      })
-      .then((doc) => {
-        console.log(doc);
-        if (!doc.empty) {
-          const { createdAt } = doc.docs[0].data();
-          user[0].createdAt = createdAt;
-        } else {
-          user = [];
-        }
-        return;
-      })
-      .then(() => {
-        clearListElement();
-        clearListPaginationElement();
-        insertTable(user, 0);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  } else {
-    console.log('Not valid');
-  }
-}
 
 function listOrderButton() {
   document.getElementsByClassName('list-menu')[0].classList.remove('hide');
@@ -313,21 +39,36 @@ function listOrderButton() {
   document.getElementsByClassName('order-form')[0].classList.add('hide');
   document.getElementsByClassName('order-form')[0].classList.add('active');
 }
-function formBotton() {
+async function formBotton() {
   document.getElementsByClassName('list-menu')[0].classList.add('hide');
   document.getElementsByClassName('list-menu')[0].classList.add('active');
   document.getElementsByClassName('order-form')[0].classList.remove('hide');
   document.getElementsByClassName('order-form')[0].classList.remove('active');
+  //await getUserValueTable();
 }
-function submit() {
-  const personal_id = document.getElementById('personal_id').value;
-  const amount = document.getElementById('amount').value;
+async function getUserValueTable() {
+  if(localStorage.user) {
+    const pofile = JSON.parse(localStorage.user);
+    const personal_id = document.getElementById('personal_id').value = pofile.id;
+    console.log(personal_id);
+    const firstName = document.getElementById('first_name').value = pofile.firstName;
+    const lastName = document.getElementById('last_name').value = pofile.lastName;
+    const amount = document.getElementById('amount').value;
+    return {personal_id, firstName, lastName, amount};
+  }
+  
+}
+async function submit() {
+  let userDetail = await getUserValueTable();
+  const budgetQ = db.collection('money_borrow');
+  console.log(userDetail);
 
-  if (!isPersonalNumber(personal_id)) {
+  const newQueues = db.collection('queues');
+  if (!isPersonalNumber(userDetail.personal_id)) {
     window.alert('หมายเลขไม่ถูกต้อง');
     return;
   }
-  if (!isNumber(amount)) {
+  if (!isNumber(userDetail.amount)) {
     window.alert('จำนวนเงินไม่ถูกต้อง');
     return;
   }
@@ -337,48 +78,66 @@ function submit() {
     return;
   }
 
-  if (personal_id !== JSON.parse(localStorage.user).id) {
+  if (userDetail. personal_id !== JSON.parse(localStorage.user).id) {
     window.alert('โปรดระบุหมายเลขบัตรเฉพาะของท่าน');
     return;
   }
+  
   db.collection('borrows')
-    .where('userId', '==', personal_id)
+    .where('userId', '==', userDetail.personal_id)
     .get()
     .then((data) => {
       if (!data.empty) {
         window.alert('ท่านมีรายชื่อของการกู้มาก่อน');
         throw new Error('invalid transaction');
       }
-      return db.collection('queues').where('userId', '==', personal_id).get();
+      return db.collection('queues').where('personalId', '==', userDetail.personal_id).get();
     })
     .then((doc) => {
       if (doc.empty) {
-        return db.doc(`users/${personal_id}`).get();
+        //window.alert('ท่านได้ทำการจองคิวไปแล้ว กรุณาเช็คที่คิวของท่าน');
+        return db.doc(`users/${userDetail.personal_id}`).get();
       }
-      window.alert('มีรายชื่อการขอกู้ยืมก่อนหน้า');
-      throw new Error('invalid transaction');
-    })
-    .then((doc) => {
-      if (doc.exists) {
-        return db.collection('queues').add({
-          personalId: personal_id.trim(),
-          createdAt: new Date().toISOString(),
-          amount: amount * 1
-        });
-      }
-      throw new Error('invalid transaction');
+      else {
+        window.alert('ท่านได้ทำการจองคิวไปแล้ว กรุณาเช็คที่คิวของท่าน');
+        throw new Error('invalid transaction');
+      } 
     })
     .then(() => {
-      document.getElementById('personal_id').value = '';
+      return budgetQ.get();
+    })
+     //return db.collection('money_borrow').get();
+    .then((data) => {
+        //console.log(budgetQ.data());
+        return budgetQ.doc(data.docs[0].id).update({
+          amount: data.docs[0].data().amount - userDetail.amount * 1,
+          date: new Date().toISOString()
+        });
+    })
+    
+    .then(() => {
+        return newQueues.add({
+          personalId: userDetail.personal_id.trim(),
+          createdAt: new Date().toISOString(),
+          amount: userDetail.amount * 1
+        });
+    })
+   
+    .then(() => {
+      //document.getElementById('personal_id').value = '';
       document.getElementById('amount').value = '';
-      clearListElement();
-      clearListPaginationElement();
-      initailUserTable();
+      //clearListElement();
+      //clearListPaginationElement();
+      //initailUserTable();
       setUserOrdernumber();
       return;
     })
     .then(() => {
+      if(localStorage.user) {
       window.alert('จองเรียบร้อย');
+        listOrderButton()
+        getUserProfile(localStorage.user)
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -414,7 +173,7 @@ const isPersonalNumber = (number) => {
 
 const isNumber = (number) => {
   const regEx = /^\d+$/;
-  if (number.match(regEx) && number * 1 >= 1000) {
+  if (number.match(regEx) && number * 1 >= 500) {
     return true;
   } else {
     return false;
@@ -434,16 +193,104 @@ window.onclick = function(e) {
     }
   }
 }
-function dropdownReport() {
-  document.getElementById("myReport").classList.toggle("show");
+
+
+//งบประมาณ
+async function getTotalBudgetQueue(){
+  const amountTotal = document.getElementsByClassName('detail-amount-total'); //ยอดเงินกู้ทั้งหมด
+  const amount = document.getElementsByClassName('detail-amount'); //ยอดเงินกู้คงเหลือ
+  //let date = new Date();
+  //let year = date.getFullYear();
+  //let year = 2019
+  try {
+    const collections 
+    = await db.collection('money_borrow').get();
+    let sumTotal = collections.docs.map(doc => doc.data().amount_total);
+    let sum = collections.docs.map(doc => doc.data().amount);
+      //console.log(collection.data().date.split("T")[0]);
+      console.log(sumTotal);
+    
+      amountTotal[0].innerHTML  = sumTotal + " บาท"
+      amount[0].innerHTML  = sum + " บาท"
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  catch (error) {
+    console.log(error);
+  }
 }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropdown_report')) {
-  var myDropdownReport = document.getElementById("myReport");
-    if (myDropdownReport.classList.contains('show')) {
-      myDropdownReport.classList.remove('show');
-    }
+function getUserProfile(user) {
+  const pofile = JSON.parse(user);
+  const name = document.getElementById('user-name');
+  const personal_id = document.getElementById('user-personal-number');
+  const telnumber = document.getElementById('user-telnumber');
+
+  name.innerHTML = `${pofile.firstName} ${pofile.lastName}`;
+  personal_id.innerHTML = `${format('X XXXX XXXXX XX X', pofile.id)}`;
+  telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
+  myFunctionQueue(pofile.id);
+  setUserOrdernumber(localStorage.user)
+  
+}
+
+function format(mask, number) {
+  var s = '' + number,
+    r = '';
+  for (var im = 0, is = 0; im < mask.length && is < s.length; im++) {
+    r += mask.charAt(im) == 'X' ? s.charAt(is++) : mask.charAt(im);
+  }
+  return r;
+}
+
+function myFunctionQueue(personal_id){
+  console.log(personal_id);
+  db.collection('queues')
+    .where('personalId', '==', personal_id)
+    .get()
+    .then((snap) => {
+      total = snap.size;
+      console.log(total);
+
+      return db.collection('queues')
+              .where('personalId', '==', personal_id)
+              .get();
+    })
+    .then((data) => {
+      data.forEach((doc) => {
+        console.log(doc.data().amount);
+        const data_queue = doc.data();
+        const queue = document.getElementById('user-queue');
+        queue.innerHTML = data_queue.amount + '  บาท';
+        const queue_date = document.getElementById('user-queue-date');
+        queue_date.innerHTML = dayjs(data_queue.createdAt).format('D MMM YYYY');
+      })  
+    })
+}
+function setUserOrdernumber(user) {
+  if (localStorage.user) {
+    const numberOrder = document.getElementsByClassName('number')[0];
+    let orderNumer = 0;
+    let exist = false;
+    const userOrder = JSON.parse(localStorage.user);
+
+    db.collection('queues')
+      .orderBy('createdAt', 'asc')
+      .get()
+      .then((data) => {
+        const { docs } = data;
+        console.log({ docs });
+        for (let i = 0; i < docs.length; i++) {
+          orderNumer++;
+          if (docs[i].data().personalId === userOrder.id) {
+            exist = true;
+            
+            break;
+          }
+        }
+        if (exist) {
+          numberOrder.innerHTML = orderNumer;
+          //displayOrder.classList.remove('hide');
+        }
+      });
   }
 }

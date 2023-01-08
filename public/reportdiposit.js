@@ -12,7 +12,8 @@ window.addEventListener('load', async function () {
   
   setUserDetail(name, email, amountTotal);
   initailUserTable();
-  await getMonthlyBudget() // เงินรวมยอดรายเดือน
+  await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
+  await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
   await getYearsBudget()  //เงินรวมยอดรายปี
   await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
@@ -29,44 +30,17 @@ function setUserDetail(name, email, amount) {
   if (!localStorage.FBIdToken) {
     window.location.href = './login.html';
   }
-  if (localStorage.FBIdToken && !localStorage.budgets) {
-    // const token = localStorage.FBIdToken;
-    const userCreadentail = JSON.parse(localStorage.AutenticatedUser);
-
-    getBudgetsTotal(name, email, amount, null, userCreadentail);
-  } else if (localStorage.FBIdToken && localStorage.budgets) {
+  if (localStorage.FBIdToken && localStorage.budgets) {
     const userDetail = JSON.parse(localStorage.AutenticatedUser);
-    const budgets = JSON.parse(localStorage.budgets);
+    //const budgets = JSON.parse(localStorage.budgets);
 
     name[0].innerHTML = `${userDetail.firstName} ${
       userDetail.lastName ? userDetail.lastName : ''
     }`;
     email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-    amount[0].innerHTML = `${budgets.total} บาท`;
-  }
-}
-
-function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
-  let budgets = {};
-  db.collection('budgets')
-    .get()
-    .then((data) => {
-      // console.log();
-      name[0].innerHTML = `${userDetail.firstName} ${
-        userDetail.lastName ? userDetail.lastName : ''
-      }`;
-      email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
-      amount[0].innerHTML = `${data.docs[0].data().total} บาท`;
-
-      if (userTotal) {
-        userTotal[0].innerHTML = `${userDetail.amount} บาท`;
-      }
-
-      budgets = data.docs[0].data();
-      budgets.id = data.id;
-
-      localStorage.setItem('budgets', JSON.stringify(budgets));
-    });
+    //amount[0].innerHTML = `${budgets.total} บาท`;
+    //getBudgetsTotal(name, email, amount, null, userCreadentail);
+  } 
 }
 
 function myFunction() {
@@ -347,10 +321,8 @@ window.onclick = function(e) {
   }
 }
 
-//Budgets
-async function getMonthlyBudget() {
-  const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
-
+ //Budgets
+ async function getMonthlyBudgetDeposit() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
   try {
@@ -361,29 +333,55 @@ async function getMonthlyBudget() {
                .where("date", "<=", endOfMonthDate )
                .get()
     let sum = 0
-
+    const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
     for(const collection of collections.docs) {
       sum += collection.data().amount * 1
-      //console.log(collection.data().date.split("T")[0]);
+      console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum + " บาท"
-    //console.log("transactions", collection.docs[0].data());
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collections.docs[0].data());
   } 
+  
   catch (error) {
     console.log(error);
   }
-
 }
+async function getMonthlyBudgetWithdraw() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
 
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "withdrawn")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount_withdraw * 1
+      //console.log(collection.data().date.split("T")[0]);
+      //console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
+}
 function getDate() {
 
   // Get moth and years
-  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
 
-  const [month, day, year] = dateString.trim().split(",")[0].split("/")
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
 
   const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 
@@ -403,7 +401,7 @@ async function getYearsBudget() {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     
-    amountYear[0].innerHTML  = sum + " บาท"
+    amountYear[0].innerHTML  = sum
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
@@ -423,7 +421,7 @@ async function getTotalBudget() {
       sum += collection.data().total * 1
       //console.log(sum);
     }
-    amountTotal[0].innerHTML  = sum + " บาท"
+    amountTotal[0].innerHTML  = sum 
   } 
   catch (error) {
     console.log(error);

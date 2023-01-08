@@ -19,15 +19,34 @@
                 <h1 class="profile-username"></h1>
                 <span class="profile-email"></span>
                 <div class="profile-history">
-                    <!--i class="far fa-id-card"></i-->
-                    <div class="profile-history-detail">
-                        <span class="detail-title">งบประมาณเดือนนี้</span>
-                        <p class="detail-amount-month"></p>
-                        <span class="detail-title">งบประมาณปีนี้ <p id="year"></p></span>
-                        <p class="detail-amount-year"></p>
-                        <span class="detail-title">งบประมาณทั้งหมด</span>
-                        <p class="detail-amount"></p>
-                      </div>
+                    <h2>งบประมาณ</h2>
+                    <table class="profile-history-detail">
+                        <tr>
+                            <th>รายการ</th>
+                            <th>จำนวนเงิน (บาท)</th>
+                        </tr>
+                        <tr>
+                            <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i> งบประมาณเดือนนี้</td>
+                            <td class="detail-title-title" ></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title">การฝาก</td>
+                            <td  class="detail-amount-month-deposit"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title">การถอน</td>
+                            <td  class="detail-amount-month-withdraw"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title-title" ><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือปีนี้</td>
+                            <td class="detail-amount-year" id="year"></td>
+                        </tr>
+                        <tr>
+                            <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือทั้งหมด</td>
+                            <td class="detail-amount"></td>
+                        </tr>
+        
+                    </table>
                   </div>
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
@@ -39,6 +58,9 @@
                         </a>
                         <a href="" class="list-menu-img-admin" id="reportborrow">
                             <li><img src="img/รายการกู้เงิน.jpg"></li>
+                        </a>
+                        <a href="budgets.html" class="list-menu-img-admin" id="reportborrow">
+                            <li><img src="img/สรุงบประมาณ.jpg"></li>
                         </a>
                         <a href="/dividend.html" class="list-menu-img-admin" id="dividend">
                             <li><img src="img/เงินปันผล1.jpg"></li>

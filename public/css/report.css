@@ -6,107 +6,115 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kanit';
-    background-image: url(bg.jpg);
 }
 body {
-    height: 745px;
-    width: 1530px;
-    padding: 30px 45px;
-    background: url(../img/bg.jpg) no-repeat;
-}
-.container {
-    width: 1300px;
-    height: 640px;
-    margin-top:  30px;
-    margin-left: 30px;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    padding: 5px 5px;
+    width: 100%;
+    height:auto;
+    padding: 30px 30px;
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
     
+}
+
+.container {
+    float: left;
+    width: 100%;
+    height:100%;
+    padding: 13px 25px;
     border-radius: 70px;
-    outline: none;
-    color: black;
     background-color: antiquewhite;
 }
+
 .container .container2 {
+    float: left;
     width: 100%;
-    text-align: center;
-}
-.container2 {
-    max-width: 1270px;
-    height: 600px;
+    height:auto;
     border-radius: 50px;
-    padding:5px 5px;
-    margin-top:  10px;
-    margin-left: 0px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    outline: none;
-    color: black;
+    text-align:center;
+    padding: 30px;
     background-color: white;
+    text-align: center;
 }
 .container2 h3 {
     font-family: 'Kanit';
     text-transform: uppercase;
-    margin-top:  3px;
+    margin-top:  -10px;
     color: rgb(255, 0, 230);
-    margin-right: 830px;
+    margin-right: 1090px;
     font-size: 15px;
-    padding:5px 5px;
+    padding: 5px 10px;
 }
-.container2 .balance {
-    width: 300px;
-    height: 500px;
-    margin-top:  15px;
-    margin-left: 10px;
-    padding: 10px 5px;
+.balance {
+    float: left;
+    width: 30%;
+    height:100%; 
+    padding: 40px;
     border-radius: 70px;
-    outline: none;
-    color: black;
     background-color: #fef2f2;
+    overflow: hidden;
+    
+}
+.list-menu {
+    float: left;
+    width: 70%;
+    height:80%;
+    padding: 40px;
+    border-radius: 70px; 
+    background-color: #fae2e2;
+
 }
 .balance h1 {
     font-family: 'Kanit';
     text-transform: uppercase;
-    margin-top:  30px;
+    margin-top:  0px;
     color: rgb(1, 1, 1);  
 }
-
-.profile-history .detail-title {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-    font-size: 30px;
-      
+.profile-history h2 {
+  color: rgb(0, 55, 255);
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 .profile-email {
     font-size: 20x;
-    margin-top: 20px;
+    margin-top: 0px;
   }
-.profile-history .detail-amount {
-    text-transform: uppercase;
-    margin-top:  10px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    color: rgb(253, 103, 9);
+    background-color: #ffd3c6;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f8f3c8;
+  }
+.detail-title {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  
 }
-.profile-history .detail-title-user {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-    font-size: 30px;
-      
+.detail-title-title {
+  background-color: #ffc0b9;
+  text-align: left;
 }
-.profile-history .detail-amount-user {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+.detail-amount-month-deposit,
+.detail-amount-month-withdraw,
+.detail-amount-year,
+.detail-amount {
+  border: 1px solid #dddddd;
+  text-align: right;
+  padding: 8px;
+  font-weight: bold;
 }
-
 .active {
     visibility: visible;
     font-family: 'Kanit';
@@ -114,32 +122,21 @@ body {
     color: rgb(101, 101, 245);
     font-weight: bold;
   }
-.btn-profile {
-    position: absolute;
-    margin-top: 80px;
-    margin-left: 110px;
-    text-transform: uppercase;
-    font-family: 'Quicksand';
-    background-color: whitesmoke;
-    border: solid 1px rgb(28, 28, 230);
-    border-radius: 15px;
-    color: rgb(101, 101, 245);
-    outline: none;
-    padding: 0.5em 0.5em;
-  }
-  .btn-profile i {
-    margin-right: 10px;
-  }
-  .btn-profile:hover {
-    background-color: rgb(101, 101, 245);
-    border: solid 1px rgb(28, 28, 230);
-    color: whitesmoke;
-  }
+.non-active {
+  visibility: visible;
+  font-family: 'Kanit';
+  font-size: 1.2em;
+  color: #fef2f2;
+  font-weight: bold;
+  background-color:  #fef2f2;
+}
 .logout_btn {
     width: 50%;
-    padding: 12px 1px;
-    margin-top: 90px;
-    margin-left: 110px;
+    padding: 12px 10px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+    margin-top: 60px;
+    float:right;
     border-radius: 15px;
     outline: none;
     background-color: #f50303;
@@ -151,55 +148,35 @@ body {
   .logout_btn:hover {
     background-color: rgb(245, 160, 160);
   }
-  .list-menu .list-menu-img {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 500px;
-    margin-top:  -500px;
-    margin-left: 320px;
-    margin-bottom: -100px;
-    margin-right: 30px;
-    padding: 5px 5px;
-    border-radius: 70px;
-    outline: none;
-    color: black;
-    background-color: #fae2e2;
-}
+
 li {
-    list-style: none;
-  }
-  .list-menu-img {
-    padding: 1em 1em;
-  }
-  .list-menu .list-menu-img {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    width: 74%;
-  }
-  .list-menu .list-menu-img li img {
-    width: 200px;
-    height: auto;
-    justify-content: center;
-    margin-right: 20px;
-  }
-  #reportdiposit {
-    margin-left: 70px;
-  }
-  #member {
-    margin-left: 350px;
-  }
-  .list-menu .list-menu-img li img:hover {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
-    transform: scale(1.2, 1.2);
-    transition: 200ms ease-in-out;
-  }
-  .list-menu-img li {
-    margin-top: 30px;
-    margin-left: 0px;
-    margin-right: 50px;
-  }
+  list-style: none;
+  
+}
+.list-menu-img {
+  padding: 0px ;
+  
+}
+.list-menu .list-menu-img {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  /* height: 100%; */
+}
+.list-menu .list-menu-img li img {
+  width: 180px;
+  height: auto;
+  object-fit: cover;
+}
+.list-menu .list-menu-img li img:hover {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
+  transform: scale(1.2, 1.2);
+  transition: 200ms ease-in-out;
+}
+.list-menu-img li {
+  margin: 0 2em 0 0;
+}
   .list-menu-img img {
     cursor: pointer;
   }
@@ -216,12 +193,11 @@ li {
   .list-menu-img-user-active {
     display: unset;
   }
+  
   .list-menu .back {
-    width: 10%;
-    padding: 0px 1px;
-    margin-top: 170px;
-    margin-bottom: 20px;
-    margin-left: -560px;
+    width: 15%;
+    padding: 10px 1px;
+    margin-right: 670px;
     border-radius: 15px;
     outline: none;
     background-color: #645862;
@@ -231,5 +207,31 @@ li {
     font: bold 'Montserrat' 2em;
     cursor: pointer;
   }
-  
-  
+
+  @media only screen and (max-width: 800px) {
+    .container {
+      width: 100%;
+      
+    }
+    .container2 {
+      width: 100%;
+    }
+    .container2 .balance {
+      width: 80%;
+      padding: 0;
+    }
+    .container2 .list-menu {
+      width: 80%;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .balance , .list-menu {
+      width: 80%;
+    }
+    .list-menu-img {
+      overflow-y: scroll;
+      width: 100%;
+      height: 100%;
+    }
+  }
+

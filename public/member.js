@@ -101,8 +101,8 @@ function initailUserTable(perPage = 5) {
           telNumber: doc.data().telNumber,
           sex: doc.data().sex,
           dividend: doc.data().dividend
-
         });
+        console.log(users);
       });
       return;
     })

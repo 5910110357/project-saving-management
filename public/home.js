@@ -41,7 +41,7 @@ window.addEventListener('load', async function () {
     let budgets = {};
     TableUser[0].classList.add('non-active')
     //getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
-    visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
+    //visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
   } else if (localStorage.FBIdToken && localStorage.budgets) {
     let date = new Date();
@@ -58,7 +58,7 @@ window.addEventListener('load', async function () {
     TableUser[0].classList.add('non-active')
 
     //userTotalLabel[0].classList.remove('active');
-    visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
+    //visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
   
   }

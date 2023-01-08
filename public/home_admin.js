@@ -10,6 +10,8 @@ window.addEventListener('load', async function () {
   const userMenu = document.getElementsByClassName('list-menu-img-user');
   const adminTotalLabel = document.getElementsByClassName('detail-title'); //เมนูยอดเงิน แอดมิน
   const userTotalLabel = document.getElementsByClassName('detail-title-user'); //เมนูยอดเงินของคุณ
+  const TableBudgets = document.getElementsByClassName('profile-history'); //ตารางงบประมาณ
+  const TableUser = document.getElementsByClassName('Profile-User'); //โปรไฟล์user
 
   if (!localStorage.user && !localStorage.FBIdToken) {
     window.location.href = './home.html';
@@ -19,8 +21,8 @@ window.addEventListener('load', async function () {
   if (localStorage.user && !localStorage.budgets) {
     const userDetail = JSON.parse(localStorage.user);
 
-    getBudgetsUsers(name, email,  amountuser, userDetail);
-    userTotalLabel[0].classList.add('active');
+    TableBudgets[0].classList.add('non-active');
+    getUserProfile(localStorage.user);
 
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
   } else if (localStorage.user && localStorage.budgets) {
@@ -139,10 +141,9 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
       window.location.href = '/member.html';
     }
   }
-
-  async function getMonthlyBudget() {
-    const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
-  
+ 
+  //Budgets
+  async function getMonthlyBudgetDeposit() {
     const [startOfMonthDate, endOfMonthDate] =  getDate()
   
     try {
@@ -153,19 +154,19 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
                  .where("date", "<=", endOfMonthDate )
                  .get()
       let sum = 0
-  
+      const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
       for(const collection of collections.docs) {
         sum += collection.data().amount * 1
-        //console.log(collection.data().date.split("T")[0]);
-        //console.log(sum);
+        console.log(collection.data().date.split("T")[0]);
+        console.log(sum);
       }
-      amountMonth[0].innerHTML  = sum + " บาท"
-      //console.log("transactions", collection.docs[0].data());
+      amountMonth[0].innerHTML  = sum 
+      //console.log("transactions", collections.docs[0].data());
     } 
+    
     catch (error) {
       console.log(error);
     }
-  
   }
   async function getMonthlyBudgetWithdraw() {
     const [startOfMonthDate, endOfMonthDate] =  getDate()
@@ -195,11 +196,13 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
   function getDate() {
   
     // Get moth and years
-    const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+    const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
   
-    const [month, day, year] = dateString.trim().split(",")[0].split("/")
+    const [day,month , year] = dateString.trim().split(",")[0].split("/")
   
     const totalDays =  new Date(year, month, 0).getDate()
+    
+    //console.log(month);
   
     return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
   
@@ -219,7 +222,7 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
         //console.log(collection.data().date.split("T")[0]);
         console.log(sum);
       
-      amountYear[0].innerHTML  = sum + " บาท"
+      amountYear[0].innerHTML  = sum
       //console.log("transactions", collection.docs[0].data());
     } 
     catch (error) {
@@ -239,7 +242,7 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
         sum += collection.data().total * 1
         //console.log(sum);
       }
-      amountTotal[0].innerHTML  = sum + " บาท"
+      amountTotal[0].innerHTML  = sum 
     } 
     catch (error) {
       console.log(error);
