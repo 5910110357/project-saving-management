@@ -3,7 +3,7 @@ let currentPage = 1;
 let total;
 let paginate;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
   const amount = document.getElementsByClassName('detail-amount');
@@ -11,7 +11,7 @@ window.addEventListener('load', function () {
 
   //   setUserDetail(name, email, amount);
   // ลำดับของผู้ใช้
-
+  await getTotalBudgetQueue(); //ยอดเงินรวมทั้งหมดเงินกู้
   initailUserTable();
 });
 function logout() {
@@ -126,7 +126,8 @@ function initailUserTable(perPage = 8) {
         queues.push({
           id: doc.id,
           personalId: doc.data().personalId,
-          createdAt: doc.data().createdAt
+          createdAt: doc.data().createdAt,
+          amount: doc.data().amount
         });
         // console.log(orders);
       });
@@ -202,7 +203,8 @@ function queryFromFirbaseWithOffset(i) {
               queues.push({
                 id: doc.id,
                 personalId: doc.data().personalId,
-                createdAt: doc.data().createdAt
+                createdAt: doc.data().createdAt,
+                amount: doc.data().amount
               });
             });
             return;
@@ -222,23 +224,14 @@ function queryFromFirbaseWithOffset(i) {
   };
 }
 
-function insertTable(users, num) {
-  let cell1, cell2, cell3, cell4, cell5;
+async function insertTable(users, num) {
+  let cell1, cell2, cell3, cell4, cell5, cell6, cell7;
   let row;
   var tbodyRef = document
     .getElementById('myTable')
     .getElementsByTagName('tbody')[0];
-  //let btn = document.createElement('button')
-  //btn.textContent="ลบข้อมูล"
- // btn.setAttribute('class', 'btn btn-danger')
-  //btn.setAttribute('id',orders.id)
   
-
   for (let i = 0; i < users.length; i++, num++) {
-    // let icon = document.createElement('i');
-    // icon.classList.add('far');
-    // icon.classList.add('fa-eye');
-
     row = tbodyRef.insertRow(tbodyRef.rows.length);
 
     cell1 = row.insertCell(0);
@@ -246,64 +239,77 @@ function insertTable(users, num) {
     cell3 = row.insertCell(2);
     cell4 = row.insertCell(3);
     cell5 = row.insertCell(4);
+    cell6 = row.insertCell(5);
+    cell7 = row.insertCell(6);
 
     cell1.innerHTML = `${num + 1}`;
     cell2.innerHTML = `${users[i].firstName}`;
     cell3.innerHTML = `${users[i].lastName}`;
-    cell4.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
-    //cell5.appendChild(btn)
-    if (localStorage.user) {
-      if (users[i].userId === JSON.parse(localStorage.user).id) {
-        row.classList.add('active-user');
-      }
-    }
-  }
-}
+    cell4.innerHTML = `${users[i].amount}`;
+    cell5.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
+    
+    //ปุ่มสำเร็จ
+    let btn_success = document.createElement('button')
+    btn_success.textContent = "สำเร็จ"
+    btn_success.setAttribute('class', 'btn-success')
+    btn_success.setAttribute('data-id', users[i].id)
+    cell6.appendChild(btn_success)
+    btn_success.addEventListener('click', (e)=> {
+      let id = e.target.getAttribute('data-id');
+      console.log(id);
+      //deleteDoc(doc(db, 'queues', id))
+      db.collection('queues').doc(id).delete()
+        .then(() => {
+          alert("ทำรายการสำเร็จ");
+          window.location.href = './booK_admin.html'
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        })
+    })
 
-function searchByPersonalId() {
-  const personal_id = document.getElementById('form1').value;
-  let user = [];
-  if (!personal_id.trim()) {
-    // กรณี ไม่มีการกรอกข้อมูล
-    return;
-  }
-  //   console.log(personal_id);
-  if (isPersonalNumber(personal_id)) {
-    const userDocument = db.doc(`/users/${personal_id}`);
-    userDocument
-      .get()
-      .then((doc) => {
-        console.log(doc);
-        if (doc.exists) {
-          user.push({
-            id: doc.id,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName
-          });
-        }
-        // console.log(user);
-        return db.collection('queues').where('userId', '==', doc.id).get();
-      })
-      .then((doc) => {
-        console.log(doc);
-        if (!doc.empty) {
-          const { createdAt } = doc.docs[0].data();
-          user[0].createdAt = createdAt;
-        } else {
-          user = [];
-        }
-        return;
-      })
-      .then(() => {
-        clearListElement();
-        clearListPaginationElement();
-        insertTable(user, 0);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  } else {
-    console.log('Not valid');
+    //ปุ่มcancel
+   
+      const collections 
+      = await db.collection('money_borrow').get();
+      let sumAmount = collections.docs.map(doc => doc.data().amount);
+      let sumId = collections.docs.map(doc => doc.id);
+      
+    
+    let btn_cancel = document.createElement('button')
+    btn_cancel.textContent = "ยกเลิก"
+    btn_cancel.setAttribute('class', 'btn-warning')
+    btn_cancel.setAttribute('data-id', users[i].id)
+    btn_cancel.setAttribute('data-amount', users[i].amount)
+    btn_cancel.setAttribute('budgets-amount', sumAmount)
+    btn_cancel.setAttribute('budgets-amount-id', sumId)
+    cell7.appendChild(btn_cancel)
+    btn_cancel.addEventListener('click', (e)=> {
+      let id = e.target.getAttribute('data-id');
+      console.log(id);
+
+        let data_amount = e.target.getAttribute('data-amount');
+        console.log(data_amount);
+        let budgets_amount = e.target.getAttribute('budgets-amount');
+        console.log(budgets_amount);
+        let budgets_amount_id = e.target.getAttribute('budgets-amount-id');
+        console.log(budgets_amount_id);
+        db.collection('money_borrow').doc(budgets_amount_id)
+        .update({
+          amount: (data_amount *1) + (budgets_amount * 1),
+          date: new Date().toISOString()
+        }); 
+        db.collection('queues').doc(id).delete()
+        .then(() => {
+          alert("ยกเลิกรายการสำเร็จ");
+          window.location.href = './booK_admin.html'
+        })
+         //return db.collection('money_borrow').get();
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        })
+     })
+    
   }
 }
 
@@ -319,107 +325,7 @@ function formBotton() {
   document.getElementsByClassName('order-form')[0].classList.remove('hide');
   document.getElementsByClassName('order-form')[0].classList.remove('active');
 }
-function submit() {
-  const personal_id = document.getElementById('personal_id').value;
-  const amount = document.getElementById('amount').value;
 
-  if (!isPersonalNumber(personal_id)) {
-    window.alert('หมายเลขไม่ถูกต้อง');
-    return;
-  }
-  if (!isNumber(amount)) {
-    window.alert('จำนวนเงินไม่ถูกต้อง');
-    return;
-  }
-
-  if (!localStorage.user) {
-    window.alert('ท่านมิใช้ผู้ใช้งานทั่วไป');
-    return;
-  }
-
-  if (personal_id !== JSON.parse(localStorage.user).id) {
-    window.alert('โปรดระบุหมายเลขบัตรเฉพาะของท่าน');
-    return;
-  }
-  db.collection('borrows')
-    .where('userId', '==', personal_id)
-    .get()
-    .then((data) => {
-      if (!data.empty) {
-        window.alert('ท่านมีรายชื่อของการกู้มาก่อน');
-        throw new Error('invalid transaction');
-      }
-      return db.collection('queues').where('userId', '==', personal_id).get();
-    })
-    .then((doc) => {
-      if (doc.empty) {
-        return db.doc(`users/${personal_id}`).get();
-      }
-      window.alert('มีรายชื่อการขอกู้ยืมก่อนหน้า');
-      throw new Error('invalid transaction');
-    })
-    .then((doc) => {
-      if (doc.exists) {
-        return db.collection('queues').add({
-          personalId: personal_id.trim(),
-          createdAt: new Date().toISOString(),
-          amount: amount * 1
-        });
-      }
-      throw new Error('invalid transaction');
-    })
-    .then(() => {
-      document.getElementById('personal_id').value = '';
-      document.getElementById('amount').value = '';
-      clearListElement();
-      clearListPaginationElement();
-      initailUserTable();
-      setUserOrdernumber();
-      return;
-    })
-    .then(() => {
-      window.alert('จองเรียบร้อย');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-const isPersonalNumber = (number) => {
-  // let digit = number *1
-
-  if (number.length > 13) {
-    return false;
-  }
-  let sum = 0,
-    j = 0,
-    check,
-    lastDigit;
-
-  for (let i = 13; i >= 2; i--) {
-    sum += number[j] * 1 * i;
-    j++;
-  }
-  if (!sum) {
-    return false;
-  }
-
-  check = 11 - (sum % 11);
-  lastDigit = check + '';
-
-  if (lastDigit[lastDigit.length - 1] === number[number.length - 1]) {
-    return true;
-  }
-  return false;
-};
-
-const isNumber = (number) => {
-  const regEx = /^\d+$/;
-  if (number.match(regEx) && number * 1 >= 1000) {
-    return true;
-  } else {
-    return false;
-  }
-};
 
 function dropdown() {
   document.getElementById("myTransaction").classList.toggle("show");
@@ -447,3 +353,25 @@ window.onclick = function(e) {
     }
   }
 }
+async function getTotalBudgetQueue(){
+    const amountTotal = document.getElementsByClassName('detail-amount-total'); //ยอดเงินกู้ทั้งหมด
+    const amount = document.getElementsByClassName('detail-amount'); //ยอดเงินกู้คงเหลือ
+    //let date = new Date();
+    //let year = date.getFullYear();
+    //let year = 2019
+    try {
+      const collections 
+      = await db.collection('money_borrow').get();
+      let sumTotal = collections.docs.map(doc => doc.data().amount_total);
+      let sum = collections.docs.map(doc => doc.data().amount);
+        //console.log(collection.data().date.split("T")[0]);
+        console.log(sumTotal);
+      
+        amountTotal[0].innerHTML  = sumTotal + " บาท"
+        amount[0].innerHTML  = sum + " บาท"
+      //console.log("transactions", collection.docs[0].data());
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  }

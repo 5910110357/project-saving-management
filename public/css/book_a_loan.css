@@ -293,7 +293,23 @@ body {
     background-color: #2196f3;
     color: white;
 }
-
+.cancel_btn {
+  width: 50%;
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  border: 2px solid #fb0909;
+  color: #f57505;
+  outline: none;
+  background-color: rgb(251, 231, 221);
+  cursor: pointer;
+  margin-top: -10px;
+  font-weight: bolder;
+}
+.cancel_btn:hover {
+  background-color: #f57505;
+  color: rgb(251, 231, 221);
+}
 table i {
     color: rgb(101, 101, 245);
     cursor: pointer;
@@ -433,6 +449,14 @@ table i:hover {
     opacity: 1;
     font-size: 15px;
   }
+  .user-queue,
+  .user-queue-date{
+    color: rgb(252, 5, 5);
+    position: absolute;
+    left: 45%;
+    opacity: 1;
+    font-size: 15px;
+  }
   .user-profile-card-title i {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -496,11 +520,11 @@ table i:hover {
         padding: 0px 0px;
         font-weight: bold;
         margin-right: 565px;
-      }
-      .container2 h3 {
-        margin-right: 433px;
+    }
+    .container2 h3 {
+      margin-right: 433px;
         
-      }
+    }
   }
   @media only screen and (max-width: 500px) {
     .balance , .details {

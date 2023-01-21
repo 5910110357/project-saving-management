@@ -137,6 +137,7 @@ async function submit() {
       window.alert('จองเรียบร้อย');
         listOrderButton()
         getUserProfile(localStorage.user)
+        window.location.href = './booK_a_loan.html'
       }
     })
     .catch((err) => {
@@ -269,6 +270,12 @@ function myFunctionQueue(personal_id){
 function setUserOrdernumber(user) {
   if (localStorage.user) {
     const numberOrder = document.getElementsByClassName('number')[0];
+    const cancel = document.getElementsByClassName('fa-trash')[0];
+    const btn = document.getElementsByClassName('cancel_btn')[0];
+    const num = document.getElementsByClassName('order-number')[0];
+    const user_queue = document.getElementsByClassName('user-queue')[0];
+    const user_queue_date = document.getElementsByClassName('user-queue-date')[0];
+    const button = document.getElementsByName('btn-menu-order')[0];
     let orderNumer = 0;
     let exist = false;
     const userOrder = JSON.parse(localStorage.user);
@@ -289,8 +296,79 @@ function setUserOrdernumber(user) {
         }
         if (exist) {
           numberOrder.innerHTML = orderNumer;
-          //displayOrder.classList.remove('hide');
+          cancel.classList.remove('hide');
+          btn.classList.remove('hide');
+          num.classList.remove('hide');
+          user_queue.classList.add('hide');
+          user_queue_date.classList.add('hide');
+          button.classList.add('hide');
         }
       });
+  }
+}
+
+async function cancel() {
+  if (localStorage.user) {
+    const user = JSON.parse(localStorage.user);
+  
+    const ids = await db.collection('queues').where('personalId', '==', user.id).get();
+    for(const collectionids of ids.docs) {
+      console.log(collectionids.data().amount);
+      //console.log(sum);
+      amountids = collectionids.data().amount;
+    }
+    
+    const userQueue = await db.collection('money_borrow').get();
+    for(const collectionuserQueue of userQueue.docs) {
+      console.log(collectionuserQueue.data().amount);
+      //console.log(sum);
+      amountQueue = collectionuserQueue.data().amount;
+      console.log(amountQueue);
+      console.log(amountids);
+      db.collection('money_borrow').doc(collectionuserQueue.id)
+        .update({
+          amount: amountids + amountQueue * 1,
+          date: new Date().toISOString()
+        }); 
+    }
+    for(const collectionids of ids.docs) {
+      console.log(collectionids.data().amount);
+      //console.log(sum);
+      amountids = collectionids.data().amount;
+      db.collection('queues').doc(collectionids.id).delete()
+        .then(() => {
+          alert("ลบสำเร็จ");
+          window.location.href = './booK_a_loan.html'
+        })
+         //return db.collection('money_borrow').get();
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        })
+      }
+      
+
+     /*try{
+      const ids = await db.collection('queues')
+                  .where('personalId', '==', user.id)
+                  .get();
+      for(const collection of ids.docs) {
+        console.log(collection.id);
+
+        db.collection('queues').doc(collection.id).delete()
+        .then(() => {
+          alert("ลบสำเร็จ");
+          window.location.href = './booK_a_loan.html'
+        })
+         //return db.collection('money_borrow').get();
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        })
+      }
+     }
+     catch (error) {
+      console.log(error);
+    }*/
+      
+     
   }
 }

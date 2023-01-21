@@ -34,7 +34,7 @@
                   </tr>
                 </table>
               </div>
-              <div class="profile-detail">
+              <!--div class="profile-detail">
                 <button
                   type="button"
                   class="btn btn-primary menu-order"
@@ -49,15 +49,7 @@
                 >
                   <i class="far fa-copy"></i>ขอกู้
                 </button>
-                <!--div class="order-number hide">
-                  <div class="order-number-title">
-                    <div class="order-number-layout">
-                      <h2 class="number"></h2>
-                      <p>ลำดับ</p>
-                    </div>
-                  </div>
-                </!--div-->
-              </div>
+              </!--div-->
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
@@ -99,24 +91,37 @@
                       <div class="user-profile-card-details-label">
                         <p class="user-name-label">จำนวนเงินที่จอง:</p>
                         <p id="user-queue"></p>
+                        <p class="user-queue active">ยังไม่มีการจอง</p>
                       </div>
                       <div class="user-profile-card-details-label">
                         <p class="user-name-label">วันที่ทำการจอง:</p>
                         <p id="user-queue-date"></p>
+                        <p class="user-queue-date active">ยังไม่มีการจอง</p>
                       </div>
                     </div> 
+                    <button
+                      type="button" name="btn-menu-order"
+                      class="btn btn-primary menu-order"
+                      onclick="formBotton()"
+                    >
+                      <i class="far fa-copy"></i>ขอกู้
+                    </button>
                 </div>
-                <div class="order-number">
+                
+                <div class="order-number hide">
                   <div class="order-number-title">
                     <div class="order-number-layout">
                       <p>ลำดับ</p>
                       <h2 class="number"></h2>
+                      
                     </div>
                   </div>
                 </div>
+                <button class="cancel_btn hide" onclick="cancel()">ยกเลิก
+                  <i class="fa fa-trash"></i>
+                </button>
               </div>
               <div class="order-form hide">
-                
                 <div class="groups-field">
                   <div class="group">
                     <label for="personal_id" class="label-name">เลขบัตรประชาชน</label>
@@ -133,7 +138,8 @@
                 </div>
                 <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการกู้ </label>
                 <input type="text" placeholder="จำนวนเงินที่ต้องการกู้ (ขั้นต่ำ 500 บาท)" id="amount" />
-                <button onclick="submit()">Submit</button>
+                <button onclick="submit()">ยืนยันการขอกู้</button>
+                
               </div>  
             </div>
        </div>

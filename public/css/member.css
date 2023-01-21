@@ -73,86 +73,55 @@ body {
     background-color: #fef2f2;
 }
 .balance h1 {
-    text-transform: uppercase;
-    margin-top:  30px;
-    color: rgb(1, 1, 1);  
+  font-family: 'Kanit';
+  text-transform: uppercase;
+  margin-top:  0px;
+  color: rgb(1, 1, 1);  
 }
-.profile-history .detail-title {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-    font-size: 30px;
-      
+.profile-history h2 {
+color: rgb(0, 55, 255);
+margin-top: 10px;
+margin-bottom: 3px;
 }
 .profile-email {
-    font-size: 20x;
-    margin-top: 20px;
-  }
-.profile-history .detail-amount {
-    text-transform: uppercase;
-    margin-top:  10px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+  font-size: 20x;
+  margin-top: 0px;
 }
-.profile-history .detail-title-user {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-    font-size: 30px;
-      
-}
-.profile-history .detail-amount-user {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+.profile-history-detail table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-.active {
-    visibility: visible;
-    font-family: 'Kanit';
-    font-size: 1.2em;
-    color: rgb(101, 101, 245);
-    font-weight: bold;
-  }
-.btn-profile {
-    position: absolute;
-    margin-top: 80px;
-    margin-left: 110px;
-    text-transform: uppercase;
-    font-family: 'Quicksand';
-    background-color: whitesmoke;
-    border: solid 1px rgb(28, 28, 230);
-    border-radius: 15px;
-    color: rgb(101, 101, 245);
-    outline: none;
-    padding: 0.5em 0.5em;
-  }
-  .btn-profile i {
-    margin-right: 10px;
-  }
-  .btn-profile:hover {
-    background-color: rgb(101, 101, 245);
-    border: solid 1px rgb(28, 28, 230);
-    color: whitesmoke;
-  }
-.container2 .balance h2 {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-      
+.profile-history-detail th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+  color: rgb(253, 103, 9);
+  background-color: #ffd3c6;
 }
-.container2 .balance h3 {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+
+.profile-history-detail tr:nth-child(even) {
+  background-color: #f8f3c8;
+}
+.profile-history-detail.detail-title {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+
+}
+.detail-title-title {
+  background-color: #ffc0b9;
+  text-align: left;
+}
+.detail-amount-month-deposit,
+.detail-amount-month-withdraw,
+.detail-amount-year,
+.detail-amount {
+border: 1px solid #dddddd;
+text-align: right;
+padding: 8px;
+font-weight: bold;
 }
 .logout_btn {
     width: 50%;

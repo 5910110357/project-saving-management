@@ -108,6 +108,8 @@ body {
 }
 .detail-amount-month-deposit,
 .detail-amount-month-withdraw,
+.detail-amount-month-borrow,
+.detail-amount-month-borrwpay,
 .detail-amount-year,
 .detail-amount {
   border: 1px solid #dddddd;
@@ -168,6 +170,7 @@ li {
   width: 180px;
   height: auto;
   object-fit: cover;
+  border-radius: 60px;
 }
 .list-menu .list-menu-img li img:hover {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);

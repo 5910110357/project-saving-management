@@ -17,32 +17,25 @@
             <h3>Saving Management System</h3>
             <h4>จองคิวเงินกู้</h4>
             <div class="balance">
-                <div class="profile-detail">
-                  <button
-                    type="button"
-                    class="btn btn-primary menu-order"
-                    onclick="listOrderButton()"
-                  >
-                    <i class="fas fa-list-ol"></i>ดูลำดับ
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary menu-order"
-                    onclick="formBotton()"
-                  >
-                    <i class="far fa-copy"></i>ขอกู้
-                  </button>
-                  <div class="order-number hide">
-                    <div class="order-number-title">
-                      <div class="order-number-layout">
-                        <h2 class="number"></h2>
-                        <p>ลำดับ</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
-                <br />
+              <div class="profile-history">
+                <h2>งบประมาณ</h2>
+                <table class="profile-history-detail">
+                    <tr>
+                        <th>รายการ</th>
+                        <th>จำนวนเงิน (บาท)</th>
+                    </tr>
+                    <tr>
+                      <td class="detail-title-title">งบประมาณเงินกู้ทั้งหมด</td>
+                      <td class="detail-amount-total" ></td>
+                  </tr>
+                  <tr>
+                      <td class="detail-title-title" >งบประมาณเงินกู้คงเหลือ</td>
+                      <td class="detail-amount"></td>
+                  </tr>
+                </table>
+              </div>
+              <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              <br />
             </div>
             <div class="details">
               <div class="menu">
@@ -81,7 +74,10 @@
                       <th scope="col">#</th>
                       <th scope="col">ชื่อ</th>
                       <th scope="col">นามสกุล</th>
+                      <th scope="col">จำนวนเงินที่จอง</th>
                       <th scope="col">เวลาจอง</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -89,14 +85,6 @@
                 <nav class="container-pagination">
                   <ul class="pagination pagination-md" id="pagination"></ul>
                 </nav>
-              </div>
-              <div class="order-form hide">
-                <label for="personal_id" class="label-name">เลขบัตรประชาชน</label>
-                <input type="text" placeholder="Enter ID Card" id="personal_id" />
-                
-                <label for="personal_id" class="label-name">จำนวนเงินที่ต้องการกู้</label>
-                <input type="text" placeholder="Enter total money" id="amount" />
-                <button onclick="submit()">Submit</button>
               </div>  
             </div>
        </div>

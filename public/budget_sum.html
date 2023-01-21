@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>budgets</title>
+    <link rel="stylesheet" href="/css/budget_sum.css">
+    <link href="font-awsome/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+  
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+       <div class="container2">
+            <h3>Saving Management System</h3>
+            <h4>สรุปงบประมาณ</h4>
+            <div class="balance">
+              <h1 class="profile-username"></h1>
+              <span class="profile-email"></span>
+              <div class="profile-history">
+                  <h2>งบประมาณ</h2>
+                  <table class="profile-history-detail">
+                      <tr>
+                          <th>รายการ</th>
+                          <th>จำนวนเงิน (บาท)</th>
+                      </tr>
+                      <tr>
+                          <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i> งบประมาณเดือนนี้</td>
+                          <td class="detail-title-title" ></td>
+                      </tr>
+                      <tr>
+                          <td class="detail-title">การฝาก</td>
+                          <td  class="detail-amount-month-deposit"></td>
+                      </tr>
+                      <tr>
+                          <td class="detail-title">การถอน</td>
+                          <td  class="detail-amount-month-withdraw"></td>
+                      </tr>
+                      <tr>
+                        <td class="detail-title">การกู้</td>
+                        <td  class="detail-amount-month-borrow"></td>
+                      </tr>
+                      <tr>
+                        <td class="detail-title">การชำระเงินกู้</td>
+                        <td  class="detail-amount-month-borrwpay"></td>
+                      </tr>
+                      <!--tr>
+                          <td class="detail-title-title" ><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือปีนี้</td>
+                          <td class="detail-amount-year" id="year"></td>
+                      </+tr-->
+                      <tr>
+                          <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือทั้งหมด</td>
+                          <td class="detail-amount"></td>
+                      </tr>
+      
+                  </table>
+                </div>
+              <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              <br />
+          </div>
+              <div class="details">
+              <div class="menu">
+                <div class="home" >
+                    <a href="home.html">หน้าหลัก</a>
+                </div>
+                <div class="trans" >
+                    <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="transaction" id="myTransaction">
+                      <a href="diposit.html">ฝากเงิน</a>
+                      <a href="withdraw.html">ถอนเงิน</a>
+                      <a href="signup.html">สมัครสมาชิก</a>
+                      <a href="borrow.html">กู้เงิน</a>
+                      <a href="borrow_pay.html">ชำระเงินกู้</a>
+                      <a href="budgets_loan.html">ปล่อยกู้</a>
+                    </div>
+                </div>
+                <div class="report">
+                  <button class="dropdown_report" onclick="dropdownReport()">รายงาน
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="menu_report" id="myReport">
+                    <a href="member.html">ข้อมูลสมาชิก</a>
+                    <a href="dividend.html">เงินปันผล</a>
+                    <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                    <a href="budget_sum.html">สรุปงบประมาณ</a>
+                    <a href="reportdiposit.html">รายการฝากถอน</a>
+                    <a href="">รายการกู้เงิน</a>
+                  </div>
+                </div>
+              </div> 
+              <div class="content">
+                <div id="myLinks"></div>
+                <div id="myLink" class="myLink-content">
+                  <div id="myYears"></div>
+                  <a id="January">มกราคม</a>
+                  <a id="February">กุมภาพันธ์</a>
+                  <a id="March">มีนาคม</a>
+                  <a id="April">เมษายน</a>
+                  <a id="May">พฤษภาคม</a>
+                  <a id="June">มิถุนายน</a>
+                  <a id="July">กรกฎาคม</a>
+                  <a id="August">สิงหาคม</a>
+                  <a id="September">กันยายน</a>
+                  <a id="October">ตุลาคม</a>
+                  <a id="November">พฤศจิกายน</a>
+                  <a id="December">ธันวาคม</a>
+                </div>
+                <div id="totolBudgets" >
+                  <div id="myYearss"></div>
+                  <div id="myMonth"></div>
+                  <table class="totolBudgets-content">
+                    <tr>
+                      <th>รายการ</th>
+                      <th>จำนวนเงิน (บาท)</th>
+                    </tr>
+                    <tr>
+                      <td class="totolBudgets_data">จำนวนเงินฝาก </td>
+                      <td class="totolBudgets_data_deposit"></td>
+                    </tr>
+                    <tr>
+                      <td class="totolBudgets_data">จำนวนเงินชำระเงินกู้</td>
+                      <td class="totolBudgets_data_pay"></td>
+                    </tr>
+                    <tr>
+                      <td class="totolBudgets_data">จำนวนเงินกู้คงเหลือเดือนที่แล้ว</td>
+                      <td class="totolBudgets_data_loanRemain"></td>
+                    </tr>
+                    <tr>
+                      <td class="totolBudgets_data">รวม</td>
+                      <td class="totolBudgets_data_total"></td>
+                    </tr>
+                    <tr>
+                      <td class="totolBudgets_data">จำนวนเงินที่ปล่อยกู้เดือนนี้</td>
+                      <td class="totolBudgets_data_total_loan"></td>
+                    </tr>
+                    <tr>
+                        <td class="totolBudgets_data">จำนวนเงินคงเหลือ</td>
+                        <td class="totolBudgets_total"></td>
+                    </tr>
+                    <tr>
+                        <td class="totolBudgets_data">จำนวนเงินถอน</td>
+                        <td class="totolBudgets_data_withdraw"></td>
+                    </tr>
+                    <tr>
+                        <td class="totolBudgets_data">จำนวนเงินคงเหลือสุทธิ</td>
+                        <td class="totolBudgets_total_sum"></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+                
+                <nav class="container-pagination">
+                  <ul class="pagination pagination-md" id="pagination"></ul>
+                </nav>
+                  
+                </div>
+                <!--button class="back" onclick="document.location='report.html'">หน้าหลัก</!--button-->
+              </div> 
+          </div>
+             
+            </div>
+      </div>
+
+      <script src="/dayjs.min.js"></script>
+      <script src="/th.js"></script>
+      <script src="/relativeTime.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+      <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+      <script>
+          var firebaseConfig = {
+              apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+              authDomain: "testproject-ff9d6.firebaseapp.com",
+              projectId: "testproject-ff9d6",
+              storageBucket: "testproject-ff9d6.appspot.com",
+              messagingSenderId: "902874923267",
+              appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+              measurementId: "G-GMTV6MGHV0"
+          };
+
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const db = firebase.firestore();
+          dayjs.extend(window.dayjs_plugin_relativeTime);
+          dayjs.locale('th');
+      </script>
+      <script src="/budget_sum.js"></script>
+  </body>
+</html>

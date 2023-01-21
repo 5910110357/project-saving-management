@@ -38,8 +38,9 @@ function signup() {
           amountDeposit: userDetail.amountDeposit,
           email: userDetail.email,
           password: userDetail.password,
-          userId:firebase.auth().currentUser.uid,
-          dividend: 0 * 1
+          //userId:firebase.auth().currentUser.uid,
+          dividend: 0 * 1,
+          status: 'active'
         };
   
         return db.doc(`/users/${userDetail.personal_id}`).set(userCredentials);
@@ -50,12 +51,12 @@ function signup() {
       .then((token) => {
         localStorage.setItem('user', JSON.stringify(token));
         window.alert('ลงทะเบียนเรียบร้อย');
-        window.location.href = '/home.html';
+        window.location.href = '/member.html';
       })
-      firebase.auth().createUserWithEmailAndPassword(email, password)
+      /*firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch((err) => {
         window.alert('Error : ' + err.message);
-      });
+      });*/
     console.log(userDetail);
   }
   const isEmpty = (string) => {
