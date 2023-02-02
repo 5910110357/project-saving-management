@@ -4,44 +4,13 @@ let total;
 let paginate;
 
 window.addEventListener('load', async function () {
-    const name = document.getElementsByClassName('profile-username');
-    const email = document.getElementsByClassName('profile-email');
-    const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
-    document.getElementById('form1').addEventListener('input', changeValueSearch);
-
     
-    setUserDetail(name, email, amountTotal);
-    initailUserTable();
-    await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
-    await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
-    await getYearsBudget()  //เงินรวมยอดรายปี
-    await getTotalBudget() //ยอดเงินรวมทั้งหมด
+    //setUserDetail(name, email, amountTotal);
+    //initailUserTable();
+    await getTotalBudgetQueue()
+    await getUserProfile();
 });
-  
 
-  function getProperty() {
-    const name = document.getElementsByClassName('profile-username');
-    const email = document.getElementsByClassName('profile-email');
-    const amount = document.getElementsByClassName('detail-amount');
-  
-    return { name, email, amount };
-  }
-  function setUserDetail(name, email, amount) {
-    if (!localStorage.FBIdToken) {
-      window.location.href = './login.html';
-    }
-    if (localStorage.AutenticatedUser && localStorage.budgets) {
-      const userDetail = JSON.parse(localStorage.AutenticatedUser);
-      const budget = JSON.parse(localStorage.budgets);
-      name[0].innerHTML = `${userDetail.firstName} ${
-        userDetail.lastName ? userDetail.lastName : ''
-      }`;
-      email[0].innerHTML = `${userDetail.email} `;
-      amount[0].innerHTML = `${budget.total} บาท`;
-    } else {
-      window.location.href = './login.html';
-    }
-  }
   
   
   function logout() {
@@ -50,45 +19,61 @@ window.addEventListener('load', async function () {
     window.location.href = '/login.html';
   }
   
- 
-async function  CheckPersonalNumber(event) {
-  let personal_id = document.getElementById('personal_id').value;
-  if (event.key === "Enter") {
-     if(personal_id.length != 13) {
-      alert('กรุณากรอกข้อมูลให้ถูกต้อง');
-    }
-    else if (personal_id.length = 13) {
-      await getUserValueTable();
-      
-   }
+ async function getUserProfile() {
+  let personal = localStorage.getItem("pofile");
+  let personalsId = JSON.parse(personal);
   
-  }  
-}
+  console.log(personalsId);
+  document.getElementById('personal_id').value=personalsId;
+  await getUserValueTable();
+  
 
-  async function getUserValueTable() {
+}  
+async function getUserValueTable() {
     let personal_id = document.getElementById('personal_id').value;
-    let collection = await db.collection('users').doc(personal_id).get();
-    if(collection.exists) {
-      console.log("data=", collection.data());
-      console.log("name=", collection.data().firstName);  
-    }
-    else {
-      return {};
-    }
-    let userDetail = collection.data();
-    //firstName = collection.data().firstName;
-    let firstName = document.getElementById('first_name').value=userDetail.firstName;
-    let lastName = document.getElementById('last_name').value=userDetail.lastName;
-    let amount = document.getElementById('amount').value=userDetail.amountDeposit;
-    console.log(firstName);
-    console.log(personal_id);
-
-    return {userDetail, personal_id, firstName,lastName,amount};
+    let firstName = document.getElementById('first_name');
+    let lastName = document.getElementById('last_name');
+   try{
+    let user  
+    = await db.collection('users')
+              .doc(personal_id)
+              .get()
+    let dataFirstname = user.data().firstName ;
+    let dataLastname = user.data().lastName ;
+    console.log(dataFirstname);
+    console.log(dataLastname);
+    ///////////////////
+    let money_loan 
+    = await db.collection('queues')
+    .where("personalId", "==", personal_id)
+    .get()
+    let userMoney;
+    let dateLoan;
+    for(const collection_loan of money_loan.docs) {
+      userMoney = collection_loan.data().amount * 1
+      dateLoan = collection_loan.data().createdAt
+    console.log(dateLoan);
+    console.log(userMoney);
   }
-
+    console.log(dataFirstname);
+    console.log(dataLastname);
+    console.log(userMoney);
+    firstName.value = dataFirstname;
+    lastName.value = dataLastname;
+    let amount = document.getElementById('amount').value = userMoney;
+    //amount.value = userMoney;
+    let amount_borrow = document.getElementById('amount_borrow').value;
+    //amount_borrow.value;
+    return { personal_id, amount,amount_borrow,dateLoan,money_loan};
+   }
+   
+   catch (error) {
+    console.log(error);
+  }
+}
   async function submit() {
     let userDetail = await getUserValueTable();
-    let errors = validation(userDetail);
+    //let errors = validation(userDetail);
     let updateData = {};
     let updateTotal = {};
     let date = new Date();
@@ -96,93 +81,92 @@ async function  CheckPersonalNumber(event) {
     //let year = 2021;
 
   
-    if (!errors.valid) {
+    /*if (!errors.valid) {
       let textError = '\n';
       for (const error in errors.errors) {
         textError += errors.errors[error] + '\n';
       }
       window.alert('Error : ' + textError);
       return;
-    }
-  
-    
-  
+    }*/
     const newTransaction = {
       personalId: userDetail.personal_id,
-      type: 'deposited',
-      amount: userDetail.amount * 1,
+      type: 'borrow',
+      amount: userDetail.amount_borrow *1,
+      amount_total: (userDetail.amount_borrow*0.25) *1,
       date: new Date().toISOString()
     };
    console.log(userDetail);
-   
-    const userDocument = db.doc(`/users/${userDetail.personal_id}`);
-    //const userDocument = userDetail
-    //console.log(userDocument);
-    const budgetsDoc = db.doc(`/budgets/${year}`);
-    const budgetYear = { 
-      total: 0 + userDetail.amount * 1,
-      updatedAt: new Date().toISOString()
-    };
+
+   const newBorrow = {
+    personalId: userDetail.personal_id,
+    status: 'active',
+    amount_loan: userDetail.amount,
+    amount: userDetail.amount_borrow *1,
+    amount_payment: userDetail.amount_borrow*1  + (userDetail.amount_borrow*0.25) *1,
+    total_amount_pay: userDetail.amount_borrow*1 + (userDetail.amount_borrow*0.25) *1,
+    date: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    dateLoan: userDetail.dateLoan
+    
+  };
+  //db.collection('transactions').add(newTransaction);
+  //db.collection('borrows').add(newBorrow);
+  const checkId 
+  = await db.collection('borrows')
+  .where('personalId', '==', userDetail.personal_id)
+  //.where('status', '==', 'active')
+  .get()
+  let checkIds;
+  let checkStatus;
+  for(const collection_checkIds of checkId.docs) {
+    checkIds = collection_checkIds.data().personalId;
+    checkStatus = collection_checkIds.data().status;
+  }
+  console.log(checkIds);
+  if(checkIds == userDetail.personal_id ) {
+    if(checkStatus == 'active') {
+      console.log(checkStatus);
+      alert("ท่านมีรายชื่อในการกู้มาก่อน โปรดตรวจสอบรายการกู้ของท่าน");
+    }
+    else {
+      console.log(checkStatus);
+      alert("ปิดบัญชีแล้ว"); //กู้ได้
+      db.collection('borrows').add(newBorrow);
+      db.collection('transactions').add(newTransaction);
+    }
+    
+  }
+  else {
+    //alert("ทำรายการได้"); //กู้ได้เลย
+    db.collection('borrows').add(newBorrow);
+    db.collection('transactions').add(newTransaction);
+  }
+  console.log(userDetail.personal_id);
+  let collection_checkloan;
+    for(const collection of userDetail.money_loan.docs) {
+      collection_checkloan = collection.id;
+
+    }
+  console.log(collection_checkloan);
   
-    userDocument
-      .get()
-      .then((data) => {
-        if (data.exists) {
-          let userData = {};
-          userData = data.data();
-          return userDocument.update({
-            amount: userData.amount + userDetail.amount * 1,
-            dividend: (userData.amount + userDetail.amount* 1) * 0.1 ,
-            updatedAt: new Date().toISOString()
-          });
-        }
-        window.alert(`ไม่ปรากฎข้อมูลหมายเลข ${userDetail.personal_id}`);
-      })
-      .then(() => {
-        console.log(year);
-        return db.doc(`/budgets/${year}`).get();
-      })
-      .then((data) => {
-        if (data.exists) {
-        //userData = data.data();
-          return budgetsDoc.update({
-            total: data.data().total + userDetail.amount * 1,
-            updatedAt: new Date().toISOString()
-          });
-       } 
-       return  db.doc(`/budgets/${year}`).set(budgetYear);
-      })
-      
-      .then(() => {
-        return userDocument.get();
-      })
-      .then((data) => {
-        updateData = data.data();
-        updateData.id = data.id;
-  
-        return db.collection('transactions').add(newTransaction);
-      })
-      .then(() => {
-        return budgetsDoc.get();
-      })
-      .then((data) => {
-        updateTotal = data.data();
-        updateTotal.id = data.id;
-        localStorage.removeItem('budgets');
-        localStorage.setItem('budgets', JSON.stringify(updateTotal));
-       
-      })
-      
+  const updatequeue = db.doc(`/queues/${collection_checkloan}`);
+  updatequeue 
+    .delete()//ไว้ลบคิว
+    /*.then(() => {
+      alert("ทำรายการสำเร็จ");
+    })*/
+    
       .then(() => {
         let element = document.getElementById('table');
-        let { name, email, amount } = getProperty();
+        //let { name, email, amount } = getProperty();
   
-        setUserDetail(name, email, amount);
+        //setUserDetail(name, email, amount);
         element.classList.add('set_table');
   
         // set Value in table
-        setTable(updateData);
-  
+        setTable(newBorrow);
+        console.log(newBorrow);
         // Reset fields
         resetFields();
       })
@@ -205,11 +189,12 @@ async function  CheckPersonalNumber(event) {
     let personal_id = document.getElementById('personal_id');
     let firstName = document.getElementById('first_name');
     let lastName = document.getElementById('last_name');
-    let amount = document.getElementById('amount');
-  
+    let amountLoan = document.getElementById('amount');
+    let amount = document.getElementById('amount_borrow');
     personal_id.value = '';
     firstName.value = '';
     lastName.value = '';
+    amountLoan.value = '';
     amount.value = '';
   }
   
@@ -219,16 +204,16 @@ async function  CheckPersonalNumber(event) {
     let row_length = table.rows.length;
     console.log(row_length);
     let date = `${dayjs(userData.date).format('DD/MM/YYYY')}`;
-    let username = `${userData.firstName} ${userData.lastName}`;
-    let personal_id = `${userData.id}`;
-    let amountDeposit = `${userData.amountDeposit}`;
-    let amount = userData.amount;
+    //let username = `${userData.firstName} ${userData.lastName}`;
+    let personal_id = `${userData.personalId}`;
+    let amountBorrow = `${userData.amount}`;
+    let amountPayment = userData.amount_payment;
 
     if(row_length > 7) {
       table.deleteRow(7);
     }
       
-    let newTable = [date, username, personal_id, amountDeposit, amount];
+    let newTable = [date, personal_id, amountBorrow, amountPayment];
     newTable.forEach((item) => {
       var td = document.createElement("td");
       var text = document.createTextNode(item);
@@ -267,7 +252,7 @@ async function  CheckPersonalNumber(event) {
   
     if (number.length != 13) {
       //return false;
-      alert("no");
+      //alert("no");
     }
     let sum = 0, j = 0, check, lastDigit;
     for (let i = 13; i >= 2; i--) {
@@ -287,7 +272,7 @@ async function  CheckPersonalNumber(event) {
     return false;
   }; 
   
-  const isNumber = (number) => {
+  /*const isNumber = (number) => {
     const regEx = /^\d+$/;
     if (number.match(regEx) && number * 1 >= 100) {
       return true;
@@ -302,7 +287,7 @@ async function  CheckPersonalNumber(event) {
     } else {
       return false;
     }
-  };
+  };*/
 
  // list
  
@@ -324,7 +309,7 @@ function initailUserTable(perPage = 8) {
   let transactions = [];
 
   db.collection('transactions')
-    .where('type', '==', 'deposited')
+    .where('type', '==', 'borrow')
     .get()
     .then((snap) => {
       total = snap.size;
@@ -334,7 +319,7 @@ function initailUserTable(perPage = 8) {
 
       return db
         .collection('transactions')
-        .where('type', '==', 'deposited' )
+        .where('type', '==', 'borrow' )
         .orderBy('date', 'desc')
         .limit(`${perPage}`)
         .get();
@@ -361,7 +346,7 @@ function initailUserTable(perPage = 8) {
       }
     })
     .then(() => {
-      insertTable(transactions, 0);
+      //insertTable(transactions, 0);
     })
     .catch((err) => {
       console.error(err);
@@ -389,7 +374,7 @@ function setListElement(el, a, i) {
   a.innerText = `${i}`;
   a.href = '#';
   el.append(a);
-  document.getElementById('pagination').appendChild(el);
+  //document.getElementById('pagination').appendChild(el);
 }
 
 function clearListPaginationElement() {
@@ -404,7 +389,7 @@ function queryFromFirbaseWithOffset(i) {
     let perPage = 8;
 
     db.collection('transactions')
-      .where('type', '==', 'deposited')
+      .where('type', '==', 'borrow')
       .orderBy('date', 'desc')
       .get()
       .then((data) => {
@@ -413,7 +398,7 @@ function queryFromFirbaseWithOffset(i) {
       })
       .then(() => {
         db.collection('transactions')
-          .where('type', '==', 'deposited')
+          .where('type', '==', 'borrow')
           .orderBy('date', 'desc')
           .startAt(last)
           .limit(8)
@@ -454,9 +439,9 @@ function insertTable(transactions, id) {
     .getElementsByTagName('tbody')[0];
 
   for (let i = 0; i < transactions.length; i++, id++) {
-    /*let icon = document.createElement('i');
+    let icon = document.createElement('i');
     icon.classList.add('far');
-    icon.classList.add('fa-eye'); */
+    icon.classList.add('fa-eye'); 
     row = tbodyRef.insertRow(tbodyRef.rows.length);
     cell1 = row.insertCell(0);
     cell2 = row.insertCell(1);
@@ -545,109 +530,28 @@ window.onclick = function(e) {
 }
 
 //Budgets
-async function getMonthlyBudgetDeposit() {
-  const [startOfMonthDate, endOfMonthDate] =  getDate()
-
-  try {
-    const collections 
-    = await  db.collection('transactions')
-               .where("type", "==", "deposited")
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sum = 0
-    const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
-    for(const collection of collections.docs) {
-      sum += collection.data().amount * 1
-      //console.log(collection.data().date.split("T")[0]);
-      //console.log(sum);
-    }
-    amountMonth[0].innerHTML  = sum 
-    //console.log("transactions", collection.docs[0].data());
-  } 
-  
-  catch (error) {
-    console.log(error);
-  }
-}
-async function getMonthlyBudgetWithdraw() {
-  const [startOfMonthDate, endOfMonthDate] =  getDate()
-
-  try {
-    const collections 
-    = await  db.collection('transactions')
-               .where("type", "==", "withdrawn")
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sum = 0
-    const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
-    for(const collection of collections.docs) {
-      sum += collection.data().amount_withdraw * 1
-      //console.log(collection.data().date.split("T")[0]);
-      //console.log(sum);
-    }
-    amountMonth[0].innerHTML  = sum 
-    //console.log("transactions", collection.docs[0].data());
-  } 
-  
-  catch (error) {
-    console.log(error);
-  }
-}
-
-function getDate() {
-
-  // Get moth and years
-  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
-
-  const [month, day, year] = dateString.trim().split(",")[0].split("/")
-
-  const totalDays =  new Date(year, month, 0).getDate()
-
-  return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
-
-}
-
-async function getYearsBudget() {
-  const amountYear = document.getElementsByClassName('detail-amount-year'); //ยอดเงินปี
-
-  let date = new Date();
-  let year = date.getFullYear();
+async function getTotalBudgetQueue(){
+  const amountTotal = document.getElementsByClassName('detail-amount-total'); //ยอดเงินกู้ทั้งหมด
+  const amount = document.getElementsByClassName('detail-amount'); //ยอดเงินกู้คงเหลือ
+  //let date = new Date();
+  //let year = date.getFullYear();
   //let year = 2019
   try {
-    const collections = await db.doc(`/budgets/${year}`).get();
-    let sum = collections.data().total * 1;
-    console.log(year);
-    
+    const collections 
+    = await db.collection('money_borrow')
+    .orderBy("date", "desc")
+    .get()
+    let sumTotal = collections.docs.map(doc => doc.data().amount_total);
+    let sum = collections.docs.map(doc => doc.data().amount);
       //console.log(collection.data().date.split("T")[0]);
-      console.log(sum);
+      console.log(sumTotal[0]);
     
-    amountYear[0].innerHTML  = sum + " บาท"
+      amountTotal[0].innerHTML  = sumTotal[0] + " บาท"
+      amount[0].innerHTML  = sum[0] + " บาท"
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
     console.log(error);
   }
-
-}
-
-async function getTotalBudget() {
-  const amountTotal = document.getElementsByClassName('detail-amount'); //ยอดเงินรวมทั้งหมด
-
-  try {
-    const collections = await  db.collection('budgets').get()
-    let sum = 0
-
-    for(const collection of collections.docs) {
-      sum += collection.data().total * 1
-      //console.log(sum);
-    }
-    amountTotal[0].innerHTML  = sum + " บาท"
-  } 
-  catch (error) {
-    console.log(error);
-  }
-
 }
   

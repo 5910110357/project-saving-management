@@ -84,7 +84,7 @@ async function submit() {
   }
   
   db.collection('borrows')
-    .where('userId', '==', userDetail.personal_id)
+    .where('personalId', '==', userDetail.personal_id)
     .get()
     .then((data) => {
       if (!data.empty) {
@@ -104,12 +104,15 @@ async function submit() {
       } 
     })
     .then(() => {
-      return budgetQ.get();
+      return budgetQ
+      .orderBy("date", "desc")
+      .get();
     })
      //return db.collection('money_borrow').get();
     .then((data) => {
-        //console.log(budgetQ.data());
+        console.log(budgetQ.doc(data.docs[0].id));
         return budgetQ.doc(data.docs[0].id).update({
+          
           amount: data.docs[0].data().amount - userDetail.amount * 1,
           date: new Date().toISOString()
         });
@@ -205,21 +208,22 @@ async function getTotalBudgetQueue(){
   //let year = 2019
   try {
     const collections 
-    = await db.collection('money_borrow').get();
+    = await db.collection('money_borrow')
+    .orderBy("date", "desc")
+    .get()
     let sumTotal = collections.docs.map(doc => doc.data().amount_total);
     let sum = collections.docs.map(doc => doc.data().amount);
       //console.log(collection.data().date.split("T")[0]);
-      console.log(sumTotal);
+      console.log(sumTotal[0]);
     
-      amountTotal[0].innerHTML  = sumTotal + " บาท"
-      amount[0].innerHTML  = sum + " บาท"
+      amountTotal[0].innerHTML  = sumTotal[0] + " บาท"
+      amount[0].innerHTML  = sum[0] + " บาท"
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
     console.log(error);
   }
 }
-
 function getUserProfile(user) {
   const pofile = JSON.parse(user);
   const name = document.getElementById('user-name');
@@ -317,14 +321,19 @@ async function cancel() {
       //console.log(sum);
       amountids = collectionids.data().amount;
     }
-    
-    const userQueue = await db.collection('money_borrow').get();
+    const [startOfMonthDate, endOfMonthDate] =  getDate()
+    const userQueue 
+    = await db.collection('money_borrow')
+              .where("date", ">=", startOfMonthDate )
+              .where("date", "<=", endOfMonthDate )
+              .get();
     for(const collectionuserQueue of userQueue.docs) {
       console.log(collectionuserQueue.data().amount);
       //console.log(sum);
       amountQueue = collectionuserQueue.data().amount;
       console.log(amountQueue);
       console.log(amountids);
+      console.log(collectionuserQueue.data().date);
       db.collection('money_borrow').doc(collectionuserQueue.id)
         .update({
           amount: amountids + amountQueue * 1,
@@ -337,7 +346,7 @@ async function cancel() {
       amountids = collectionids.data().amount;
       db.collection('queues').doc(collectionids.id).delete()
         .then(() => {
-          alert("ลบสำเร็จ");
+          alert("ยกเลิกสำเร็จ");
           window.location.href = './booK_a_loan.html'
         })
          //return db.collection('money_borrow').get();
@@ -371,4 +380,18 @@ async function cancel() {
       
      
   }
+}
+function getDate() {
+
+  // Get moth and years
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
+
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
+
+  const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
+
+  return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
+
 }

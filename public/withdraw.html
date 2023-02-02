@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>withdraw</title>
+    <title>ถอนเงิน</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/withdraw.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
@@ -24,11 +24,11 @@
               <div class="profile-history">
                 <h2>งบประมาณ</h2>
                 <table class="profile-history-detail">
-                    <tr>
-                        <th>รายการ</th>
-                        <th>จำนวนเงิน (บาท)</th>
-                    </tr>
-                    <tr>
+                  <tr>
+                      <th>รายการ</th>
+                      <th>จำนวนเงิน (บาท)</th>
+                  </tr>
+                  <tr>
                       <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i> งบประมาณเดือนนี้</td>
                       <td class="detail-title-title" ></td>
                   </tr>
@@ -41,14 +41,18 @@
                       <td  class="detail-amount-month-withdraw"></td>
                   </tr>
                   <tr>
-                      <td class="detail-title-title" ><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือปีนี้</td>
-                      <td class="detail-amount-year" id="year"></td>
+                    <td class="detail-title">การกู้</td>
+                    <td  class="detail-amount-month-borrow"></td>
+                  </tr>
+                  <tr>
+                    <td class="detail-title">การชำระเงินกู้</td>
+                    <td  class="detail-amount-month-borrwpay"></td>
                   </tr>
                   <tr>
                       <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือทั้งหมด</td>
                       <td class="detail-amount"></td>
                   </tr>
-                </table>
+              </table>
               </div> 
               <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
               <br />

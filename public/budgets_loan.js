@@ -517,6 +517,12 @@ async function submit(year, m, money, sumMoneyLoan, mNum) {
     amount: sumMoneyLoan * 1,
     date: new Date().toISOString()
   };
+  const newTransaction2 = {
+    personalId: 'admin',
+    type: 'loan',
+    amount: amount_loan * 1,
+    date: new Date().toISOString()
+  };
   const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,mNum)
   const today = new Date(); //"July 21, 1983 01:15:00"
   console.log(today);
@@ -555,6 +561,7 @@ async function submit(year, m, money, sumMoneyLoan, mNum) {
     console.log(monthToday);
     db.collection('money_borrow').add(newMoneyBorrow);
     db.collection('transactions').add(newTransaction);
+    db.collection('transactions').add(newTransaction2);
     const budgetsDoc = db.doc(`/budgets/${testyear}`);
     budgetsDoc
       .get()

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รายละเอียดการกู้</title>
+    <link rel="stylesheet" href="/css/list_borrow_user.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link href="font-awsome/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+       <div class="container2">
+            <h3>Saving Management System</h3>
+            <div class="balance">
+                  <div class="Profile-User">
+                    <div class="user-profile-card-details">
+                        <div class="user-profile-card-title" >
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">ชื่อ-สกุล:</p>
+                          <p id="user-name"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เลขบัตรประชาชน:</p>
+                          <p id="user-personal-number"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">วันที่เข้าร่วม:</p>
+                          <p id="user-date"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">จำนวนเงินฝากสะสม:</p>
+                          <p id="user-amount"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">ที่อยู่:</p>
+                          <p id="user-address"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เบอร์ติดต่อ:</p>
+                          <p id="user-telnumber"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">เพศ:</p>
+                          <p id="user-sex"></p>
+                        </div>
+                        <div class="user-profile-card-details-label">
+                          <p class="user-name-label">จำนวนเงินปันผล:</p>
+                          <p id="user-dividend"></p>
+                        </div>
+                      </div>
+                  </div>
+                <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+                <br />
+            </div>
+            <div class="details">
+                <div class="menu">
+                  <div class="home" >
+                      <a href="home.html">หน้าหลัก</a>
+                  </div>
+                  <div class="trans" >
+                      <button class="dropdown" onclick="dropdown()">เมนู
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="transaction" id="myTransaction">
+                        <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                        <a href="list_dw_user.html">รายการฝากถอน</a>
+                        <a href="list_borrow_user.html">รายการกู้เงิน</a>
+                        <a href="">ข้อมูลสมาชิก</a>
+                      </div>
+                  </div>
+                </div> 
+                <div class="content">
+                  <p class="user-history-borrow">รายละเอียดการกู้</p>
+                  <div class="user-history-borrow-details">
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">ชื่อ-สกุล:</p>
+                      <p id="borrow-name"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">เลขบัตรประชาชน:</p>
+                      <p id="borrow-personal-number"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">เบอร์ติดต่อ:</p>
+                      <p id="borrow-telnumber"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">วันที่กู้เงิน:</p>
+                      <p id="borrow-date"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">จำนวนเงินกู้:</p>
+                      <p id="borrow-amount"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">จำนวนเงินที่ต้องชำระ:</p>
+                      <p id="borrow-amount_payment"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">จำนวนเงินค้างชำระ:</p>
+                      <p id="borrow-total_amount_pay"></p>
+                    </div>
+                    <div class="user-history-borrow-details-label">
+                      <p class="borrow-name-label">สถานะ:</p>
+                      <p id="borrow-status"></p>
+                    </div>
+                  </div>
+                  </br>
+                  <button class="btn-list" onclick="listtransactions()">
+                    <i class="fas fa-stream"></i>รายการ
+                  </button>
+                </div>
+                <div class="list-menu hide">
+                    <table class="table" id="myTable"> 
+                      <thead>
+                        <tr>
+                          <th>วันที่</th>
+                          <th>ประเภท</th>
+                          <th>จำนวนเงิน</th>
+                          <th>จำนวนเงินคงเหลือ</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                    <nav class="container-pagination">
+                      <ul class="pagination pagination-md" id="pagination"></ul>
+                    </nav>
+                </div>  
+            </div>
+        </div>
+    </div>
+ 
+    <script src="/dayjs.min.js"></script>
+    <script src="/th.js"></script>
+    <script src="/relativeTime.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('th');
+    </script>
+    <script src="/list_borrow_user.js"></script>
+
+</body>
+</html>

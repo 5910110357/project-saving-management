@@ -8,152 +8,88 @@
     font-family: 'Kanit';
 }
 body {
-  width: 100%;
-  height:auto;
-  padding: 30px 30px;
-  background: url(../img/bg.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  
+    width: 100%;
+    height:auto;
+    padding: 30px 30px;
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    
 }
 
 .container {
-  float: left;
-  width: 100%;
-  height:100%;
-  padding: 13px 25px;
-  border-radius: 70px;
-  background-color: antiquewhite;
+    float: left;
+    width: 100%;
+    height:100%;
+    padding: 13px 25px;
+    border-radius: 70px;
+    background-color: antiquewhite;
 }
 
 .container .container2 {
-  float: left;
-  width: 100%;
-  height:auto;
-  border-radius: 50px;
-  text-align:center;
-  padding: 30px;
-  background-color: white;
-  text-align: center;
-}
-.container2 {
-    max-width: 1270px;
-    height: 600px;
+    float: left;
+    width: 100%;
+    height:auto;
     border-radius: 50px;
-    padding:5px 5px;
-    margin-top:  10px;
-    margin-left: 0px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    outline: none;
-    color: black;
+    text-align:center;
+    padding: 30px;
     background-color: white;
+    text-align: center;
 }
 .container2 h3 {
-  font-family: 'Kanit';
-  text-transform: uppercase;
-  margin-top:  -15px;
-  color: rgb(255, 0, 230);
-  margin-right: 800px;
-  font-size: 15px;
-  padding: 5px 10px;
-}
-.container2 h4 {
-  font-family: 'Kanit';
-  text-transform: uppercase;
-  margin-top:  -10px;
-  color: rgb(4, 0, 255);
-  margin-right: 940px;
-  font-size: 25px;
-  padding: 5px 10px;
-  font-weight: bold;
+    font-family: 'Kanit';
+    text-transform: uppercase;
+    margin-top:  -10px;
+    color: rgb(255, 0, 230);
+    margin-right: 1090px;
+    font-size: 15px;
+    padding: 5px 10px;
 }
 .balance {
-  float: left;
-  width: 30%;
-  height:100%; 
-  padding: 30px 20px;
-  border-radius: 70px;
-  background-color: #fef2f2;
-  overflow: hidden;
-  
+    float: left;
+    width: 30%;
+    height:100%; 
+    padding: 40px;
+    border-radius: 70px;
+    background-color: #fef2f2;
+    overflow: hidden;
+    
 }
 .details {
-  float: left;
-  width: 70%;
-  height:80%;
-  padding: 40px;
-  border-radius: 70px; 
-  background-color: #fae2e2;
-
-}
+    float: left;
+    width: 70%;
+    height:80%;
+    padding: 40px;
+    border-radius: 70px; 
+    background-color: #fae2e2;
+  
+  }
 .balance h1 {
-  font-family: 'Kanit';
-  text-transform: uppercase;
-  margin-top:  0px;
-  color: rgb(1, 1, 1);  
-}
-.profile-history h2 {
-color: rgb(0, 55, 255);
-margin-top: 10px;
-margin-bottom: 3px;
-}
-.profile-email {
-  font-size: 20x;
-  margin-top: 0px;
-}
-.profile-history-detail table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+    font-family: 'Kanit';
+    text-transform: uppercase;
+    margin-top:  0px;
+    color: rgb(1, 1, 1);  
 }
 
-.profile-history-detail th {
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-  color: rgb(253, 103, 9);
-  background-color: #ffd3c6;
-}
-
-.profile-history-detail tr:nth-child(even) {
-  background-color: #f8f3c8;
-}
-.profile-history-detail.detail-title {
-border: 1px solid #dddddd;
-text-align: left;
-padding: 8px;
-
-}
-.detail-title-title {
-  background-color: #ffc0b9;
-  text-align: left;
-}
-.detail-amount-total,
-.detail-amount  {
-border: 1px solid #dddddd;
-text-align: right;
-padding: 8px;
-font-weight: bold;
-}
 .logout_btn {
-  width: 50%;
-  padding: 12px 10px;
-  margin-right: 10px;
-  margin-top: 60px;
-  float:right;
-  border-radius: 15px;
-  outline: none;
-  background-color: #f50303;
-  color: aliceblue;
-  border: none;
-  text-transform: uppercase;
-  font: bold 'Montserrat' 2em;
-}
-.logout_btn:hover {
-  background-color: rgb(245, 160, 160);
-}
-.content .btn-list {
+    width: 50%;
+    padding: 12px 10px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+    float:right;
+    border-radius: 15px;
+    outline: none;
+    background-color: #f50303;
+    color: aliceblue;
+    border: none;
+    text-transform: uppercase;
+    font: bold 'Montserrat' 2em;
+  }
+  .logout_btn:hover {
+    background-color: rgb(245, 160, 160);
+  }
+
+  .content .btn-list {
     margin-top: -37px;
     margin-right: auto;
     text-transform: uppercase;
@@ -201,26 +137,70 @@ font-weight: bold;
   .hide {
     display: none;
   }
-
-.logout_btn {
-  width: 50%;
-  padding: 12px 10px;
-  margin-right: 10px;
-  margin-bottom: 0px;
-  float:right;
-  border-radius: 15px;
-  outline: none;
-  background-color: #f50303;
-  color: aliceblue;
-  border: none;
-  text-transform: uppercase;
-  font: bold 'Montserrat' 2em;
-}
-.logout_btn:hover {
-  background-color: rgb(245, 160, 160);
-}
-
-.menu {
+  .Profile-User .user-profile-card-title i {
+    font-size: 2em;
+    background-color: rgb(255, 232, 232);
+    padding: 0.25em 0.25em;
+    border-radius: 10px;
+    
+  }
+  .Profile-User {
+    width: 100%;
+    height: 50%;
+    /* background-color: rgb(160, 252, 252); */
+    border-radius: 20px;
+    padding: 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    float: top;
+  }
+  
+.Profile-User .user-profile-card-details {
+    width: 100%;
+    margin-top: 0em;
+    padding: 0em 0em;
+  }
+  .Profile-User,
+  .user-profile-card-details,
+  .user-profile-card-details-label {
+    border-radius: 20px;
+    background-color: rgba(255, 232, 232, 0);
+    padding: 0.3em 0.1em;
+    margin-top: -0.5em;
+    float: top;
+  }
+  .user-profile-card-details-label p {
+    margin: 10px;
+    font-family: 'Kanit';
+    font-weight: bold;
+    font-size: 15px;
+  }
+  
+  .user-profile-card-details-label {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: left;
+  }
+  .user-profile-card-details-label {
+    position: relative;
+  }
+  #user-name,
+  #user-personal-number,
+  #user-date,
+  #user-amount, 
+  #user-address,
+  #user-telnumber,
+  #user-sex,
+  #user-dividend{
+    color: blueviolet;
+    position: absolute;
+    left: 45%;
+    opacity: 1;
+    font-size: 15px;
+  }
+  .menu {
     margin-left: -20px;
     width: 30%;
     height: 40px;
@@ -298,60 +278,14 @@ font-weight: bold;
 .show {
   display: block;
 }
-.menu .report {
-  width: 220px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 390px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
-  background-color: #8499f7;
-  overflow: hidden;
-}
-.report .dropdown_report {
-cursor: pointer;
-font-size: 20px;  
-border: none;
-outline: none;
-color: white;
-padding: 5px 5px;
-width: 120px;
-height: 40px;
-border-radius: 30px;
-background-color: inherit;
-font-family: 'Kanit';
-background-color: #8499f7;
-}
 
-.navbar a:hover, .trans:hover .dropdown_report, .dropdown_report:focus {
+
+.navbar a:hover, .trans:hover  {
   background-color:  #4767f4;
   border-radius: 30px;
 
 }
 
-.menu_report {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.menu_report a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.menu_report a:hover {
-  background-color: rgb(182, 221, 252);
-}
 
 .content {
     width: 100%;
@@ -394,8 +328,7 @@ background-color: #8499f7;
   .groups-field .group .label-name {
     display: block;
 }
-  .groups-field .group input,
-  #personal_id{
+  .groups-field .group input {
     width: 100%;
     box-sizing: border-box;
     border: none;
@@ -431,10 +364,14 @@ background-color: #8499f7;
     padding: 0.5em 0.5em;
     border: 1px solid rgb(148, 149, 156);
   }
-  
+table th {
+  text-align: center;
+  background-color: #eec3c3;
+  color: #4767f4;
+}
  table tbody tr th {
-    background-color: #F5C6C6;
-    color: rgb(5, 5, 5);
+    background-color: #eec3c3;
+    color: rgb(11, 11, 11);
   }
 
  table tbody tr th,
@@ -472,7 +409,16 @@ background-color: #8499f7;
 .set_table {
     visibility: visible;
   }
-  @media only screen and (max-width: 800px) {
+  .user-history-borrow {
+    margin: 0px;
+    font-family: 'Kanit';
+    font-weight: bold;
+    font-size: 20px;
+    color: #f44747;
+  }
+  
+  /*respon*/
+  @media only screen and (max-width: 1000px) {
     .container {
       width: 100%;
       
@@ -484,55 +430,69 @@ background-color: #8499f7;
       width: 80%;
       padding: 0;
     }
-    .container2 .details {
-      width: 80%;
-      margin-top: 50px;
-    }
-    .menu .trans {
-      width: 100px;
-      height: 35px;
-      margin-left: 7em; 
-    }
-    .trans .dropdown {
-      cursor: pointer;
-      font-size: 15px; 
+    .container2 .balance {
+        width: 80%;
+        padding: 0;
+      }
+      .container2 .details {
+        width: 80%;
+        margin-top: 50px;
+      }
+      .menu .trans {
+        width: 100px;
+        height: 35px;
+        margin-left: 7em; 
+      }
+      .trans .dropdown {
+        cursor: pointer;
+        font-size: 15px; 
+        
+      }
       
-    }
-    .menu .report {
-      width: 100px;
-      height: 35px;
-      margin-left: 15em; 
-      margin-top: -2.5em;
-    }
-    .report .dropdown_report {
-      cursor: pointer;
-      font-size: 15px;
-    }
-    .home a {
-      text-transform: uppercase;
-      margin-right:  -2em;
-      color: rgb(3, 3, 3);
-      font-size: 17px;
-    }
-    .groups-field .group .label-name {
-      font-size: 12px;
-      padding: 0;
-    }
-    .logout_btn {
-      width: 30%;
-    }
+      .home a {
+        text-transform: uppercase;
+        margin-right:  -2em;
+        color: rgb(3, 3, 3);
+        font-size: 17px;
+      }
+      .groups-field .group .label-name {
+        font-size: 12px;
+        padding: 0;
+      }
+      .logout_btn {
+        width: 30%;
+      }
   }
   @media only screen and (max-width: 500px) {
-    .balance , .details {
+    .balance , .list-menu {
       width: 80%;
     }
+    .list-menu-img {
+      overflow-y: scroll;
+      width: 100%;
+      height: 100%;
+    }
+    #user-name,
+  #user-personal-number,
+  #user-date,
+  #user-amount, 
+  #user-address,
+  #user-telnumber,
+  #user-sex,
+  #user-dividend{
+    font-size: 12px;
+  }
+  .user-profile-card-details-label p {
+    font-size: 12px;
+  }
   
   }
+  @media only screen and (max-width: 1400px) {
+    .list-menu .list-menu-img li img {
+      width: 190px;
+    }
+  }
 
-
-
-
-
-
-
+  
+  
 

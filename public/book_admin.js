@@ -4,12 +4,12 @@ let total;
 let paginate;
 
 window.addEventListener('load', async function () {
-  const name = document.getElementsByClassName('profile-username');
-  const email = document.getElementsByClassName('profile-email');
-  const amount = document.getElementsByClassName('detail-amount');
+  //const name = document.getElementsByClassName('profile-username');
+  //const email = document.getElementsByClassName('profile-email');
+  //const amount = document.getElementsByClassName('detail-amount');
   //document.getElementById('form1').addEventListener('input', changeValueSearch);
 
-  //   setUserDetail(name, email, amount);
+  //setUserDetail(name, email, amount);
   // ลำดับของผู้ใช้
   await getTotalBudgetQueue(); //ยอดเงินรวมทั้งหมดเงินกู้
   initailUserTable();
@@ -248,6 +248,21 @@ async function insertTable(users, num) {
     cell4.innerHTML = `${users[i].amount}`;
     cell5.innerHTML = `${dayjs(users[i].createdAt).format('DD/MM/YYYY')}`;
     
+    //ปุ่มดำเนินการ
+    let btn_warning = document.createElement('button')
+    btn_warning.textContent = "ดำเนินการ"
+    btn_warning.setAttribute('class', 'btn-danger')
+    btn_warning.setAttribute('data-id', users[i].id)
+    btn_warning.setAttribute('data-personal', users[i].personalId)
+    cell6.appendChild(btn_warning)
+    btn_warning.addEventListener('click', (e)=> {
+      let id = e.target.getAttribute('data-id');
+      let personalId = e.target.getAttribute('data-personal');
+      console.log(id);
+      console.log(personalId);
+      localStorage.setItem('pofile', personalId);
+      window.location.href = '/borrow.html';
+    })
     //ปุ่มสำเร็จ
     let btn_success = document.createElement('button')
     btn_success.textContent = "สำเร็จ"
@@ -353,6 +368,7 @@ window.onclick = function(e) {
     }
   }
 }
+
 async function getTotalBudgetQueue(){
     const amountTotal = document.getElementsByClassName('detail-amount-total'); //ยอดเงินกู้ทั้งหมด
     const amount = document.getElementsByClassName('detail-amount'); //ยอดเงินกู้คงเหลือ
@@ -361,14 +377,16 @@ async function getTotalBudgetQueue(){
     //let year = 2019
     try {
       const collections 
-      = await db.collection('money_borrow').get();
+      = await db.collection('money_borrow')
+      .orderBy("date", "desc")
+      .get()
       let sumTotal = collections.docs.map(doc => doc.data().amount_total);
       let sum = collections.docs.map(doc => doc.data().amount);
         //console.log(collection.data().date.split("T")[0]);
-        console.log(sumTotal);
+        console.log(sumTotal[0]);
       
-        amountTotal[0].innerHTML  = sumTotal + " บาท"
-        amount[0].innerHTML  = sum + " บาท"
+        amountTotal[0].innerHTML  = sumTotal[0] + " บาท"
+        amount[0].innerHTML  = sum[0] + " บาท"
       //console.log("transactions", collection.docs[0].data());
     } 
     catch (error) {

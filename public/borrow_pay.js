@@ -7,13 +7,16 @@ window.addEventListener('load', async function () {
     const name = document.getElementsByClassName('profile-username');
     const email = document.getElementsByClassName('profile-email');
     const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
-    document.getElementById('form1').addEventListener('input', changeValueSearch);
+    //document.getElementById('form1').addEventListener('input', changeValueSearch);
 
     
-    setUserDetail(name, email, amountTotal);
-    initailUserTable();
-    await getMonthlyBudget() // เงินรวมยอดรายเดือน
-    await getYearsBudget()  //เงินรวมยอดรายปี
+    //setUserDetail(name, email, amountTotal);
+    //initailUserTable();
+    await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก
+    await getMonthlyBudgetWithdraw() //เงินรวมยอดรายเดือนถอน
+    await getMonthlyBudgetBorrow() //เงินรวมยอดรายเดือนกู้
+    await getMonthlyBudgetBorrowPay() //เงินรวมยอดรายเดือนชำระเงินกู้
+    //await getYearsBudget()  //เงินรวมยอดรายปี
     await getTotalBudget() //ยอดเงินรวมทั้งหมด
 });
   
@@ -78,16 +81,32 @@ async function  CheckPersonalNumber(event) {
     //firstName = collection.data().firstName;
     let firstName = document.getElementById('first_name').value=userDetail.firstName;
     let lastName = document.getElementById('last_name').value=userDetail.lastName;
-    let amount = document.getElementById('amount').value=userDetail.amountDeposit;
+    
+      const collections_borrow
+      = await  db.collection('borrows')
+                 .where("personalId", "==", personal_id)
+                 .where("status", "==",  "active")
+                 .get()
+      let userBorrow;
+      
+      for(const collection of collections_borrow.docs) {
+        userBorrow = collection.data();
+        console.log(userBorrow.total_amount_pay);
+      }
+      let amount = document.getElementById('amountTotal').value 
+      = userBorrow.total_amount_pay;
+      let amountPay = document.getElementById('amountPay').value;
+    console.log(userBorrow);
+    console.log(amount);
     console.log(firstName);
     console.log(personal_id);
 
-    return {userDetail, personal_id, firstName,lastName,amount};
+    return {userDetail, personal_id, firstName,lastName,amount, amountPay,collections_borrow};
   }
 
   async function submit() {
     let userDetail = await getUserValueTable();
-    let errors = validation(userDetail);
+    //let errors = validation(userDetail);
     let updateData = {};
     let updateTotal = {};
     let date = new Date();
@@ -95,57 +114,62 @@ async function  CheckPersonalNumber(event) {
     //let year = 2021;
 
   
-    if (!errors.valid) {
+    /*if (!errors.valid) {
       let textError = '\n';
       for (const error in errors.errors) {
         textError += errors.errors[error] + '\n';
       }
       window.alert('Error : ' + textError);
       return;
-    }
+    }*/
   
     
   
     const newTransaction = {
       personalId: userDetail.personal_id,
-      type: 'deposited',
-      amount: userDetail.amount * 1,
+      type: 'borrow_pay',
+      amount: userDetail.amountPay * 1,
+      amount_total: userDetail.amount*1 - userDetail.amountPay *1,
       date: new Date().toISOString()
     };
    console.log(userDetail);
    
-    const userDocument = db.doc(`/users/${userDetail.personal_id}`);
-    //const userDocument = userDetail
-    //console.log(userDocument);
-    const budgetsDoc = db.doc(`/budgets/${year}`);
+    let checkIds ;
+    let checkStatus;
+    let userDocument;
+    for(const collection of userDetail.collections_borrow.docs) {
+      userDocument = collection.id;
+      checkIds = collection.data().personalId;
+      checkStatus = collection.data().status;
+
+    }
+    console.log(checkIds);
+    const budgetsDoc = await db.doc(`/budgets/${year}`);
     const budgetYear = { 
       total: 0 + userDetail.amount * 1,
       updatedAt: new Date().toISOString()
     };
-  
-    userDocument
-      .get()
+    const updateBorrow = {
+      total_amount_pay: userDetail.amount - userDetail.amountPay * 1,
+      updatedAt: new Date().toISOString()
+    }
+    if(checkIds == userDetail.personal_id && checkStatus == 'active') {
+        console.log(checkStatus);
+        db.collection('borrows').doc(userDocument)
+        .update(updateBorrow);
+        //alert("ปิดบัญชีแล้วการกู้");
+    }
+    db.doc(`/budgets/${year}`).get()
+      //.then(() => {
+        
+        //return db.doc(`/budgets/${year}`).get();
+      //})
       .then((data) => {
-        if (data.exists) {
-          let userData = {};
-          userData = data.data();
-          return userDocument.update({
-            amount: userData.amount + userDetail.amount * 1,
-            dividend: (userData.amount + userDetail.amount* 1) * 0.1 ,
-            updatedAt: new Date().toISOString()
-          });
-        }
-        window.alert(`ไม่ปรากฎข้อมูลหมายเลข ${userDetail.personal_id}`);
-      })
-      .then(() => {
         console.log(year);
-        return db.doc(`/budgets/${year}`).get();
-      })
-      .then((data) => {
         if (data.exists) {
         //userData = data.data();
           return budgetsDoc.update({
-            total: data.data().total + userDetail.amount * 1,
+            total: data.data().total + userDetail.amountPay * 1,
             updatedAt: new Date().toISOString()
           });
        } 
@@ -153,12 +177,12 @@ async function  CheckPersonalNumber(event) {
       })
       
       .then(() => {
-        return userDocument.get();
+        return db.collection('borrows').doc(userDocument).get();
       })
       .then((data) => {
         updateData = data.data();
         updateData.id = data.id;
-  
+        console.log(updateData.id);
         return db.collection('transactions').add(newTransaction);
       })
       .then(() => {
@@ -174,13 +198,13 @@ async function  CheckPersonalNumber(event) {
       
       .then(() => {
         let element = document.getElementById('table');
-        let { name, email, amount } = getProperty();
+        //let { name, email, amount } = getProperty();
   
-        setUserDetail(name, email, amount);
+        //setUserDetail(name, email, amount);
         element.classList.add('set_table');
   
         // set Value in table
-        setTable(updateData);
+        setTable(newTransaction);
   
         // Reset fields
         resetFields();
@@ -204,12 +228,14 @@ async function  CheckPersonalNumber(event) {
     let personal_id = document.getElementById('personal_id');
     let firstName = document.getElementById('first_name');
     let lastName = document.getElementById('last_name');
-    let amount = document.getElementById('amount');
+    let amount = document.getElementById('amountTotal');
+    let amountPay = document.getElementById('amountPay');
   
     personal_id.value = '';
     firstName.value = '';
     lastName.value = '';
     amount.value = '';
+    amountPay.value = '';
   }
   
   function setTable(userData) {
@@ -218,16 +244,16 @@ async function  CheckPersonalNumber(event) {
     let row_length = table.rows.length;
     console.log(row_length);
     let date = `${dayjs(userData.date).format('DD/MM/YYYY')}`;
-    let username = `${userData.firstName} ${userData.lastName}`;
-    let personal_id = `${userData.id}`;
-    let amountDeposit = `${userData.amountDeposit}`;
-    let amount = userData.amount;
+    //let username = `${userData.firstName} ${userData.lastName}`;
+    let personal_id = `${userData.personalId}`;
+    let amountPay = `${userData.amount}`;
+    let amountTotal = userData.amount_total;
 
     if(row_length > 7) {
       table.deleteRow(7);
     }
       
-    let newTable = [date, username, personal_id, amountDeposit, amount];
+    let newTable = [date, personal_id, amountPay, amountTotal];
     newTable.forEach((item) => {
       var td = document.createElement("td");
       var text = document.createTextNode(item);
@@ -329,7 +355,7 @@ function initailUserTable(perPage = 8) {
       total = snap.size;
       paginate = Math.ceil(total / perPage);
       console.log(total);
-      createPaginateButton(paginate);
+      //createPaginateButton(paginate);
 
       return db
         .collection('transactions')
@@ -360,7 +386,7 @@ function initailUserTable(perPage = 8) {
       }
     })
     .then(() => {
-      insertTable(transactions, 0);
+      //insertTable(transactions, 0);
     })
     .catch((err) => {
       console.error(err);
@@ -544,9 +570,7 @@ window.onclick = function(e) {
 }
 
 //Budgets
-async function getMonthlyBudget() {
-  const amountMonth = document.getElementsByClassName('detail-amount-month'); //ยอดเงินเดือน
-
+async function getMonthlyBudgetDeposit() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
   try {
@@ -557,29 +581,105 @@ async function getMonthlyBudget() {
                .where("date", "<=", endOfMonthDate )
                .get()
     let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-deposit'); //ยอดเงินเดือน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount * 1
+      console.log(collection.data().date.split("T")[0]);
+      console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collections.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
+}
+async function getMonthlyBudgetWithdraw() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
 
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "withdrawn")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-withdraw'); //ยอดเงินเดือนถอน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount_withdraw * 1
+      //console.log(collection.data().date.split("T")[0]);
+      //console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collection.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
+}
+async function getMonthlyBudgetBorrow() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
+
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "borrow")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-borrow'); //ยอดเงินเดือน
     for(const collection of collections.docs) {
       sum += collection.data().amount * 1
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum + " บาท"
-    //console.log("transactions", collection.docs[0].data());
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collections.docs[0].data());
   } 
+  
   catch (error) {
     console.log(error);
   }
-
 }
+async function getMonthlyBudgetBorrowPay() {
+  const [startOfMonthDate, endOfMonthDate] =  getDate()
 
+  try {
+    const collections 
+    = await  db.collection('transactions')
+               .where("type", "==", "borrow_pay")
+               .where("date", ">=", startOfMonthDate )
+               .where("date", "<=", endOfMonthDate )
+               .get()
+    let sum = 0
+    const amountMonth = document.getElementsByClassName('detail-amount-month-borrwpay'); //ยอดเงินเดือน
+    for(const collection of collections.docs) {
+      sum += collection.data().amount * 1
+      //console.log(collection.data().date.split("T")[0]);
+      //console.log(sum);
+    }
+    amountMonth[0].innerHTML  = sum 
+    //console.log("transactions", collections.docs[0].data());
+  } 
+  
+  catch (error) {
+    console.log(error);
+  }
+}
 function getDate() {
 
   // Get moth and years
-  const dateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
 
-  const [month, day, year] = dateString.trim().split(",")[0].split("/")
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
 
   const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 
@@ -599,7 +699,7 @@ async function getYearsBudget() {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     
-    amountYear[0].innerHTML  = sum + " บาท"
+    amountYear[0].innerHTML  = sum
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
@@ -619,7 +719,7 @@ async function getTotalBudget() {
       sum += collection.data().total * 1
       //console.log(sum);
     }
-    amountTotal[0].innerHTML  = sum + " บาท"
+    amountTotal[0].innerHTML  = sum 
   } 
   catch (error) {
     console.log(error);

@@ -16,35 +16,39 @@
         <div class="container2">
             <h3>Saving Management System</h3>
             <h4>ชำระเงินกู้</h4>
-            <!--div class="balance">
-                <h2>ยอดเงินทั้งหมดที่กู้ได้ในปีนี้ : </h2>
-                <h3>1,000,000 บาท</h3>
-                <h2>ยอดเงินคงเหลือที่กู้ได้ : </h2>
-                <h3>123456 บาท</h3>
-                <button class="logout_btn" type="submit">ออกจากระบบ</button>
-                <br />
-            </+div-->
             <div class="balance">
               <div class="profile-history">
                 <h2>งบประมาณ</h2>
                 <table class="profile-history-detail">
-                    <tr>
-                        <th>รายการ</th>
-                        <th>จำนวนเงิน (บาท)</th>
-                    </tr>
-                    <tr>
-                        <td class="detail-title">งบประมาณเดือนนี้</td>
-                        <td  class="detail-amount-month"></td>
-                    </tr>
-                    <tr>
-                        <td class="detail-title" >งบประมาณปีนี้</td>
-                        <td class="detail-amount-year" id="year"></td>
-                    </tr>
-                    <tr>
-                        <td class="detail-title">งบประมาณทั้งหมด</td>
-                        <td class="detail-amount"></td>
-                    </tr>
-                </table>
+                  <tr>
+                      <th>รายการ</th>
+                      <th>จำนวนเงิน (บาท)</th>
+                  </tr>
+                  <tr>
+                      <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i> งบประมาณเดือนนี้</td>
+                      <td class="detail-title-title" ></td>
+                  </tr>
+                  <tr>
+                      <td class="detail-title">การฝาก</td>
+                      <td  class="detail-amount-month-deposit"></td>
+                  </tr>
+                  <tr>
+                      <td class="detail-title">การถอน</td>
+                      <td  class="detail-amount-month-withdraw"></td>
+                  </tr>
+                  <tr>
+                    <td class="detail-title">การกู้</td>
+                    <td  class="detail-amount-month-borrow"></td>
+                  </tr>
+                  <tr>
+                    <td class="detail-title">การชำระเงินกู้</td>
+                    <td  class="detail-amount-month-borrwpay"></td>
+                  </tr>
+                  <tr>
+                      <td class="detail-title-title"><i class="fa fa-circle" aria-hidden="true"></i>งบประมาณคงเหลือทั้งหมด</td>
+                      <td class="detail-amount"></td>
+                  </tr>
+              </table>
               </div> 
               <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
               <br />
@@ -81,7 +85,7 @@
               </div> 
               <div class="content">
                 <label for="personal_id">เลขบัตรประชาชน</label>
-                <input type="text" placeholder="Enter ID Card" id="personal_id" />
+                <input type="text" placeholder="Enter ID Card" id="personal_id" onkeydown="CheckPersonalNumber(event)"/>
                 <div class="groups-field">
                   <div class="group">
                     <label for="personal_id" class="label-name">ชื่อ</label>
@@ -92,31 +96,40 @@
                     <input type="text" placeholder="Lastname" id="last_name" />
                   </div>
                   <div class="group">
-                    <label for="personal_id">จำนวนเงินที่ยื่นกู้</label>
-                    <input type="text" placeholder="Amount" id="amount" />
+                    <label for="personal_id">จำนวนเงินค้างชำระ</label>
+                    <input type="text" placeholder="Amount" id="amountTotal" />
                   </div>
-                </div>
+                </div>  
+                  <label for="personal_id">จำนวนเงินที่ต้องการชำระ</label>
+                  <input type="text" placeholder="Amount" id="amountPay" />
+                 
+                
                 
                 <button onclick="submit()">Submit</button>
                 <table id="table">
                   <tr>
-                    <th>ชื่อ-สกุล</th>
+                    <th>วันที่</th>
                     <th>เลขบัตรประชาชน</th>
-                    <th>จำนวนเงินกู้</th>
-                    <th>จำนวนเงินที่ต้องจ่าย+10%</th>
+                    <th>จำนวนเงินที่ชำระ</th>
+                    <th>จำนวนเงินคงเหลือ</th>
                   </tr>
-                  <tr>
+                  <tr id="updateTable">
+                    
+                    <!--td id="date"></!--td>
                     <td id="username"></td>
                     <td id="personal_id_table"></td>
-                    <td id="amount_table"></td>
-                    <td id="amount10_teble"></td>
+                    <td id="amountWithdraw_teble"></td>
+                    <td-- id="amount_table"></td-->
+                  
                   </tr>
                 </table>
               </div>  
             </div>
        </div>
     </div>
-
+    <script src="/dayjs.min.js"></script>
+    <script src="/th.js"></script>
+    <script src="/relativeTime.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
     <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
@@ -134,6 +147,8 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('th');
     </script>
     <script src="/borrow_pay.js"></script>
 
