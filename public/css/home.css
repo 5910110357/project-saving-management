@@ -317,7 +317,50 @@ li {
       width: 190px;
     }
   }
-
+  @media only screen and (max-width: 420px) {
+  .container2 h3 {
+    margin-top:  -18px;
+    margin-right: 80px;
+    font-size: 10px;
+  }
+  .container .container2 {
+    padding: 30px 10px ;
+  }
+  .balance {
+    width: 100%;
+    padding: 0px;
+    border-radius: 30px; 
+  }
+  .list-menu {
+      width: 90%;
+      border-radius: 30px;
+      padding: 10px; 
+  }
+    .list-menu-img {
+      overflow-y: scroll;
+      width: 100%;
+      height: 100%;
+    }
+    .list-menu .list-menu-img li img {
+      width: 140px;
+      border-radius: 30px;
+      text-align: center;
+    }
+    #user-name,
+  #user-personal-number,
+  #user-date,
+  #user-amount, 
+  #user-address,
+  #user-telnumber,
+  #user-sex,
+  #user-dividend{
+    font-size: 12px;
+  }
+  .user-profile-card-details-label p {
+    font-size: 12px;
+  }
+  
+  }
   
   
 

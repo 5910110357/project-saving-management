@@ -1,4 +1,45 @@
+window.addEventListener('load',  function () {
+    //generates random id;
+    let guid = () => {
+    let s4 = () => {
+      return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+    }
+    //return id of format 'aaaaaaaa'
+    return s4() + s4();
+  }
 
+  console.log(guid());
+  
+});
+function getUserValue() {
+    let personal_id = document.getElementById('personal_id').value;
+    let firstName = document.getElementById('first_name').value;
+    let lastName = document.getElementById('last_name').value;
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    let sex = document.getElementById('sex').value;
+    let address = document.getElementById('address').value;
+    let telNumber = document.getElementById('tel_number').value;
+    //let amount = document.getElementById('amount').value;
+    let amountDeposit = document.getElementById('amountDeposit').value;
+  
+    
+
+    return {
+      personal_id,
+      firstName,
+      lastName,
+      email,
+      password,
+      sex,
+      address,
+      telNumber,
+      //amount,
+      amountDeposit
+    };
+  }
 function signup() {
     let userDetail = getUserValue();
     let errors = validation(userDetail);
@@ -119,31 +160,7 @@ function signup() {
     return false;
   };
   
-  function getUserValue() {
-    let personal_id = document.getElementById('personal_id').value;
-    let firstName = document.getElementById('first_name').value;
-    let lastName = document.getElementById('last_name').value;
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let sex = document.getElementById('sex').value;
-    let address = document.getElementById('address').value;
-    let telNumber = document.getElementById('tel_number').value;
-    //let amount = document.getElementById('amount').value;
-    let amountDeposit = document.getElementById('amountDeposit').value;
   
-    return {
-      personal_id,
-      firstName,
-      lastName,
-      email,
-      password,
-      sex,
-      address,
-      telNumber,
-      //amount,
-      amountDeposit
-    };
-  }
   
   
   
