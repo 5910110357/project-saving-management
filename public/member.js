@@ -1,4 +1,4 @@
-let pageSize = 5;
+let pageSize = 8;
 let currentPage = 1;
 let total;
 let paginate;
@@ -70,7 +70,7 @@ function getBudgetsTotal(name, email, amount, userTotal, userDetail) {
     });
 }
 
-function initailUserTable(perPage = 5) {
+function initailUserTable(perPage = 8) {
   let users = [];
 
   db.collection('users')
@@ -162,7 +162,7 @@ function queryFromFirbaseWithOffset(i) {
           .where('role', '==', 'member')
           .orderBy('firstName', 'asc')
           .startAt(last)
-          .limit(5)
+          .limit(8)
           .get()
           .then((data) => {
             clearListElement();

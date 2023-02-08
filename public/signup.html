@@ -6,9 +6,12 @@
     <title>signup</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/signup.css">
-
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.js"></script>
 </head>
 <body>
     <div class="container">
@@ -16,29 +19,40 @@
             <h1>ลงทะเบียนสมาชิก</h1>
             <br />
             <div class="form_signup">
-                <input type="text" placeholder="เลขบัตรประชาชน.." id="personal_id"/>
+                <span class="req">*</span>
+                <input type="text" placeholder="เลขบัตรประชาชน.." 
+                id="personal_id" />
                 <br />
                 <div class="name_lastname">
+                    <span class="req">*</span>
                     <input type="text" placeholder="ชื่อ.." id="first_name"/>
                     <br />
+                    <span class="req">*</span>
                     <input type="text" placeholder="นามสกุล.." id="last_name"/>
-                    <br />
+                    
                 </div>
+                <div class="name_lastname">
+                    <span class="req">*</span>
+                    <select id="sex" name="sex">
+                        <option value="" disabled selected>ระบุเพศ</option>
+                        <option value="ชาย">ชาย</option>
+                        <option value="หญิง">หญิง</option>
+                    </select>
+                    <br />
+                    <span class="req">*</span>
+                    <input type="tel" name="tel" placeholder="เบอร์ติดต่อ.." id="tel_number"/>
+                </div>
+                <span class="req">*</span>
+                <input type="text" placeholder="ที่อยู่.." id="address"></textarea>
                 <input type="text" placeholder="email.." id="email"/>
                 <br >
-                <input type="password" placeholder="รหัสผ่าน.." name="password"
-                id="password"/>
-                <br />
-                <select id="sex" name="sex">
-                    <option value="" disabled selected>ระบุเพศ</option>
-                    <option value="ชาย">ชาย</option>
-                    <option value="หญิง">หญิง</option>
-                </select>
-                <br />
-                <input type="text" placeholder="ที่อยู่.." id="address"></textarea>
-                <br />
-                <input type="tel" name="tel" placeholder="เบอร์ติดต่อ.." id="tel_number"/>
-                <br />
+                <div class="password">
+                   <span class="req">*</span>
+                    <input type="password" placeholder="รหัสผ่าน.." name="password"
+                    id="password" />
+                    <button type="button" class="random_btn" onclick="random()"> ramdom password </button> 
+                </div>
+                <span class="req">*</span>
                 <input type="text" name="amountDeposit" id="amountDeposit" placeholder="จำนวนวงเงิน ที่ต้องการฝาก"/>
                 <button type="button" class="signup_btn" onclick="signup()"> sign up </button>
                 <br />

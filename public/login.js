@@ -2,7 +2,11 @@ function login(event) {
     event.preventDefault();
     let userEmail = document.getElementById('email_field').value;
     let userPass = document.getElementById('password_field').value;
-  
+    let hashuserPass = 
+    CryptoJS.SHA256(userPass)
+            .toString(CryptoJS.enc.hex);
+    console.log(userPass);
+    console.log(hashuserPass);
     const obj = { userEmail, userPass };
     let errors = {};
     let userId;
@@ -50,7 +54,8 @@ function login(event) {
           window.alert('Error: ' + err.message);
         });
     } else {
-      if (isPersonalNumber(userEmail)) {
+      //เก่า
+      /*if (isPersonalNumber(userEmail)) {
         let user = {};
   
         const userData = db.collection('users');
@@ -61,6 +66,58 @@ function login(event) {
           .then((doc) => {
             if (doc.exists) {
               return userData.where('password', '==', userPass).get();
+            } else {
+              window.alert('รหัสผ่านไม่ถูกต้อง');
+            }
+          })
+          .then((data) => {
+            if (!data.empty) {
+              // console.log(data.docs[0].data());
+              user = data.docs[0].data();
+              user.id = data.docs[0].id;
+              console.log(data.docs[0].id);
+              localStorage.setItem('user', JSON.stringify(user));
+              window.location.href = '/home.html';
+            } else {
+              window.alert('รหัสผ่านไม่ถูกต้อง');
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }*/
+      //ใหม่แบบมีบังคับเปลี่ยนรหัส
+      if (isPersonalNumber(userEmail)) {
+        let user = {};
+        let newUser = {};
+        
+        const userData = db.collection('users');
+        userData
+          .doc(userEmail)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              console.log(doc.data().otp);
+              const checkOTP = doc.data().otp;
+              if(checkOTP){
+                console.log(checkOTP);
+                console.log(userPass);
+                
+                userData.where('otp', '==', userPass).get()
+                .then((data) => {
+                  if (data) {
+                    newUser = data.docs[0].data();
+                    newUser.id = data.docs[0].id;
+                    console.log(newUser.id);
+                    alert('yes');
+                    localStorage.setItem('newUser', JSON.stringify(newUser));
+                    window.location.href = '/home.html';
+                  }
+                })
+              }
+              else{
+                return userData.where('password', '==', hashuserPass).get();
+              }
             } else {
               window.alert('รหัสผ่านไม่ถูกต้อง');
             }

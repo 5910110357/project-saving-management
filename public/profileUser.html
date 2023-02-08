@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ประวัติส่วนตัว</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/profileUser.css">
+    <link href="/font-awsome/css/all.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="container2">
+            <h3>Saving Management System</h3>
+            <h4>ข้อมูลส่วนตัว</h4>
+            <div class="menu">
+                    <div class="home" >
+                        <a href="home.html">หน้าหลัก</a>
+                    </div>
+                    <div class="trans" >
+                        <button class="dropdown" onclick="dropdown()">เมนู
+                          <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="transaction" id="myTransaction">
+                          <a href="">รายการฝาก-ถอน</a>
+                          <a href="">รายการเงินกู้</a>
+                          <a href="">ประวัติส่วนตัว</a>
+                          <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                        </div>
+                    </div>
+                </div>
+            <div class="details">
+              <div class="user-profile-coatianer">
+                <div class="user-profile-card">
+                  <div class="user-profile-card-title" >
+                    <a href="profileUser.html">
+                        <i class="far fa-user-circle"></i>
+                    </a>
+                  </div>
+                  <div class="user-profile-card-details">
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">ชื่อ-สกุล:</p>
+                      <p id="user-name"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เลขบัตรประชาชน:</p>
+                      <p id="user-personal-number"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">วันที่เข้าร่วม:</p>
+                      <p id="user-date"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">จำนวนเงินฝากสะสม:</p>
+                      <p id="user-amount"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">ที่อยู่:</p>
+                      <p id="user-address"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เบอร์ติดต่อ:</p>
+                      <p id="user-telnumber"></p>
+                    </div>
+                    <div class="user-profile-card-details-label">
+                      <p class="user-name-label">เพศ:</p>
+                      <p id="user-sex"></p>
+                    </div>
+                    <!--div class="user-profile-card-details-label">
+                      <p class="user-name-label">จำนวนเงินปันผล:</p>
+                      <p id="user-dividend"></p>
+                    </!--div-->
+                  </div>
+                  <div class="user-profile-card-status"></div>
+                </div> 
+                <button class="repassword_btn" onclick="rePassword()">เปลี่ยนรหัสผ่าน</button>
+                <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
+              </div>
+              <div class="list-menu hide">
+                <div class="icon" >
+                    <a href="profileUser.html">
+                        <i class="far fa-user-circle"></i>
+                    </a>
+                </div>
+                <div class="changePassword">
+                    <label class="label-name">รหัสผ่านเก่า</label>
+                    <br>
+                    <input type="text" id="old_password" placeholder="รหัสผ่านเก่า"/>
+                    <br>
+                    <label class="label-name">รหัสผ่านใหม่</label>
+                    <br>
+                    <input type="text" id="new_password" placeholder="รหัสผ่านใหม่"/>
+                    <br>
+                    <button class="submit_btn" onclick="submit()">ยืนยัน</button>
+                </div>
+            </div>
+       </div>
+    </div>
+    
+    <script src="/dayjs.min.js"></script>
+    <script src="/th.js"></script>
+    <script src="/relativeTime.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <script src= "https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0vuCJHYGOpJEqH1PERWHnNEFWmkK2rgw",
+            authDomain: "testproject-ff9d6.firebaseapp.com",
+            projectId: "testproject-ff9d6",
+            storageBucket: "testproject-ff9d6.appspot.com",
+            messagingSenderId: "902874923267",
+            appId: "1:902874923267:web:5f69187bfae8b50a6e6936",
+            measurementId: "G-GMTV6MGHV0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('th');
+    </script>
+    <script src="/profileUser.js"></script>
+
+</body>
+</html>

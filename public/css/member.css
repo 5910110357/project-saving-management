@@ -319,7 +319,9 @@ table i:hover {
     margin-top: 20px;
     color: rgb(55, 64, 246);
 }
-
+#pagination {
+  margin-top: auto;
+}
 
 
 

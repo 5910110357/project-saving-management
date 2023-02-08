@@ -8,12 +8,13 @@ window.addEventListener('load', async function () {
 
   const elements = document.getElementsByClassName('list-menu-img-admin');
   const userMenu = document.getElementsByClassName('list-menu-img-user');
+  const changePassword = document.getElementsByClassName('chang_password_new');
   const adminTotalLabel = document.getElementsByClassName('detail-title-title'); //เมนูยอดเงิน แอดมิน
   const userTotalLabel = document.getElementsByClassName('detail-title-user'); //เมนูยอดเงินของคุณ
   const TableBudgets = document.getElementsByClassName('profile-history'); //ตารางงบประมาณ
   const TableUser = document.getElementsByClassName('Profile-User'); //โปรไฟล์user
 
-  if (!localStorage.user && !localStorage.FBIdToken) {
+  if (!localStorage.user && !localStorage.FBIdToken && !localStorage.newUser) {
     window.location.href = './home.html';
     //window.alert('ท่านไม่ใช่เจ้าหน้าที่');
   }
@@ -21,6 +22,8 @@ window.addEventListener('load', async function () {
   if (localStorage.user && !localStorage.budgets) {
     //const userDetail = JSON.parse(localStorage.user);
     TableBudgets[0].classList.add('non-active');
+    //NewUser[0].classList.add('non-active');
+    changePassword[0].classList.add('non-active');
     getUserProfile(localStorage.user);
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
   } else if (localStorage.user && localStorage.budgets) {
@@ -29,6 +32,7 @@ window.addEventListener('load', async function () {
     //amountuser[0].innerHTML = `${userDetail.amount} บาท`;
     //userTotalLabel[0].classList.add('active');
     TableBudgets[0].classList.add('non-active');
+    changePassword[0].classList.add('non-active');
     getUserProfile(localStorage.user);
     visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
   }
@@ -40,6 +44,7 @@ window.addEventListener('load', async function () {
     // const decodedToken = parseJwt(token);
     let budgets = {};
     TableUser[0].classList.add('non-active')
+    changePassword[0].classList.add('non-active');
     //getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, userCreadentail);
     //visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
@@ -56,11 +61,28 @@ window.addEventListener('load', async function () {
     email[0].innerHTML = `${userDetail.email ? userDetail.email : ''} `;
     //amountTotal[0].innerHTML = `${budgets.year} บาท`;
     TableUser[0].classList.add('non-active')
-
+    changePassword[0].classList.add('non-active');
     //userTotalLabel[0].classList.remove('active');
     //visibleItems(userMenu, 'list-menu-img-user', 'list-menu-img-user-active');
     visibleItems(elements, 'list-menu-img-admin', 'list-menu-img-admin-active');
   
+  }
+  //new user
+  if (localStorage.newUser && !localStorage.budgets) {
+    //const userDetail = JSON.parse(localStorage.user);
+    TableBudgets[0].classList.add('non-active');
+    //TableUser[0].classList.add('non-active')
+    getUserProfile(localStorage.newUser);
+    visibleItems(changePassword, 'chang_password_new', 'chang_password_new-active');
+  } else if (localStorage.newUser && localStorage.budgets) {
+    const userDetail = JSON.parse(localStorage.user);
+    const budgets = JSON.parse(localStorage.budgets);
+    //amountuser[0].innerHTML = `${userDetail.amount} บาท`;
+    //userTotalLabel[0].classList.add('active');
+    TableBudgets[0].classList.add('non-active');
+    //TableUser[0].classList.add('non-active')
+    getUserProfile(localStorage.newUser);
+    visibleItems(changePassword, 'chang_password_new', 'chang_password_new-active');
   }
 
   
@@ -329,7 +351,7 @@ function getUserProfile(user) {
   const address = document.getElementById('user-address');
   const telnumber = document.getElementById('user-telnumber');
   const sex = document.getElementById('user-sex');
-  const dividend = document.getElementById('user-dividend');
+  //const dividend = document.getElementById('user-dividend');
 
 
   name.innerHTML = `${pofile.firstName} ${pofile.lastName}`;
@@ -339,7 +361,7 @@ function getUserProfile(user) {
   address.innerHTML = `${pofile.address}`;
   telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
   sex.innerHTML = `${pofile.sex}`;
-  dividend.innerHTML = `${pofile.dividend} บาท`;
+  //dividend.innerHTML = `${pofile.dividend} บาท`;
 }
 
 function format(mask, number) {
@@ -349,5 +371,68 @@ function format(mask, number) {
     r += mask.charAt(im) == 'X' ? s.charAt(is++) : mask.charAt(im);
   }
   return r;
+}
+function rePassword(){
+  let old_Password = document.getElementById('old_password').value;
+  let new_Password = document.getElementById('new_password').value;
+  
+  console.log(old_Password);
+    if (localStorage.newUser) {
+      const pofile = JSON.parse(localStorage.newUser);
+      console.log(pofile.password);
+      console.log(pofile.otp);
+      let id = pofile.id;
+      console.log(id);
+      let hashPassword = 
+      CryptoJS.SHA256(new_Password)
+              .toString(CryptoJS.enc.hex);
+      db.doc(`/users/${id}`).get()
+      .then((data) => {
+        if(data.exists){
+          if(old_Password != pofile.otp){
+            console.log('รหัสผ่านเก่าไม่ถูกต้อง');
+            alert('รหัสผ่านเก่าไม่ถูกต้อง');
+          }
+          else {
+            
+            console.log('yes!');
+            console.log(id);
+            return  db.doc(`/users/${id}`).update({
+              password: hashPassword,
+              otp: ''
+            })
+          }
+        }
+      })
+      .then(() => {
+        alert('เปลี่ยนรหัสผ่านสำเร็จ');
+        resetFields();
+      })
+      .then(() => {
+        var hash = CryptoJS.SHA256(new_Password).toString(CryptoJS.enc.hex);
+        console.log(new_Password);
+        console.log(hash);
+        console.log(hashPassword);
+        return db.collection('users').where('password', '==', hashPassword).get();
+      })
+      .then((data) => {
+        if (!data.empty) {
+          // console.log(data.docs[0].data());
+          user = data.docs[0].data();
+          user.id = data.docs[0].id;
+          console.log(data.docs[0].id);
+          localStorage.setItem('user', JSON.stringify(user));
+          window.location.href = '/home.html';
+        }
+      })
+    }
+    
+}
+function resetFields() {
+    let old_Password = document.getElementById('old_password');
+    let new_Password = document.getElementById('new_password');
+  
+    old_Password.value = '';
+    new_Password.value = '';
 }
 

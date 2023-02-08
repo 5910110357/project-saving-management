@@ -1,4 +1,22 @@
 window.addEventListener('load',  function () {
+  //swal("Deleted!", "Your imaginary file has been deleted!", "success");
+  let guid = () => {
+    let s4 = () => {
+      return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+    }
+    //return id of format 'aaaaaaaa'
+    let result = s4() + s4();
+    return result;
+  }
+  //document.getElementById('password').value= guid() ;
+  console.log(guid());
+      var password = "887a5ae3"
+      var passhash = CryptoJS.SHA256(password).toString(CryptoJS.enc.hex)
+      console.log(passhash)
+});
+function random() {
     //generates random id;
     let guid = () => {
     let s4 = () => {
@@ -7,24 +25,27 @@ window.addEventListener('load',  function () {
           .substring(1);
     }
     //return id of format 'aaaaaaaa'
-    return s4() + s4();
+    let result = s4() + s4();
+    return result;
   }
-
-  console.log(guid());
   
-});
+  console.log(guid());
+  let password = document.getElementById('password').value= guid() ;
+ return {password};
+};
 function getUserValue() {
+    let randomPassword = random();
     let personal_id = document.getElementById('personal_id').value;
     let firstName = document.getElementById('first_name').value;
     let lastName = document.getElementById('last_name').value;
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    let password = document.getElementById('password').value = randomPassword.password;
     let sex = document.getElementById('sex').value;
     let address = document.getElementById('address').value;
     let telNumber = document.getElementById('tel_number').value;
     //let amount = document.getElementById('amount').value;
     let amountDeposit = document.getElementById('amountDeposit').value;
-  
+    console.log(randomPassword.password);
     
 
     return {
@@ -66,6 +87,7 @@ function signup() {
         return;
       })
       .then(() => {
+        //let hashPassword = CryptoJS.SHA256(userDetail.password).toString(CryptoJS.enc.hex);
         const userCredentials = {
           firstName: userDetail.firstName,
           lastName: userDetail.lastName,
@@ -78,20 +100,23 @@ function signup() {
           amount: 0 * 1,
           amountDeposit: userDetail.amountDeposit,
           email: userDetail.email,
-          password: userDetail.password,
-          //userId:firebase.auth().currentUser.uid,
+          //password: hashPassword,
+          otp: userDetail.password,
+          password: '',
           dividend: 0 * 1,
           status: 'active'
         };
-  
+        
         return db.doc(`/users/${userDetail.personal_id}`).set(userCredentials);
       })
+      
       .then(() => {
         return db.doc(`/users/${userDetail.personal_id}`).get();
       })
+      
       .then((token) => {
         localStorage.setItem('user', JSON.stringify(token));
-        window.alert('ลงทะเบียนเรียบร้อย');
+        window.alert(`ลงทะเบียนเรียบร้อย   กรุณาแจ้งรหัสผ่านแก่สมาชิก รหัส (${userDetail.password})`);
         window.location.href = '/member.html';
       })
       /*firebase.auth().createUserWithEmailAndPassword(email, password)

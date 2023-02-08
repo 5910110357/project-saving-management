@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/css/home.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
     <link href="font-awsome/css/all.css" rel="stylesheet" />
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.js"></script>
 </head>
 <body>
     <div class="container">
@@ -52,6 +53,9 @@
       
                   </table>
                   </div>
+                  <!--div class="new_member">
+                    <i class="fa fa-user"></i>
+                  </!--div-->
                   <div class="Profile-User">
                     <div class="user-profile-card-details">
                         <div class="user-profile-card-title" >
@@ -85,12 +89,13 @@
                           <p class="user-name-label">เพศ:</p>
                           <p id="user-sex"></p>
                         </div>
-                        <div class="user-profile-card-details-label">
+                        <!--div class="user-profile-card-details-label">
                           <p class="user-name-label">จำนวนเงินปันผล:</p>
                           <p id="user-dividend"></p>
-                        </div>
+                        </!--div-->
                       </div>
                   </div>
+                  
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
                 <br />
             </div>
@@ -114,7 +119,19 @@
                     </a> 
                     <a href="/list_borrow_user.html" class="list-menu-img-user" id="userborrow">
                       <li><img src="img/สมาชิกกู้เงิน.jpg"></li> 
-                    </a>  
+                    </a>
+                    <a href="/profileUser.html" class="list-menu-img-user" id="userborrow">
+                      <li><img src="img/ข้อมูลส่วนตัว.jpg"></li> 
+                    </a> 
+                    <div class="chang_password_new">
+                      <p>สมาชิกใหม่ </p>
+                      <p>กรุณาเปลี่ยนรหัสผ่านก่อนการใช้งาน</p>
+                      <label for="password" >รหัสผ่านเก่า</label>
+                      <input type="text" id="old_password" placeholder="รหัสผ่านเก่า"/>
+                      <label for="password">รหัสผ่านใหม่</label>
+                      <input type="text" id="new_password" placeholder="รหัสผ่านใหม่"/>
+                      <button class="rePassword_btn" onclick="rePassword()">ยืนยัน</button>
+                    </div>  
                 </ui>
             </div> 
        </div>
