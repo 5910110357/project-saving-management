@@ -407,6 +407,25 @@ li {
     font-size: 12px;
   }
   
+  .chang_password_new {
+    margin-top: -50px;
+    padding: 0;
+  }
+  .chang_password_new p {
+    font-size: 15px;
+  }
+  .chang_password_new label {
+    font-size: 12px;
+    margin-left: 20px;
+  }
+ 
+  .rePassword_btn {
+    width: 40%;
+    margin-left: 50px;
+    margin-right: 40px;
+    font-size: 10px;
+  }
+  
   }
   
   

@@ -533,9 +533,7 @@ window.onclick = function(e) {
 async function getTotalBudgetQueue(){
   const amountTotal = document.getElementsByClassName('detail-amount-total'); //ยอดเงินกู้ทั้งหมด
   const amount = document.getElementsByClassName('detail-amount'); //ยอดเงินกู้คงเหลือ
-  //let date = new Date();
-  //let year = date.getFullYear();
-  //let year = 2019
+  //const [startOfMonthDate, endOfMonthDate] =  getDate()
   try {
     const collections 
     = await db.collection('money_borrow')
@@ -543,15 +541,19 @@ async function getTotalBudgetQueue(){
     .get()
     let sumTotal = collections.docs.map(doc => doc.data().amount_total);
     let sum = collections.docs.map(doc => doc.data().amount);
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumTotal[0]);
-    
-      amountTotal[0].innerHTML  = sumTotal[0] + " บาท"
-      amount[0].innerHTML  = sum[0] + " บาท"
-    //console.log("transactions", collection.docs[0].data());
+      var n = sumTotal.length;
+      
+      var sumTotal1 = sumTotal.splice(0, sumTotal.length-(n-1));
+      console.log((sumTotal1*1).toLocaleString());
+      amountTotal[0].innerHTML  = (sumTotal1*1).toLocaleString();
+
+      var sum1 = sum.splice(0, sum.length-(n-1));
+      console.log((sum1*1).toLocaleString());
+      amount[0].innerHTML  = (sum1*1).toLocaleString();
   } 
   catch (error) {
     console.log(error);
   }
 }
+
   

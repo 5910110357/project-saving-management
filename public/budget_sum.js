@@ -2,7 +2,12 @@ let pageSize = 5;
 let currentPage = 1;
 let total;
 let paginate;
-
+const monthTH = ["มกราคม","กุมภาพันธ์","มีนาคม",
+  "เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม",
+  "กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const monthEN = ["January","February","March",
+  "April","May","June","July","August",
+  "September","October","November","December"];
 window.addEventListener('load', async function () {
   const name = document.getElementsByClassName('profile-username');
   const email = document.getElementsByClassName('profile-email');
@@ -96,7 +101,7 @@ window.onclick = function(e) {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString(); 
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -121,7 +126,7 @@ async function getMonthlyBudgetWithdraw() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString(); 
     //console.log("transactions", collection.docs[0].data());
   } 
   
@@ -146,7 +151,7 @@ async function getMonthlyBudgetBorrow() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString(); 
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -171,7 +176,7 @@ async function getMonthlyBudgetBorrowPay() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString(); 
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -206,7 +211,7 @@ async function getTotalBudget() {
       sum += collection.data().total * 1
       //console.log(sum);
     }
-    amountTotal[0].innerHTML  = sum 
+    amountTotal[0].innerHTML  = sum.toLocaleString(); 
   } 
   catch (error) {
     console.log(error);
@@ -330,6 +335,7 @@ function insertTable(listYear, d) {
     //console.log(d+1);
     newNode.appendChild(textNode);
     newNode.onclick = function() {getMonthOfYear(listYear[i].id)};
+    
   }
 }
 async function getMonthOfYear(year) {
@@ -354,21 +360,18 @@ async function getMonthOfYear(year) {
 async function selectMonth(year,m) {
   console.log(m);
   console.log(year);
-  const months = ["January","February","March",
-  "April","May","June","July","August",
-  "September","October","November","December"];
-  const monthTH = ["มกราคม","กุมภาพันธ์","มีนาคม",
-  "เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม",
-  "กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+  
+  
   const d = new Date();
   d.setMonth(m-1);
-  let month = months[d.getMonth()];
+  let month = monthEN[d.getMonth()];
   let monthth = monthTH[d.getMonth()];
   console.log(month);
   console.log(monthth);
   document.getElementById('myYearss').innerHTML = year;
   document.getElementById('myMonth').innerHTML = monthth;
   
+
   const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,m)
   const amount_Deposit = document.getElementsByClassName('totolBudgets_data_deposit'); 
   const amount_Borrow_pay = document.getElementsByClassName('totolBudgets_data_pay');
@@ -378,6 +381,8 @@ async function selectMonth(year,m) {
   const amount_total = document.getElementsByClassName('totolBudgets_total');  
   const amount_withdraw = document.getElementsByClassName('totolBudgets_data_withdraw');
   const amount_total_sum = document.getElementsByClassName('totolBudgets_total_sum');   
+  const inputLoan = document.getElementsByClassName("Budgets_loan_")[0];
+  
   try {
     const collections 
     = await  db.collection('transactions')
@@ -393,7 +398,7 @@ async function selectMonth(year,m) {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sumDeposited);
     }
-    amount_Deposit[0].innerHTML  = sumDeposited;
+    amount_Deposit[0].innerHTML  = sumDeposited.toLocaleString();;
     const borrow_pay 
     = await  db.collection('transactions')
                .where("type", "==", "borrow_pay")
@@ -447,20 +452,46 @@ async function selectMonth(year,m) {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sumWithdraw);
     }
-    amount_Borrow_pay[0].innerHTML  = sumBorow_pay;
+    amount_Borrow_pay[0].innerHTML  = sumBorow_pay.toLocaleString();
     let Total = sumDeposited + sumBorow_pay + sumLoan;
-    amount_Total[0].innerHTML = Total;
-    amount_loanRemain[0].innerHTML = sumLoan;
-    amount_total_loan[0].innerHTML = sumAmountLoan;
-    amount_total[0].innerHTML = Total - sumAmountLoan;
-    amount_withdraw[0].innerHTML = sumWithdraw;
-    amount_total_sum[0].innerHTML = Total - sumAmountLoan - sumWithdraw;
+    amount_Total[0].innerHTML = Total.toLocaleString();
+    amount_loanRemain[0].innerHTML = sumLoan.toLocaleString();
+    
+    let [DateStart, DateEnd] = getDate();
+    if(DateStart != startOfMonthDate && DateEnd != endOfMonthDate){
+      console.log(DateStart);
+      console.log(startOfMonthDate);
+        inputLoan.classList.add('hide');
+        amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
+        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
+        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
+        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
+    }
+    else {
+      inputLoan.classList.remove('hide');
+      if(sumAmountLoan){
+        amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
+        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
+        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
+        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
+        document.getElementsByClassName("submit")[0].classList.add('hide');
+        document.getElementsByClassName("edit")[0].classList.remove('hide');
+        document.getElementById('edited').onclick 
+           = function() {edit(year, month, Total, sumAmountLoan, m, sumWithdraw)};
+      }
+      else{
+        amount_total_loan[0].innerHTML = '';
+        amount_total[0].innerHTML = '';
+        amount_withdraw[0].innerHTML = '';
+        amount_total_sum[0].innerHTML = '';
+        document.getElementById('submited').onclick 
+           = function() {submit(year, month, Total, sumLoan, m, sumWithdraw)};
+      }  
+    } 
   } 
-  
   catch (error) {
     console.log(error);
-  }
-    
+  } 
 }
 
  function getSelectMonth(years,m) {
@@ -468,7 +499,7 @@ async function selectMonth(year,m) {
   const date = new Date()
   date.setFullYear(years, m-1, 1);
   
-  //console.log(date);
+  console.log(date);
   const dateString = date.toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
 
   const [day,month ,year] = dateString.trim().split(",")[0].split("/")
@@ -506,3 +537,185 @@ function getSelectDate(years,m) {
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 }
+
+async function submit(year, m, Total, sumMoneyLoan, mNum, sumWithdraw) {
+  let amount_loan = document.getElementById('money_loan').value;
+ /* const month = ["January","February","March",
+  "April","May","June","July","August","September",
+  "October","November","December"];*/
+ //console.log(year);
+ console.log(m);
+ console.log(mNum);
+  const newMoneyBorrow = {
+    amount: amount_loan,
+    amount_total: amount_loan,
+    date: new Date().toISOString()
+  };
+  const newTransaction = {
+    personalId: 'admin',
+    type: 'refund',
+    amount: sumMoneyLoan * 1,
+    date: new Date().toISOString()
+  };
+  const newTransaction2 = {
+    personalId: 'admin',
+    type: 'loan',
+    amount: amount_loan * 1,
+    date: new Date().toISOString()
+  };
+  const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,mNum)
+  const today = new Date(); //"July 21, 1983 01:15:00"
+  console.log(today);
+  let yearToday = today.getFullYear();
+  let monthToday = monthEN[today.getMonth()];
+  //let testyear = 1112;
+  const checkDate 
+    = await db.collection('money_borrow')
+    .where("date", ">=", startOfMonthDate )
+    .where("date", "<=", endOfMonthDate )
+    .get()
+     let checkDate_money_borow ;
+    for(const collection_check of checkDate.docs) {
+     checkDate_money_borow = collection_check.data().date;
+    }
+  if(checkDate_money_borow >= startOfMonthDate && checkDate_money_borow <= endOfMonthDate){
+    alert("ท่านได้ทำรายการของเดือนนี้ไปแล้ว");
+  }
+  /*else {
+    alert("???");
+  }*/
+    
+  else if(amount_loan > Total){
+    console.log(Total);
+    alert("จำนวนเงินไม่ถูกต้อง");
+  }
+  else if (yearToday != year && monthToday != m){
+    alert("ไม่อยู่ในช่วงทำรายการ กรุณาตรวจสอบเดือนและปีให้ถูกต้อง");
+  }
+  else{
+    console.log(yearToday);
+    console.log(monthToday);
+    db.collection('money_borrow').add(newMoneyBorrow);
+    db.collection('transactions').add(newTransaction);
+    db.collection('transactions').add(newTransaction2);
+    const budgetsDoc = db.doc(`/budgets/${yearToday}`);
+    budgetsDoc
+      .get()
+      .then((data) => {
+        if (data.exists) {
+          //userData = data.data();
+          return budgetsDoc.update({
+            total: data.data().total + sumMoneyLoan - amount_loan * 1,
+            updatedAt: new Date().toISOString()
+          });
+        }
+      })
+      .then(() => {
+        window.alert('ทำรายการปล่อยกู้เรียบร้อย');
+        resetFields();
+        setTotalBudgets(sumWithdraw, Total, amount_loan);
+        
+      })
+      
+       
+      
+      .catch((err) => {
+        console.error(err);
+      });
+    }
+}
+function resetFields() {
+  let amount_loan = document.getElementById('money_loan');
+
+  amount_loan.value = '';
+}
+
+function setTotalBudgets(sumWithdraw, Total, amount_loan){
+  console.log(amount_loan);
+  let sumAmountLoan = amount_loan;
+  let amount_total_loan = document.getElementsByClassName('totolBudgets_data_total_loan');  
+  let amount_total = document.getElementsByClassName('totolBudgets_total');  
+  let amount_withdraw = document.getElementsByClassName('totolBudgets_data_withdraw');
+  let amount_total_sum = document.getElementsByClassName('totolBudgets_total_sum'); 
+  amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
+  amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
+  amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
+  amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();  
+  
+  document.getElementsByClassName("submit")[0].classList.add('hide');
+  document.getElementsByClassName("edit")[0].classList.remove('hide');
+}
+async function edit(year, m, Total, sumMoneyLoan, mNum, sumWithdraw) {
+  let amount_loan = document.getElementById('money_loan').value;
+ console.log(m);
+ console.log(mNum);
+  /*const newMoneyBorrow = {
+    amount: amount_loan,
+    amount_total: amount_loan,
+    date: new Date().toISOString(),
+    update: new Date().toISOString()
+  };
+  const newTransaction2 = {
+    personalId: 'admin',
+    type: 'loan',
+    amount: amount_loan * 1,
+    date: new Date().toISOString()
+  };*/
+  const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,mNum)
+  const today = new Date(); //"July 21, 1983 01:15:00"
+  console.log(today);
+  let yearToday = today.getFullYear();
+  let monthToday = monthEN[today.getMonth()];
+  //let testyear = 1112;
+  const checkDate 
+    = await db.collection('money_borrow')
+    .where("date", ">=", startOfMonthDate )
+    .where("date", "<=", endOfMonthDate )
+    .get()
+     let checkDate_money_borow;
+     let checkDate_money_borow_id;
+    for(const collection_check of checkDate.docs) {
+      console.log(collection_check.id);
+      checkDate_money_borow_id = collection_check.id;
+     checkDate_money_borow = collection_check.data().date;
+    }
+    if(amount_loan > Total){
+      console.log(Total);
+      alert("จำนวนเงินไม่ถูกต้อง");
+    }
+    else if (checkDate_money_borow >= startOfMonthDate && checkDate_money_borow <= endOfMonthDate){
+      alert("ยืนยันการแก้ไข");
+      db.collection('money_borrow').doc(checkDate_money_borow_id).update({
+        amount: amount_loan,
+        amount_total: amount_loan,
+        update: new Date().toISOString()
+      })
+      console.log(yearToday);
+      console.log(monthToday);
+      //db.collection('money_borrow').add(newMoneyBorrow);
+      //db.collection('transactions').add(newTransaction);
+      //db.collection('transactions').add(newTransaction2);
+      const budgetsDoc = db.doc(`/budgets/${yearToday}`);
+      budgetsDoc
+        .get()
+        .then((data) => {
+          if (data.exists) {
+            //userData = data.data();
+            return budgetsDoc.update({
+              total: data.data().total + sumMoneyLoan - amount_loan * 1,
+              updatedAt: new Date().toISOString()
+            });
+          }
+        })
+        .then(() => {
+          window.alert('แก้ไขรายการปล่อยกู้เรียบร้อย');
+          resetFields();
+          setTotalBudgets(sumWithdraw, Total, amount_loan);
+          
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+}
+

@@ -118,6 +118,8 @@ padding: 8px;
 }
 .detail-amount-month-deposit,
 .detail-amount-month-withdraw,
+.detail-amount-month-borrow,
+.detail-amount-month-borrwpay,
 .detail-amount-year,
 .detail-amount {
 border: 1px solid #dddddd;

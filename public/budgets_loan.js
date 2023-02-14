@@ -410,6 +410,7 @@ async function selectMonth(year,m) {
     for(const collection of collections.docs) {
       sumDeposited += collection.data().amount * 1
       //console.log(collection.data().date.split("T")[0]);
+      console.log(collection.data().date)
       console.log(sumDeposited);
     }
     amount_Deposit[0].innerHTML  = sumDeposited;

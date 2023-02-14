@@ -560,7 +560,7 @@ async function getMonthlyBudgetDeposit() {
       console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString();  
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -585,7 +585,7 @@ async function getMonthlyBudgetWithdraw() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString();  
     //console.log("transactions", collection.docs[0].data());
   } 
   
@@ -610,7 +610,7 @@ async function getMonthlyBudgetBorrow() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString();  
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -635,7 +635,7 @@ async function getMonthlyBudgetBorrowPay() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum 
+    amountMonth[0].innerHTML  = sum.toLocaleString();  
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -672,7 +672,7 @@ async function getYearsBudget() {
       //console.log(collection.data().date.split("T")[0]);
       console.log(sum);
     
-    amountYear[0].innerHTML  = sum
+    amountYear[0].innerHTML  = sum.toLocaleString(); 
     //console.log("transactions", collection.docs[0].data());
   } 
   catch (error) {
@@ -690,9 +690,9 @@ async function getTotalBudget() {
 
     for(const collection of collections.docs) {
       sum += collection.data().total * 1
-      //console.log(sum);
+      //console.log(sum.toLocaleString());
     }
-    amountTotal[0].innerHTML  = sum 
+    amountTotal[0].innerHTML  = sum.toLocaleString();  
   } 
   catch (error) {
     console.log(error);

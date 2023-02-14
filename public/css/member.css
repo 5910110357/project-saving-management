@@ -95,19 +95,19 @@ margin-bottom: 3px;
 
 .profile-history-detail th {
   border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-  color: rgb(253, 103, 9);
-  background-color: #ffd3c6;
+    text-align: center;
+    padding: 8px;
+    color: rgb(253, 103, 9);
+    background-color: #ffd3c6;
 }
 
 .profile-history-detail tr:nth-child(even) {
   background-color: #f8f3c8;
 }
 .profile-history-detail.detail-title {
-border: 1px solid #dddddd;
-text-align: left;
-padding: 8px;
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 
 }
 .detail-title-title {
@@ -116,8 +116,10 @@ padding: 8px;
 }
 .detail-amount-month-deposit,
 .detail-amount-month-withdraw,
+.detail-amount-month-borrow,
+.detail-amount-month-borrwpay,
 .detail-amount-year,
-.detail-amount {
+.detail-amount{
 border: 1px solid #dddddd;
 text-align: right;
 padding: 8px;

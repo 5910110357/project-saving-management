@@ -413,7 +413,12 @@ table {
 .content #myLink {
   display: none;
 }
-
+.content p {
+  font-weight: bold;
+  font-size: 20px;
+  color: #0901f3;
+  margin-top: -15px;
+}
 .content a {
   color: rgb(82, 79, 79);
   padding: 14px 16px;
@@ -480,35 +485,75 @@ table {
 .totolBudgets-content th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #04AA6D;
   color: white;
 }
 .totolBudgets-content td input {
-    width: 50%;
+    width: 40%;
     box-sizing: border-box;
     border: none;
     border-bottom: 2px solid red;
     background-color: #fdebeb;
     padding: 10px 20px;
     border-radius: 16px;
+    margin-right: 0px;
 }
-.totolBudgets-content td button {
-  width: 20%;
+.submit{
+  width: 25%;
   box-sizing: border-box;
   border: 2px solid #04AA6D;
   color: green;
   padding: 10px 20px;
   border-radius: 16px;
+  margin-right: -90px;
+  
 }
-.totolBudgets-content td button:hover{
+.submit:hover{
   background-color: #04AA6D;
   color: white;
 }
+.edit{
+  width: 25%;
+  box-sizing: border-box;
+  border: 2px solid #f59105;
+  color: rgb(154, 95, 0);
+  padding: 10px 20px;
+  border-radius: 16px;
+  margin-right: -90px;
+  
+}
+.edit:hover{
+  background-color: #ed9d08;
+  color: white;
+}
+.totolBudgets_data_deposit,
+.totolBudgets_data_pay,
+.totolBudgets_data_loanRemain,
+.totolBudgets_data_total,
+.totolBudgets_data_total_loan,
+.totolBudgets_total,
+.totolBudgets_data_withdraw,
+.totolBudgets_total_sum {
+  text-align: right;
+  font-weight: bold;
+}
+
 #myYearss {
   color: #0901f3;
   margin-top: 10px;
   font-size: 20px;
+}
+.Budgets_loan,
+.totolBudgets_data_td3 {
+  background-color: #f8ee82e6;
+}
+.totolBudgets_datas,
+.totolBudgets_data_total,
+.totolBudgets_total,
+.totolBudgets_total_sum {
+  background-color: #f9b4b4;
+  font-weight: bold;
 }
 @media only screen and (max-width: 800px) {
   .container {
@@ -589,6 +634,7 @@ table {
   }
 
 }
+
 
 
 
