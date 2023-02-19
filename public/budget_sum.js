@@ -496,20 +496,17 @@ async function selectMonth(year,m) {
 
  function getSelectMonth(years,m) {
   //console.log(m);
-  const date = new Date()
-  date.setFullYear(years, m-1, 1);
+  const date = new Date(years, m-1); //เดือน m 1-12
   
   console.log(date);
-  const dateString = date.toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
+  let year = date.getFullYear();
+  let month = date.getMonth()+1; // แปลงเป็นเดือน 1-12
 
-  const [day,month ,year] = dateString.trim().split(",")[0].split("/")
-
-  const totalDays =  new Date(year, month, 0).getDate()
+  const totalDays =  new Date(year, month, 0).getDate(); // วันสุดท้ายของเดือน
   //console.log(dateString);
   //console.log(totalDays);
   //console.log(m);
   //console.log(years);
-
   return [`${years}-${month}-01`, `${years}-${month}-${totalDays}`]
 }
 

@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Kanit';
+}
+body {
+    width: 100%;
+    height:auto;
+    padding: 30px 30px;
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.header {
+    position: absolute;
+    width: 1200px;
+    height: 160px;
+    left: 120px;
+    top: 37px;
+    background-color: #FCDEDE;
+    border-color: #E1A0A0;
+    border-style: solid;
+    border-radius: 67px;
+}
+.header h1 {
+    color: #1d04f7;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+}
+.header h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+.lower {
+    position: absolute;
+    width: 1374px;
+    height: 145px;
+    left: 37px;
+    top: 620px;
+    
+}
+.lower .develop {
+    position: absolute;
+    width: 230px;
+    height: 60px;
+    left: 50px;
+    top: 40px;
+
+    font-family: 'Sniglet';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 30px;
+    text-align: center;
+
+    color: #000000;
+}
+#logoCoe {
+    position: absolute;
+    width: 129px;
+    height: 103px;
+    left: 865px;
+    top: 0px;
+}
+#logoPsu {
+    position: absolute;
+    width: 205px;
+    height: 145px;
+    left: 1066px;
+    top: -10px;
+}
+.detail1 {
+    position: absolute;
+    width: 360px;
+    height: 390px;
+    left: 110px;
+    top: 224px;
+    
+    background-color: #ffffff34;
+    border-color: #b8acb6;
+    border-style: solid;
+    border-radius: 67px;
+}
+.detail1 p {
+    position: absolute;
+    width: 329px;
+    height: 210px;
+    left: 18px;
+    top: 64px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}
+.detail2 {
+    position: absolute;
+    width: 406px;
+    height: 390px;
+    left: 505px;
+    top: 224px;
+
+    background-color: #ffffff34;
+    border-color: #b8acb6;
+    border-style: solid;
+    border-radius: 67px;
+}
+.detail2 #manual {
+    position: absolute;
+    width: 85%;
+    height: 20%;
+    left: 42px;
+    top: 57px;
+    background: #848484;
+    border-radius: 67px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.detail2 #manual:hover {
+    background-color: #000000f9;
+}
+.detail2 #login {
+    position: absolute;
+    width: 85%;
+    height: 20%;
+    left: 42px;
+    top: 177px;
+    background: #848484;
+    border-radius: 67px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.detail2 #login:hover {
+    background-color: #000000f9;
+}
+.detail3 {
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    left: 945px;
+    top: 224px;
+
+    background-color: #ffffff34;
+    border-color: #b8acb6;
+    border-style: solid;
+    border-radius: 67px;
+}
+.detail3 #qrCode {
+    position: absolute;
+    left: 45px;
+    top: 55px;
+    width: 300px;
+}
+.detail3 p {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    left: 75px;
+    top: 10px;
+}
