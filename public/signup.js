@@ -39,7 +39,7 @@ function getUserValue() {
     let firstName = document.getElementById('first_name').value;
     let lastName = document.getElementById('last_name').value;
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value = randomPassword.password;
+    let password  = randomPassword.password;
     let sex = document.getElementById('sex').value;
     let address = document.getElementById('address').value;
     let telNumber = document.getElementById('tel_number').value;
