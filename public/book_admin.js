@@ -17,7 +17,7 @@ window.addEventListener('load', async function () {
 function logout() {
   firebase.auth().signOut();
   localStorage.clear();
-  window.location.href = '/login.html';
+  window.location.href = '/index.html';
 }
 function changeValueSearch() {
   if (!this.value) {
@@ -263,6 +263,7 @@ async function insertTable(users, num) {
       localStorage.setItem('pofile', personalId);
       window.location.href = '/borrow.html';
     })
+    /*
     //ปุ่มสำเร็จ
     let btn_success = document.createElement('button')
     btn_success.textContent = "สำเร็จ"
@@ -281,7 +282,7 @@ async function insertTable(users, num) {
         .catch((error) => {
           console.error("Error removing document: ", error);
         })
-    })
+    }) */
 
     //ปุ่มcancel
    

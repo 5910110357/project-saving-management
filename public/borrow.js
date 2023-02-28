@@ -16,7 +16,7 @@ window.addEventListener('load', async function () {
   function logout() {
     firebase.auth().signOut();
     localStorage.clear();
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
   }
   
  async function getUserProfile() {

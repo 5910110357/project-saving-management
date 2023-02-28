@@ -14,6 +14,8 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.js"></script>
 </head>
 <body>
     <div class="container">
@@ -80,6 +82,7 @@
                   </div>
                   <div class="user-profile-card-status"></div>
                 </div> 
+                <button class="editProfile_btn" onclick="editProfile()">แก้ไขข้อมูล</button>
                 <button class="repassword_btn" onclick="rePassword()">เปลี่ยนรหัสผ่าน</button>
                 <button class="logout_btn" onclick="logout()">ออกจากระบบ</button>
               </div>
@@ -101,6 +104,25 @@
                     <button class="submit_btn" onclick="submit()">ยืนยัน</button>
                 </div>
             </div>
+            <div class="edit hide">
+              <div class="icon" >
+                <a href="profileUser.html">
+                    <i class="far fa-user-circle"></i>
+                </a>
+              </div>
+              <div class="editProfile">
+                <label class="label-name-editProfile">ชื่อ</label><br>
+                <input type="text" id="first_name" placeholder="ชื่อ"/><br>
+                <label class="label-name-editProfile">นามสกุล</label><br>
+                <input type="text" id="last_name" placeholder="สกุล"/><br>
+                <label class="label-name-editProfile">ที่อยู่</label><br>
+                <input type="text" id="address" placeholder="ที่อยู่"/><br>
+                <label class="label-name-editProfile">เบอร์ติดต่อ</label><br>
+                <input type="text" id="telNumber" placeholder="เบอร์ติดต่อ"/><br>
+            
+                <button class="submit_btn" onclick="edited()">ยืนยัน</button>
+              </div>
+          </div>
        </div>
     </div>
     

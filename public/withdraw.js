@@ -39,7 +39,7 @@ window.addEventListener('load', async function () {
   function logout() {
     firebase.auth().signOut();
     localStorage.clear();
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
   }
   
   async function  CheckPersonalNumber(event) {
@@ -346,7 +346,7 @@ db.collection('transactions')
        id: doc.id,
        personalId: doc.data().personalId,
        type: doc.data().type,
-       amount: doc.data().amount,
+       amount_withdraw: doc.data().amount_withdraw,
        date: doc.data().date
      });
    });
@@ -358,6 +358,7 @@ db.collection('transactions')
     let user = await db.doc(`users/${transactions[i].personalId}`).get();
     transactions[i].firstName = user.data().firstName;
     transactions[i].lastName = user.data().lastName;
+    console.log(user.data().firstName);
   }
 })
  .then(() => {
@@ -424,7 +425,7 @@ return function () {
              id: doc.id,
              personalId: doc.data().personalId,
              type: doc.data().type,
-             amount: doc.data().amount,
+             amount_withdraw: doc.data().amount_withdraw,
              date: doc.data().date
            });
          });
@@ -469,7 +470,7 @@ function insertTable(transactions, id) {
     cell2.innerHTML = `${transactions[i].personalId}`;
     cell3.innerHTML = `${transactions[i].firstName}`;
     cell4.innerHTML = `${transactions[i].type}`;
-    cell5.innerHTML = `${transactions[i].amount}`;
+    cell5.innerHTML = `${transactions[i].amount_withdraw}`;
     cell6.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
     //cell7.innerHTML = 
     //cell6.append(icon);

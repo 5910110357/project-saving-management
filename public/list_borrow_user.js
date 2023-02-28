@@ -15,7 +15,7 @@ window.addEventListener('load', async function () {
   function logout() {
     firebase.auth().signOut();
     localStorage.clear();
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
   }
 
   //home users
@@ -38,7 +38,7 @@ window.addEventListener('load', async function () {
     address.innerHTML = `${pofile.address}`;
     telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
     sex.innerHTML = `${pofile.sex}`;
-    dividend.innerHTML = `${pofile.dividend} บาท`;
+    //dividend.innerHTML = `${pofile.dividend} บาท`;
   }
   
   function format(mask, number) {

@@ -30,7 +30,7 @@ function random() {
   }
   
   console.log(guid());
-  let password = document.getElementById('password').value= guid() ;
+  let password =  guid() ;
  return {password};
 };
 function getUserValue() {
@@ -65,7 +65,7 @@ function signup() {
     let userDetail = getUserValue();
     let errors = validation(userDetail);
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    //let password = document.getElementById('password').value;
     //let telNumber = document.getElementById('tel_number').value;
     //let uid = firebase.auth().currentUser.uid;
     //let userId;

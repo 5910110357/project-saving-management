@@ -53,39 +53,8 @@ function login(event) {
         .catch((err) => {
           window.alert('Error: ' + err.message);
         });
-    } else {
-      //เก่า
-      /*if (isPersonalNumber(userEmail)) {
-        let user = {};
-  
-        const userData = db.collection('users');
-  
-        userData
-          .doc(userEmail)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              return userData.where('password', '==', userPass).get();
-            } else {
-              window.alert('รหัสผ่านไม่ถูกต้อง');
-            }
-          })
-          .then((data) => {
-            if (!data.empty) {
-              // console.log(data.docs[0].data());
-              user = data.docs[0].data();
-              user.id = data.docs[0].id;
-              console.log(data.docs[0].id);
-              localStorage.setItem('user', JSON.stringify(user));
-              window.location.href = '/home.html';
-            } else {
-              window.alert('รหัสผ่านไม่ถูกต้อง');
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }*/
+    } 
+    else {
       //ใหม่แบบมีบังคับเปลี่ยนรหัส
       if (isPersonalNumber(userEmail)) {
         let user = {};

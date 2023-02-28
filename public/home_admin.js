@@ -119,7 +119,7 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
   function logout() {
     firebase.auth().signOut();
     localStorage.clear();
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
   }
   
   function hiddenItems(items) {

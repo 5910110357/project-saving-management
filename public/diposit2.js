@@ -49,7 +49,7 @@ window.addEventListener('load', async function () {
   function logout() {
     firebase.auth().signOut();
     localStorage.clear();
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
   }
   
  
@@ -441,6 +441,7 @@ function queryFromFirbaseWithOffset(i) {
               let user = await db.doc(`users/${transactions[i].personalId.trim()}`).get();
               transactions[i].firstName = user.data().firstName;
               transactions[i].lastName = user.data().lastName;
+              console.log(transactions[i].firstName);
             }
           })
           .then(() => {
