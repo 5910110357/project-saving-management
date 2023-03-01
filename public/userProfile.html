@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>ข้อมูลสมาชิก</title>
+     <link rel="stylesheet" href="/css/userprofile.css">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/userprofile.css">
     <link href="/font-awsome/css/all.css" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -14,107 +15,44 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="container2">
             <h3>Saving Management System</h3>
             <h4>ข้อมูลสมาชิก</h4>
-            <div class="balance">
-              <div class="user-profile-transaction">
-                <div class="user-transactions-date">
-                    <ul class="user-transactions-list-month">
-                      <li class="user-transactions-date">
-                        <p>มกราคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Jan" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>กุมภาพันธ์</p>
-                        <p class="title-underline"></p>
-                        <p id="Feb" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>มีนาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Mar" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>เมษายน</p>
-                        <p class="title-underline"></p>
-                        <p id="Apr" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>พฤษภาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="May" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>มิถุนายน</p>
-                        <p class="title-underline"></p>
-                        <p id="Jun" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>กรกฎาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Jul" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>สิงหาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Aug" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>กันยายน</p>
-                        <p class="title-underline"></p>
-                        <p id="Sep" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>ตุลาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Oct" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>พฤศจิกายน</p>
-                        <p class="title-underline"></p>
-                        <p id="Nov" class="month"></p>
-                      </li>
-                      <li class="user-transactions-date">
-                        <p>ธันวาคม</p>
-                        <p class="title-underline"></p>
-                        <p id="Dec" class="month"></p>
-                      </li>
-                    </ul>
-                </div>    
-              </div>   
-            </div>
+            <div class="menu">
+              <div class="home" >
+                  <a href="home.html">หน้าหลัก</a>
+              </div>
+              <div class="trans" >
+                  <button class="dropdown" onclick="dropdown()">ธุรกรรม
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="transaction" id="myTransaction">
+                    <a href="diposit.html">ฝากเงิน</a>
+                    <a href="withdraw.html">ถอนเงิน</a>
+                    <a href="borrow_pay.html">ชำระเงินกู้</a>
+                    <a href="borrow.html">กู้เงิน</a>
+                    <a href="book_admin.html">จองคิวเงินกู้</a>
+                    <a href="signup.html">สมัครสมาชิก</a>
+                  </div>
+              </div>
+              <div class="report">
+                <button class="dropdown_report" onclick="dropdownReport()">รายงาน
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="menu_report" id="myReport">
+                  <a href="reportdiposit.html">รายการฝากถอน</a>
+                  <a href="">รายการกู้เงิน</a>
+                  <a href="book_a_loan.html">จองคิวเงินกู้</a>
+                  <a href="member.html">ข้อมูลสมาชิก</a>
+                </div>
+              </div>
+            </div> 
             <div class="details">
-              <div class="menu">
-                <div class="home" >
-                    <a href="home.html">หน้าหลัก</a>
-                </div>
-                <div class="diposit" >
-                    <a href="diposit.html" class="list-menu-img-admin">ฝากเงิน</a>
-                </div>
-                <div class="withdraw">
-                    <a href="withdraw.html" class="list-menu-img-admin">ถอนเงิน</a>
-                </div>
-                <div class="member">
-                    <a href="member.html" class="list-menu-img-admin">ข้อมูลสมาชิก</a>
-                </div>
-                <div class="signup">
-                    <a href="signup.html" class="list-menu-img-admin">สมัครสมาชิก</a>
-                </div>
-                <div class="borrow">
-                    <a href="borrow.html" class="list-menu-img-admin">กู้เงิน</a>
-                </div>
-                <div class="dividend">
-                    <a href="dividend.html" class="list-menu-img-admin">เงินปันผล</a>
-                </div>
-                <div class="book">
-                    <a href="book_a_loan.html" class="list-menu-img-user">จองคิวเงินกู้</a>
-                </div>
-              </div> 
               <div class="user-profile-coatianer">
                 <div class="user-profile-card">
                   <div class="user-profile-card-title">
@@ -149,10 +87,10 @@
                       <p class="user-name-label">เพศ:</p>
                       <p id="user-sex"></p>
                     </div>
-                    <div class="user-profile-card-details-label">
+                    <!--div class="user-profile-card-details-label">
                       <p class="user-name-label">จำนวนเงินปันผล:</p>
                       <p id="user-dividend"></p>
-                    </div>
+                    </!--div-->
                   </div>
                   <div class="user-profile-card-status"></div>
                 </div> 

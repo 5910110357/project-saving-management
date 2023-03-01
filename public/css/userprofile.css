@@ -2,319 +2,221 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,200&display=swap');
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Kanit';
-    background-image: url(bg.jpg);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Kanit';
 }
 body {
-    height: 745px;
-    width: 1530px;
-    padding: 30px 45px;
-    background: url(../img/bg.jpg) no-repeat;
+width: 100%;
+height:auto;
+padding: 30px 30px;
+background: url(../img/bg.jpg);
+background-repeat: no-repeat;
+background-position: center;
+
 }
+
 .container {
-    width: 1300px;
-    height: 640px;
-    margin-top:  30px;
-    margin-left: 30px;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    padding: 5px 5px;
-    
-    border-radius: 70px;
-    outline: none;
-    color: black;
-    background-color: antiquewhite;
+width: 100%;
+height:100%;
+padding: 13px 25px;
+border-radius: 70px;
+background-color: antiquewhite;
 }
+
 .container .container2 {
-    width: 100%;
-    text-align: center;
+float: left;
+width: 100%;
+height:auto;
+border-radius: 50px;
+text-align:center;
+padding: 30px;
+background-color: white;
+text-align: center;
 }
-.container2 {
-    max-width: 1270px;
-    height: 600px;
-    border-radius: 50px;
-    padding:5px 5px;
-    margin-top:  10px;
-    margin-left: 0px;
-    margin-bottom: 10px;
-    margin-right: 20px;
-    outline: none;
-    color: black;
-    background-color: white;
-}
-.container .container2 h3 {
-    font-family: 'Kanit';
-    text-transform: uppercase;
-    margin-top:  3px;
-    color: rgb(255, 0, 230);
-    margin-left: -40px;
-    font-size: 15px;
-    padding:5px 2px;
-    width: 30%;
+
+.container2 h3 {
+font-family: 'Kanit';
+text-transform: uppercase;
+margin-top:  -15px;
+color: rgb(255, 0, 230);
+margin-right: 850px;
+font-size: 15px;
+padding: 5px 10px;
 }
 .container2 h4 {
-    font-family: 'Kanit';
-    text-transform: uppercase;
-    margin-top:  -10px;
-    color: rgb(34, 0, 255);
-    margin-right: 950px;
-    font-size: 25px;
-    padding:5px 5px;
+font-family: 'Kanit';
+text-transform: uppercase;
+margin-top:  -10px;
+color: rgb(4, 0, 255);
+margin-right: 870px;
+font-size: 25px;
+padding: 5px 10px;
+font-weight: bold;
 }
-.container2 .balance {
-    width: 300px;
-    height: 500px;
-    margin-top:  15px;
-    margin-left: 10px;
-    padding: 10px 5px;
-    border-radius: 70px;
-    outline: none;
-    color: black;
-    background-color: #fef2f2;
-}
-.balance h1 {
-    font-family: 'Kanit';
-    text-transform: uppercase;
-    margin-top:  30px;
-    color: rgb(1, 1, 1);  
-}
-.container2 .balance h2 {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(0, 25, 247);
-      
-}
-.container2 .balance h3 {
-    text-transform: uppercase;
-    margin-top:  20px;
-    color: rgb(1, 1, 1); 
-    width: 300px;
-    margin-left: 10px;
-    font-size: 25px;
+.details {
+  width: 100%;
+  height:80%;
+  padding: 0px;
+  border-radius: 70px; 
+  background-color: #fae2e2;
+  margin-top: 0px;
+
 }
 .logout_btn {
-    width: 30%;
-    padding: 12px 1px;
-    margin-top: 10px;
-    margin-left: 500px;
-    border-radius: 15px;
-    outline: none;
-    background-color: #f50303;
-    color: aliceblue;
-    border: none;
-    text-transform: uppercase;
-    font: bold 'Montserrat' 2em;
-  }
-  .logout_btn:hover {
-    background-color: rgb(245, 160, 160);
-  }
-  .details .btn-list {
-    width: 20%;
-    padding: 10px 1px;
-    margin-right: 550px;
-    margin-top: 0px;
-    text-transform: uppercase;
-    font-family: 'Quicksand';
-    background-color: whitesmoke;
-    border: solid 1px rgb(28, 230, 28);
-    border-radius: 15px;
-    color: rgb(101, 245, 127);
-    outline: none;
-    
-  }
-  .details .btn-list i {
-    margin-right: 10px;
-  }
-  .details .btn-list:hover {
-    background-color: rgb(101, 245, 101);
-    border: solid 1px rgb(28, 230, 68);
-    color: whitesmoke;
-  }
-.container2 .details {
-    width: 800px;
-    height: 500px;
-    margin-top:  -500px;
-    margin-left: 320px;
-    margin-right: 30px;
-    padding: 5px 5px;
-    border-radius: 70px;
-    outline: none;
-    color: black;
-    background-color: #fae2e2;
+  width: 20%;
+  padding: 12px 1px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: -780px;
+  border-radius: 15px;
+  outline: none;
+  background-color: #f50303;
+  color: aliceblue;
+  border: none;
+  text-transform: uppercase;
+  font: bold 'Montserrat' 2em;
 }
-.container2 .menu {
-    margin-left: -20px;
+.logout_btn:hover {
+  background-color: rgb(245, 160, 160);
 }
-.menu .home {
-  width: 120px;
+.menu {
+  width: 30%;
   height: 40px;
-  margin-top:  -50px;
-  margin-left: -50px;
+  margin-top:  -40px;
+  margin-left: 260px;
   padding: 5px 5px;
   border-radius: 30px;
   outline: none;
   color: black;
-  
 }
 .home a {
   text-transform: uppercase;
-  margin-top:  20px;
+  margin-top:  0px;
   color: rgb(3, 3, 3);
-  font-size: 20px;
+  font-size: 18px;
+  margin-right: 140px;
 }
 .home a:hover {
   color: rgb(46, 0, 250);
 }
-.menu .diposit {
-  width: 120px;
+.menu .trans {
+  width: 200px;
   height: 40px;
   margin-top:  -40px;
-  margin-left: 50px;
+  margin-left: 150px;
   padding: 5px 5px;
   border-radius: 30px;
   outline: none;
   color: black;
-  
+  background-color: #8499f7;
+  overflow: hidden;
 }
-.diposit a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
+.trans .dropdown {
+cursor: pointer;
+font-size: 20px;  
+border: none;
+outline: none;
+color: white;
+padding: 5px 5px;
+width: 120px;
+height: 40px;
+border-radius: 30px;
+background-color: inherit;
+font-family: 'Kanit';
+margin: 0;
 }
-.diposit a:hover {
-  color: rgb(46, 0, 250);
-}
-.menu .withdraw {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 145px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
-}
-.withdraw a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
-}
-.withdraw a:hover {
-  color: rgb(46, 0, 250);
-}
-.menu .borrow {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 230px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
-}
-.borrow a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
-}
-.borrow a:hover {
-  color: rgb(46, 0, 250);
-}
-.menu .dividend {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 310px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
-}
-.dividend a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
-}
-.dividend a:hover {
-  color: rgb(46, 0, 250);
-}
-.menu .book {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 420px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
-  
-}
-.book a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
-}
-.book a:hover {
-  color: rgb(46, 0, 250);
-}
-.menu .member {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 535px;
-  margin-right: 200px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
+
+.navbar a:hover, .trans:hover .dropdown, .dropdown:focus {
+background-color:  #4767f4;
+border-radius: 30px;
 
 }
-.member a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
+
+.transaction {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
 }
-.member a:hover {
-  color: rgb(46, 0, 250);
+
+.transaction a {
+float: none;
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+text-align: left;
 }
-.menu .signup {
-  width: 120px;
-  height: 40px;
-  margin-top:  -40px;
-  margin-left: 650px;
-  margin-right: 20px;
-  padding: 5px 5px;
-  border-radius: 30px;
-  outline: none;
-  color: black;
+
+.transaction a:hover {
+background-color: rgb(182, 221, 252);
 }
-.signup a {
-  text-transform: uppercase;
-  color: rgb(3, 3, 3);
-  font-size: 20px;
+
+.show {
+display: block;
 }
-.signup a:hover {
-  color: rgb(46, 0, 250);
+.menu .report {
+width: 220px;
+height: 40px;
+margin-top:  -40px;
+margin-left: 390px;
+padding: 5px 5px;
+border-radius: 30px;
+outline: none;
+color: black;
+background-color: #8499f7;
+overflow: hidden;
+}
+.report .dropdown_report {
+cursor: pointer;
+font-size: 20px;  
+border: none;
+outline: none;
+color: white;
+padding: 5px 5px;
+width: 120px;
+height: 40px;
+border-radius: 30px;
+background-color: inherit;
+font-family: 'Kanit';
+background-color: #8499f7;
+}
+
+.navbar a:hover, .trans:hover .dropdown_report, .dropdown_report:focus {
+background-color:  #4767f4;
+border-radius: 30px;
+
+}
+
+.menu_report {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.menu_report a {
+float: none;
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+text-align: left;
+}
+
+.menu_report a:hover {
+background-color: rgb(182, 221, 252);
 }
 .user-transactions-list-month li {
   list-style: none;
 }
-.balance {
-  margin-left: 30px;
-  margin-top: -10px;
-  border-radius: 10px;
-  font-size: 10px;
-}
-.balance .user-transactions-list-month {
-  padding: 5px 5px;
-  margin-top: 0px;
-  margin-left: auto;
-  /* margin-bottom: 0.5em; */
-  /* overflow-y: scroll; */
-}
+
 .user-transactions-list-month .user-transactions-date {
   padding: 0.2em -1em;
   margin-top: -10px;

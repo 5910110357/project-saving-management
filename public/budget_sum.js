@@ -101,7 +101,7 @@ window.onclick = function(e) {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum.toLocaleString(); 
+    amountMonth[0].innerHTML  = sum.toLocaleString() ; 
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -231,12 +231,11 @@ function initailUserTable(perPage = 5) {
       total = snap.size;
       paginate = Math.ceil(total / perPage);
       console.log(total);
-      createPaginateButton(paginate);
+      //createPaginateButton(paginate);
       
       return db
         .collection('budgets')
         .orderBy('updatedAt', 'desc')
-        .limit(`${perPage}`)
         .get();
     })
     .then((data) => {
@@ -251,13 +250,14 @@ function initailUserTable(perPage = 5) {
       return;
     })
     .then(() => {
-      insertTable(listYear, 0);
+      //insertTable(listYear, 0);
+      Paginate(listYear);
     })
     .catch((err) => {
       console.error(err);
     });
 }
-function createPaginateButton(totalPage) {
+/*function createPaginateButton(totalPage) {
   for (let i = 1; i <= totalPage; i++) {
     let el = document.createElement('li');
     let a = document.createElement('a');
@@ -337,6 +337,79 @@ function insertTable(listYear, d) {
     newNode.onclick = function() {getMonthOfYear(listYear[i].id)};
     
   }
+}*/
+function Paginate(totalYear){ 
+  let maxPages = totalYear;
+ 
+  changePage(1, maxPages);
+  
+  document.getElementById('btn_next').onclick 
+         = function() {nextPage(maxPages)};
+  document.getElementById('btn_prev').onclick 
+         = function() {prevPage(maxPages)};
+}
+var current_page = 1;
+var records_per_page = 5;
+
+function prevPage(maxPages)
+{
+  if (current_page > 1) {
+      current_page--;
+      changePage(current_page, maxPages);
+  }
+}
+
+async function nextPage(maxPages)
+{
+let numPage = Math.ceil(maxPages.length / records_per_page);
+  if (current_page < numPage) {
+      current_page++;
+      changePage(current_page, maxPages);
+  }
+}
+
+function changePage(page, maxPages)
+{
+let numPage = Math.ceil(maxPages.length / records_per_page);
+  var btn_next = document.getElementById("btn_next");
+  var btn_prev = document.getElementById("btn_prev");
+  var listing_table = document.getElementById("listingTable");
+  var page_span = document.getElementById("page");
+
+  // Validate page
+  if (page < 1) page = 1;
+  if (page > numPage) page = numPage;
+  
+  listing_table.innerHTML = "";
+  //newNode.innerHTML = '';
+  for (let i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
+      console.log(page * records_per_page);
+      const newNode = document.createElement("button");
+      newNode.className = 'btnYear';
+      
+    const list = document.getElementById('listingTable');
+    list.insertBefore(newNode, list.children[-1]);
+
+    // Create a text node:
+    const textNode = document.createTextNode(maxPages[i].id);
+
+    newNode.appendChild(textNode);
+    newNode.onclick = function() {getMonthOfYear(maxPages[i].id)};
+  }
+  //page_span.innerHTML = page;
+
+  /*if (page == 1) {
+      btn_prev.style.visibility = "hidden";
+  } else {
+      btn_prev.style.visibility = "visible";
+  }
+
+  if (page == numPage || page != 1) {
+      btn_next.style.visibility = "hidden";
+  } else {
+      btn_next.style.visibility = "visible";
+  }*/
+  
 }
 async function getMonthOfYear(year) {
   var x = document.getElementById("myLink").classList.toggle("show");
@@ -354,7 +427,7 @@ async function getMonthOfYear(year) {
   document.getElementById('October').onclick = function() {selectMonth(year, "10")};
   document.getElementById('November').onclick = function() {selectMonth(year, "11")};
   document.getElementById('December').onclick = function() {selectMonth(year, "12")};
-     
+  //document.getElementById('AllYear').onclick = function() {selectMonth(year, "12")};
 }
 
 async function selectMonth(year,m) {
@@ -392,7 +465,7 @@ async function selectMonth(year,m) {
                .get()
     let sumDeposited = 0
     console.log(startOfMonthDate);
-    
+    console.log(endOfMonthDate);
     for(const collection of collections.docs) {
       sumDeposited += collection.data().amount * 1
       //console.log(collection.data().date.split("T")[0]);
@@ -454,6 +527,7 @@ async function selectMonth(year,m) {
     }
     amount_Borrow_pay[0].innerHTML  = sumBorow_pay.toLocaleString();
     let Total = sumDeposited + sumBorow_pay + sumLoan;
+    console.log(Total);
     amount_Total[0].innerHTML = Total.toLocaleString();
     amount_loanRemain[0].innerHTML = sumLoan.toLocaleString();
     
@@ -463,17 +537,17 @@ async function selectMonth(year,m) {
       console.log(startOfMonthDate);
         inputLoan.classList.add('hide');
         amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
-        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
-        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
+        amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
+        amount_withdraw[0].innerHTML =  sumWithdraw.toLocaleString();
+        amount_total_sum[0].innerHTML = (Total - sumWithdraw - sumAmountLoan ).toLocaleString();
     }
     else {
       inputLoan.classList.remove('hide');
       if(sumAmountLoan){
         amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
+        amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
         amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
-        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
+        amount_total_sum[0].innerHTML = (Total - sumWithdraw - sumAmountLoan).toLocaleString();
         document.getElementsByClassName("submit")[0].classList.add('hide');
         document.getElementsByClassName("edit")[0].classList.remove('hide');
         document.getElementById('edited').onclick 
@@ -495,19 +569,19 @@ async function selectMonth(year,m) {
 }
 
  function getSelectMonth(years,m) {
-  //console.log(m);
-  const date = new Date(years, m-1); //เดือน m 1-12
+  console.log(m);
+  const date = new Date(years, m); //เดือน m 1-12
   
   console.log(date);
   let year = date.getFullYear();
-  let month = date.getMonth()+1; // แปลงเป็นเดือน 1-12
-
+  let month = date.getMonth(); // แปลงเป็นเดือน 1-12
+  //console.log(month);
   const totalDays =  new Date(year, month, 0).getDate(); // วันสุดท้ายของเดือน
   //console.log(dateString);
-  //console.log(totalDays);
+  console.log(totalDays);
   //console.log(m);
   //console.log(years);
-  return [`${years}-${month}-01`, `${years}-${month}-${totalDays}`]
+  return [`${years}-${m}-01`, `${years}-${m}-${totalDays}`]
 }
 
 function getSelectDate(years,m) {
@@ -635,9 +709,9 @@ function setTotalBudgets(sumWithdraw, Total, amount_loan){
   let amount_withdraw = document.getElementsByClassName('totolBudgets_data_withdraw');
   let amount_total_sum = document.getElementsByClassName('totolBudgets_total_sum'); 
   amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-  amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
+  amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
   amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
-  amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();  
+  amount_total_sum[0].innerHTML = (Total - sumWithdraw - sumAmountLoan ).toLocaleString();  
   
   document.getElementsByClassName("submit")[0].classList.add('hide');
   document.getElementsByClassName("edit")[0].classList.remove('hide');

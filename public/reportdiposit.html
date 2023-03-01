@@ -13,12 +13,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+  </head>
 <body>
     <div class="container">
        <div class="container2">
             <h3>Saving Management System</h3>
-            <h4>ข้อมูลสมาชิก</h4>
+            <h4>รายการฝากถอน</h4>
             <div class="balance">
               <h1 class="profile-username"></h1>
               <span class="profile-email"></span>
@@ -91,12 +91,12 @@
               </div> 
               <div class="content">
                 <div id="myLinks"></div>
-                <!--button class="w3-button w3-black w3-display-left" 
-                    onclick="plusDivs(-1)">&#10094;
-                  </!--button>
-                  <button-- class="w3-button w3-black w3-display-right" 
-                    onclick="plusDivs(1)">&#10095;
-                  </button-->
+                <div class="nextPage">
+                <a  id="btn_prev"><<</a>
+                <div id="listingTable"></div>
+                <a id="btn_next">>></a>
+                </div>
+               
                 <div id="myLink" class="myLink-content">
                   <div id="myYears"></div>               
                   <a id="January">มกราคม</a>
@@ -112,39 +112,54 @@
                   <a id="November">พฤศจิกายน</a>
                   <a id="December">ธันวาคม</a>
                 </div>
-                <div class="tableList">
-                  <table class="table" id="myTable">
-                    <thead>
-                      <p id="demo"></p>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ชื่อ</th>
-                        <th scope="col">นามสกุล</th>
-                        <th scope="col">ยอดสะสม</th>
-                        <th scope="col">ระยะเวลา</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
-                </div>
-                <div class="pagination">
-                  <div>
-                      <a class="btn fastforward-btn" ><i class="fa fa-angle-double-left"></i></a>
-                  </div>
-                  <div>
-                      <a class="btn fastbackward-btn"><i class="fa fa-angle-double-right"></i></a>
-                  </div>
               </div>
+              
+                <div class="list-menu">
+                  <div id="myYearss"></div>
+                <div id="myMonth"></div>
+                <!--div class="input-group">
+                  <div class="all">
+                    <div class="form-outline">
+                      <input
+                        type="search"
+                        id="form1"
+                        class="form-control"
+                        placeholder="Search"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      onclick="searchByPersonalId()"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </!--div-->
+                <table class="table" id="myTable"> 
+                  <thead>
+                    <tr>
+                      <th>วันที่</th>
+                      <th>เลขบัตรประชาชน</th>
+                      <th>ชื่อ</th>
+                      <th>ประเภท</th>
+                      <th>จำนวนเงิน</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
                   <nav class="container-pagination">
                     <ul class="pagination pagination-md" id="pagination"></ul>
                   </nav>
-                </div>
-                <!--button class="back" onclick="document.location='report.html'">หน้าหลัก</!--button-->
-              </div> 
-          </div>
-             
+                </div> 
+                
+              
+                    
+              </div>
             </div>
-      </div>
+          </div>
+      
 
       <script src="/dayjs.min.js"></script>
       <script src="/th.js"></script>

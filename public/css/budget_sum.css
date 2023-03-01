@@ -490,7 +490,7 @@ table {
   color: white;
 }
 .totolBudgets-content td input {
-    width: 40%;
+    width: 45%;
     box-sizing: border-box;
     border: none;
     border-bottom: 2px solid red;
@@ -554,6 +554,21 @@ table {
 .totolBudgets_total_sum {
   background-color: #f9b4b4;
   font-weight: bold;
+}
+.nextPage {
+  display: flex;
+  text-align: center;
+  margin-left: 13%;
+  margin-top: 0%;
+}
+.nextPage #listingTable{
+  display: flex;
+  
+}
+#btn_prev , #btn_next {
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
 }
 @media only screen and (max-width: 800px) {
   .container {

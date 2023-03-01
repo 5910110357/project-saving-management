@@ -119,6 +119,9 @@ function getBudgetsTotal(name, email, amountTotal, amountMonth, amountYear, user
     localStorage.clear();
     window.location.href = '/index.html';
   }
+  function openTab(th) {
+    window.open(th.name,'_blank');
+}
   
   function hiddenItems(items) {
     for (const item of items) {

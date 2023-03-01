@@ -3,6 +3,7 @@ let currentPage = 1;
 let total;
 let paginate;
 var totalShow = 0;
+let perPage = 8;
 const monthTH = ["มกราคม","กุมภาพันธ์","มีนาคม",
   "เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม",
   "กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
@@ -72,7 +73,7 @@ async function getMonthlyBudgetDeposit() {
       //console.log(collection.data().date.split("T")[0]);
       //console.log(sum);
     }
-    amountMonth[0].innerHTML  = sum.toLocaleString(); 
+    amountMonth[0].innerHTML  = sum.toLocaleString() ; 
     //console.log("transactions", collections.docs[0].data());
   } 
   
@@ -216,17 +217,6 @@ window.onclick = function(e) {
     }
   }
 }
-/*function myFunction() {
-  let perPage;
-  var dateStart = document.getElementById("myDateStart").value;
-  //document.getElementById("demoStart").innerHTML = dateStart;
-  var dateEnd = document.getElementById("myDateEnd").value;
-  //document.getElementById("demoEnd").innerHTML = dateEnd;
-  console.log(dateStart);
-  console.log(dateEnd);
-  clearListElement();
-  initailUserTable(perPage, dateStart, dateEnd);
-}*/
 
 //selectyear
 async function initailUserTable(perPage = 5) {
@@ -237,14 +227,11 @@ async function initailUserTable(perPage = 5) {
     .then((snap) => {
       total = snap.size;
       paginate = Math.ceil(total / perPage);
-      console.log(total);
-      createPaginateButton(paginate);
-      nextPage(paginate);
-      
+      console.log(listYear);
+  
       return db
         .collection('budgets')
         .orderBy('updatedAt', 'desc')
-        .limit(`${perPage}`)
         .get();
     })
     .then((data) => {
@@ -254,115 +241,16 @@ async function initailUserTable(perPage = 5) {
           id: doc.id
           
         });
-        console.log(doc.id);
       });
       return listYear;
     })
     .then(() => {
-      insertTable(listYear, 0);
+      Paginate(listYear);
     })
     .catch((err) => {
       console.error(err);
     });
   }
-
-function createPaginateButton(totalPage) {
-  for (let i = 1; i <= totalPage; i++) {
-    let el = document.createElement('li');
-    let a = document.createElement('a');
-
-    setListElement(el, a, i);
-  }
-}
-
-function clearListElement() {
-  let el = document.getElementById('myLinks')
-    for(let i=0; i<5; i++) {
-      let button = el.getElementsByTagName('button')[0];
-      button.parentNode.removeChild(button);
-      //button.parentNode.appendChild(button);
-    }
-}
-
-function setListElement(el, a, i) {
-  el.classList.add('page-item');
-  el.onclick = queryFromFirbaseWithOffset(i);
-  a.classList.add('page-link');
-  a.innerText = `${i}`;
-  a.href = '#';
-  el.append(a);
-  document.getElementById('pagination').appendChild(el);
-}
-
-function clearListPaginationElement() {
-  document.getElementById('pagination').innerHTML = '';
-}
-
-function queryFromFirbaseWithOffset(i) {
-  return function () {
-    let indexOf = (i - 1) * pageSize;
-    console.log(indexOf);
-    let last;
-    let listYear = [];
-    db.collection('budgets')
-    .orderBy('updatedAt', 'desc')
-      .get()
-      .then((data) => {
-        last = data.docs[indexOf];
-        console.log(last);
-        return;
-      })
-      .then(() => {
-        db.collection('budgets')
-          .orderBy('updatedAt', 'desc')
-          .startAt(last)
-          .limit(5)
-          .get()
-          .then((data) => {
-            clearListElement();
-            data.docs.forEach((doc) => {
-              listYear.push({
-                id: doc.id
-              });
-            });
-            return;
-          })
-          .then(() => {
-            insertTable(listYear, indexOf);
-          });
-      });
-    };
-  }
-
-  function insertTable(listYear, d) {
-    console.log(listYear);
-    for (let i = 0; i < listYear.length; i++, d++) {
-      let icon = document.createElement('i');
-      icon.classList.add('fa');
-      icon.classList.add('fa-list-ul');
-      const newNode = document.createElement("button");
-      newNode.className = 'btnYear';
-      const list = document.getElementById('myLinks');
-      list.insertBefore(newNode, list.children[-1]);
-  
-      // Create a text node:
-      const textNode = document.createTextNode(listYear[i].id);
-      //console.log(listYear[i].id);
-      //console.log(d+1);
-      newNode.appendChild(textNode);
-      newNode.onclick = function() {getMonthOfYear(listYear[i].id)};
-      
-    }
-  }
-
-function getUserProfile(user) {
-  const personal_id = document.getElementById('form1');
-  return function () {
-    localStorage.setItem('pofile', JSON.stringify(user));
-    personal_id.value = '';
-    window.location.href = '/userProfile.html';
-  };
-}
 
 function logout() {
   firebase.auth().signOut();
@@ -405,10 +293,82 @@ function listMemberPage() {
     window.location.href = '/member.html';
   }
 }
+function Paginate(totalYear){ 
+    let maxPages = totalYear;
+   
+    changePage(1, maxPages);
+    
+    document.getElementById('btn_next').onclick 
+           = function() {nextPage(maxPages)};
+    document.getElementById('btn_prev').onclick 
+           = function() {prevPage(maxPages)};
+  }
+  var current_page = 1;
+var records_per_page = 4;
 
+function prevPage(maxPages)
+{
+    if (current_page > 1) {
+        current_page--;
+        changePage(current_page, maxPages);
+    }
+}
+
+async function nextPage(maxPages)
+{
+  let numPage = Math.ceil(maxPages.length / records_per_page);
+    if (current_page < numPage) {
+        current_page++;
+        changePage(current_page, maxPages);
+    }
+}
+
+function changePage(page, maxPages)
+{
+  let numPage = Math.ceil(maxPages.length / records_per_page);
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var listing_table = document.getElementById("listingTable");
+    var page_span = document.getElementById("page");
+
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > numPage) page = numPage;
+
+    listing_table.innerHTML = "";
+    //newNode.innerHTML = '';
+    for (let i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
+        console.log(page * records_per_page);
+        const newNode = document.createElement("button");
+        newNode.className = 'btnYear';
+        
+      const list = document.getElementById('listingTable');
+      list.insertBefore(newNode, list.children[-1]);
+  
+      // Create a text node:
+      const textNode = document.createTextNode(maxPages[i].id);
+
+      newNode.appendChild(textNode);
+      newNode.onclick = function() {getMonthOfYear(maxPages[i].id)};
+    }
+    //page_span.innerHTML = page;
+
+    if (page == 1) {
+        btn_prev.style.visibility = "hidden";
+    } else {
+        btn_prev.style.visibility = "visible";
+    }
+
+    if (page == numPage) {
+        btn_next.style.visibility = "hidden";
+    } else {
+        btn_next.style.visibility = "visible";
+    }
+    
+}
 async function getMonthOfYear(year) {
   var x = document.getElementById("myLink").classList.toggle("show");
-  
+  console.log(year);
   document.getElementById('myYears').innerHTML = year;
   document.getElementById('January').onclick = function() {selectMonth(year,"01")};
   document.getElementById('February').onclick = function() {selectMonth(year, "02")};
@@ -438,130 +398,60 @@ async function selectMonth(year,m) {
   console.log(monthth);
   document.getElementById('myYearss').innerHTML = year;
   document.getElementById('myMonth').innerHTML = monthth;
-  
+  clearTable();
+
 
   const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,m)
-  const amount_Deposit = document.getElementsByClassName('totolBudgets_data_deposit'); 
-  const amount_Borrow_pay = document.getElementsByClassName('totolBudgets_data_pay');
-  const amount_Total = document.getElementsByClassName('totolBudgets_data_total');
-  const amount_loanRemain = document.getElementsByClassName('totolBudgets_data_loanRemain'); 
-  const amount_total_loan = document.getElementsByClassName('totolBudgets_data_total_loan');  
-  const amount_total = document.getElementsByClassName('totolBudgets_total');  
-  const amount_withdraw = document.getElementsByClassName('totolBudgets_data_withdraw');
-  const amount_total_sum = document.getElementsByClassName('totolBudgets_total_sum');   
-  const inputLoan = document.getElementsByClassName("Budgets_loan_")[0];
-  
-  try {
-    const collections 
-    = await  db.collection('transactions')
-               .where("type", "==", "deposited")
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sumDeposited = 0
-    console.log(startOfMonthDate);
-    
-    for(const collection of collections.docs) {
-      sumDeposited += collection.data().amount * 1
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumDeposited);
-    }
-    amount_Deposit[0].innerHTML  = sumDeposited.toLocaleString();;
-    const borrow_pay 
-    = await  db.collection('transactions')
-               .where("type", "==", "borrow_pay")
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sumBorow_pay = 0
-    console.log(startOfMonthDate);
-    
-    for(const collection_pay of borrow_pay.docs) {
-      sumBorow_pay += collection_pay.data().amount * 1
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumBorow_pay);
-    }
-    const [startDate, endhDate] =  getSelectDate(year,m)
-    const amount_loan = await db.collection('money_borrow')
-    .where("date", ">=", startDate )
-    .where("date", "<=", endhDate )
-    .get();
-    console.log(startDate);
-    let sumLoan = 0
-    for(const collection_pay of amount_loan.docs) {
-      sumLoan += collection_pay.data().amount * 1
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumLoan);
-    }
-    const loan 
-    = await  db.collection('money_borrow')
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sumAmountLoan = 0
-    console.log(startOfMonthDate);
-    
-    for(const collection_pay of loan.docs) {
-        sumAmountLoan = collection_pay.data().amount_total * 1
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumAmountLoan);
-    }
-    const withdraws 
-    = await  db.collection('transactions')
-               .where("type", "==", "withdrawn")
-               .where("date", ">=", startOfMonthDate )
-               .where("date", "<=", endOfMonthDate )
-               .get()
-    let sumWithdraw = 0
-    console.log(startOfMonthDate);
-    
-    for(const collection_pay of withdraws.docs) {
-        sumWithdraw += collection_pay.data().amount_withdraw * 1
-      //console.log(collection.data().date.split("T")[0]);
-      console.log(sumWithdraw);
-    }
-    amount_Borrow_pay[0].innerHTML  = sumBorow_pay.toLocaleString();
-    let Total = sumDeposited + sumBorow_pay + sumLoan;
-    amount_Total[0].innerHTML = Total.toLocaleString();
-    amount_loanRemain[0].innerHTML = sumLoan.toLocaleString();
-    
-    let [DateStart, DateEnd] = getDate();
-    if(DateStart != startOfMonthDate && DateEnd != endOfMonthDate){
-      console.log(DateStart);
-      console.log(startOfMonthDate);
-        inputLoan.classList.add('hide');
-        amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
-        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
-        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
-    }
-    else {
-      inputLoan.classList.remove('hide');
-      if(sumAmountLoan){
-        amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumAmountLoan).toLocaleString();
-        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
-        amount_total_sum[0].innerHTML = (Total - sumAmountLoan - sumWithdraw).toLocaleString();
-        document.getElementsByClassName("submit")[0].classList.add('hide');
-        document.getElementsByClassName("edit")[0].classList.remove('hide');
-        document.getElementById('edited').onclick 
-           = function() {edit(year, month, Total, sumAmountLoan, m, sumWithdraw)};
-      }
-      else{
-        amount_total_loan[0].innerHTML = '';
-        amount_total[0].innerHTML = '';
-        amount_withdraw[0].innerHTML = '';
-        amount_total_sum[0].innerHTML = '';
-        document.getElementById('submited').onclick 
-           = function() {submit(year, month, Total, sumLoan, m, sumWithdraw)};
-      }  
-    } 
-  } 
-  catch (error) {
-    console.log(error);
-  } 
-}
+  let transactions = [];
+  db.collection('transactions')
+    .where('type', 'in', ['deposited','withdrawn'])
+    .where("date", ">=", startOfMonthDate )
+    .where("date", "<=", endOfMonthDate )
+    .get()
+    .then((snap) => {
+      total = snap.size;
+      paginate = Math.ceil(total / perPage);
+      console.log(total);
+      createPaginateButton(paginate,year,m);
 
+      return db
+        .collection('transactions')
+        .where('type', 'in', ['deposited','withdrawn'])
+        .where("date", ">=", startOfMonthDate )
+        .where("date", "<=", endOfMonthDate )
+        .orderBy('date', 'desc')
+        .limit(`${perPage}`)
+        .get();
+    })
+    .then((data) => {
+      console.log(data.size);
+      data.docs.forEach((doc) => {
+        transactions.push({
+          id: doc.id,
+          personalId: doc.data().personalId,
+          type: doc.data().type,
+          amount: doc.data().amount,
+          amountWithdrow: doc.data().amount_withdraw,
+          date: doc.data().date
+        });
+      });
+      return;
+    })
+    .then(async () => {
+      for (let i = 0; i < transactions.length; i++) {
+        console.log(transactions[i].personalId);
+        let user = await db.doc(`users/${transactions[i].personalId}`).get();
+        transactions[i].firstName = user.data().firstName;
+        transactions[i].lastName = user.data().lastName;
+      }
+    })
+    .then(() => {
+      insertTable(transactions, 0);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
  function getSelectMonth(years,m) {
   //console.log(m);
   const date = new Date()
@@ -605,6 +495,140 @@ function getSelectDate(years,m) {
 
   return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
 }
-function nextPage(paginate){
-  console.log(paginate);
+function clearTable() {
+  let table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+  table.innerHTML = '';
+  let page = document.getElementById('pagination');
+  page.innerHTML = '';
+}
+function createPaginateButton(totalPage,year,m) {
+  for (let i = 1; i <= totalPage; i++) {
+    let el = document.createElement('li');
+    let a = document.createElement('a');
+
+    setListElement(el, a, i,year,m);
+  }
+}
+
+function clearListElement() {
+  let el = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+  el.innerHTML = '';
+}
+
+function setListElement(el, a, i,year,m) {
+  el.classList.add('page-item');
+  el.onclick = queryFromFirbaseWithOffset(i,year,m);
+  a.classList.add('page-link');
+  a.innerText = `${i}`;
+  a.href = '#';
+  el.append(a);
+  document.getElementById('pagination').appendChild(el);
+}
+
+function clearListPaginationElement() {
+  document.getElementById('pagination').innerHTML = '';
+}
+
+function queryFromFirbaseWithOffset(i,year,m) {
+  return function () {
+    let indexOf = (i - 1) * pageSize;
+    let last;
+    let transactions = [];
+    let perPage = 8;
+    const [startOfMonthDate, endOfMonthDate] =  getSelectMonth(year,m)
+    console.log(year,m);
+    db.collection('transactions')
+    .where('type', 'in', ['deposited','withdrawn'])
+    .where("date", ">=", startOfMonthDate )
+    .where("date", "<=", endOfMonthDate )
+      .orderBy('date', 'desc')
+      .get()
+      .then((data) => {
+        last = data.docs[indexOf];
+        return;
+      })
+      .then(() => {
+        db.collection('transactions')
+        .where('type', 'in', ['deposited','withdrawn'])
+        .where("date", ">=", startOfMonthDate )
+        .where("date", "<=", endOfMonthDate )
+          .orderBy('date', 'desc')
+          .startAt(last)
+          .limit(8)
+          .get()
+          .then((data) => {
+            clearListElement();
+            data.docs.forEach((doc) => {
+              transactions.push({
+                id: doc.id,
+                personalId: doc.data().personalId,
+                type: doc.data().type,
+                amount: doc.data().amount,
+                amountWithdrow: doc.data().amount_withdraw,
+                date: doc.data().date
+              });
+            });
+            return;
+          })
+          .then(async () => {
+            for (let i = 0; i < transactions.length; i++) {
+              console.log(transactions[i].personalId);
+              let user = await db.doc(`users/${transactions[i].personalId.trim()}`).get();
+              transactions[i].firstName = user.data().firstName;
+              transactions[i].lastName = user.data().lastName;
+              console.log(transactions[i].firstName);
+            }
+          })
+          .then(() => {
+            insertTable(transactions, indexOf);
+          });
+      });
+  };
+}
+
+function insertTable(transactions, id) {
+  let cell1, cell2, cell3, cell4, cell5, cell6, cell7;
+  let row;
+  var tbodyRef = document
+    .getElementById('myTable')
+    .getElementsByTagName('tbody')[0];
+
+  for (let i = 0; i < transactions.length; i++, id++) {
+    /*let icon = document.createElement('i');
+    icon.classList.add('far');
+    icon.classList.add('fa-eye'); */
+    row = tbodyRef.insertRow(tbodyRef.rows.length);
+    cell1 = row.insertCell(0);
+    cell2 = row.insertCell(1);
+    cell3 = row.insertCell(2);
+    cell4 = row.insertCell(3);
+    cell5 = row.insertCell(4);
+    //cell6 = row.insertCell(5);
+    //cell7 = row.insertCell(6);
+
+    cell1.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+    cell2.innerHTML = `${transactions[i].personalId}`;
+    cell3.innerHTML = `${transactions[i].firstName}`;
+    //cell4.innerHTML = `${transactions[i].type}`;
+    //cell5.innerHTML = `${transactions[i].amount}`;
+    if(transactions[i].type == 'deposited') {
+      cell4.innerHTML = 'ฝากเงิน';
+      //cell2.style.backgroundColor = "lightblue";
+      cell5.innerHTML = `${transactions[i].amount}`;
+    }
+    else if(transactions[i].type == 'withdrawn'){
+      cell4.innerHTML = 'ถอนเงิน';
+      /*cell1.style.backgroundColor = "#8abb8a";
+      cell2.style.backgroundColor = "#8abb8a";
+      cell5.style.backgroundColor = "#8abb8a";
+      cell4.style.backgroundColor = "#8abb8a";
+      cell3.style.backgroundColor = "#8abb8a";*/
+      cell5.innerHTML = `${transactions[i].amountWithdrow}`;
+    }
+    //cell6.innerHTML = `${dayjs(transactions[i].date).format('DD/MM/YYYY')}`;
+   
+    //cell6.append(icon);
+    //cell6.onclick = getUserProfile(users[i]);
+
+  }
 }

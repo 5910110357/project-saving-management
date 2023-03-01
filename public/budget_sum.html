@@ -95,14 +95,13 @@
                 </div>
               </div> 
               <div class="content">
-                <p>สรุปงบประมาณ</p>
+                <p>สรุปงบประมาณรายเดือน</p>
                 <div id="myLinks"></div>
-                <!--button class="w3-button w3-black w3-display-left" 
-                    onclick="plusDivs(-1)">&#10094;
-                  </!--button>
-                  <button-- class="w3-button w3-black w3-display-right" 
-                    onclick="plusDivs(1)">&#10095;
-                  </button-->
+                <div class="nextPage">
+                  <a  id="btn_prev"><<</a>
+                  <div id="listingTable"></div>
+                  <a id="btn_next">>></a>
+                </div>
                 <div id="myLink" class="myLink-content">
                   <div id="myYears"></div>               
                   <a id="January">มกราคม</a>
@@ -117,6 +116,7 @@
                   <a id="October">ตุลาคม</a>
                   <a id="November">พฤศจิกายน</a>
                   <a id="December">ธันวาคม</a>
+                  <!--a id="AllYear">สรุปยอดปีนี้</!--a-->
                 </div>
                 <div id="totolBudgets" >
                   
@@ -131,6 +131,7 @@
                       <td class="totolBudgets_data">จำนวนเงินฝาก </td>
                       <td class="totolBudgets_data_deposit"></td>
                     </tr>
+                     
                     <tr>
                       <td class="totolBudgets_data">จำนวนเงินชำระเงินกู้</td>
                       <td class="totolBudgets_data_pay"></td>
@@ -142,6 +143,14 @@
                     <tr>
                       <td class="totolBudgets_datas">รวม</td>
                       <td class="totolBudgets_data_total"></td>
+                    </tr>
+                    <tr>
+                        <td class="totolBudgets_data">จำนวนเงินถอน</td>
+                        <td class="totolBudgets_data_withdraw"></td>
+                    </tr>
+                     <tr>
+                        <td class="totolBudgets_datas">จำนวนเงินคงเหลือ</td>
+                        <td class="totolBudgets_total"></td>
                     </tr>
                     <tr class="Budgets_loan_">
                       <td class="Budgets_loan">กรอกจำนวนเงินที่ต้องการปล่อยกู้</td>
@@ -155,14 +164,8 @@
                       <td class="totolBudgets_data">จำนวนเงินที่ปล่อยกู้เดือนนี้</td>
                       <td class="totolBudgets_data_total_loan"></td>
                     </tr>
-                    <tr>
-                        <td class="totolBudgets_datas">จำนวนเงินคงเหลือ</td>
-                        <td class="totolBudgets_total"></td>
-                    </tr>
-                    <tr>
-                        <td class="totolBudgets_data">จำนวนเงินถอน</td>
-                        <td class="totolBudgets_data_withdraw"></td>
-                    </tr>
+                   
+                   
                     <tr>
                         <td class="totolBudgets_datas">จำนวนเงินคงเหลือสุทธิ</td>
                         <td class="totolBudgets_total_sum"></td>
@@ -171,9 +174,9 @@
                   </table>
                 </div>
               </div>
-                <nav class="container-pagination">
+                <!--nav class="container-pagination">
                   <ul class="pagination pagination-md" id="pagination"></ul>
-                </nav>
+                </!--nav-->
             </div>
                 <!--button class="back" onclick="document.location='report.html'">หน้าหลัก</!--button-->
           </div> 

@@ -18,7 +18,6 @@ background-position: center;
 }
 
 .container {
-float: left;
 width: 100%;
 height:100%;
 padding: 13px 25px;
@@ -63,7 +62,7 @@ font-family: 'Kanit';
 text-transform: uppercase;
 margin-top:  -10px;
 color: rgb(4, 0, 255);
-margin-right: 940px;
+margin-right: 840px;
 font-size: 25px;
 padding: 5px 10px;
 font-weight: bold;
@@ -134,22 +133,22 @@ padding: 8px;
     font-size: 20x;
     margin-top: 0px;
   }
-  table {
+ .table table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
   
-  th {
+  .table th {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
-    color: rgb(253, 103, 9);
+    color: rgb(9, 9, 9);
     background-color: #ffd3c6;
   }
   
   tr:nth-child(even) {
-    background-color: #f8f3c8;
+    background-color: #daf8c8;
   }
 .detail-title {
   border: 1px solid #dddddd;
@@ -332,13 +331,6 @@ background-color: #8499f7;
     padding: 20px 20px;
     
   }
-table i {
-    color: rgb(101, 101, 245);
-    cursor: pointer;
-}
-table i:hover {
-    transform: scale(1.2, 1.2);
-}
   
 .content .group-field {
     display: inline;
@@ -372,35 +364,6 @@ table i:hover {
     border-bottom: 2px solid red;
     background-color: #fdebeb;
 }
-
-table {
-    width: 100%;
-    margin-top: 14px;
-    font-family: 'Kanit';
-    visibility: hidden;
-    
-  }
-  table tbody {
-    padding: 0.5em 0.5em;
-  }
-  table tbody tr th,
-  table tbody tr td {
-    padding: 0.5em 0.5em;
-    border: 1px solid rgb(148, 149, 156);
-  }
-  
-  table tbody tr th {
-    background-color: #F5C6C6;
-    color: rgb(5, 5, 5);
-  }
-  table tbody tr th,
-  table tbody tr td {
-    visibility: visible;
-    border: 2px solid rgb(83, 84, 87);
-  }
-  .set_table {
-    visibility: visible;
-  }
   
   #myDIV {
     width: 100%;
@@ -429,14 +392,14 @@ table {
   border-color: #2196F3;
   color: dodgerblue;
   padding: 16px;
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   cursor: pointer;
 }
 
 .btnYear:hover, .btnYear:focus {
   background: #2196F3;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .content {
@@ -448,7 +411,7 @@ table {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 120px;
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -457,9 +420,10 @@ table {
 
 .myLink-content a {
   color: black;
-  padding: 12px 16px;
+  padding: 8px 14px;
   text-decoration: none;
   display: block;
+  font-size: 14px;
 }
 
 .content a:hover {background-color: #ddd;}
@@ -504,6 +468,26 @@ table {
 .pagination a:hover:not(.active) {
 	background-color: #ddd;
 }
+.nextPage {
+  display: flex;
+  text-align: center;
+  margin-left: 10%;
+  margin-top: -4%;
+}
+.nextPage #listingTable{
+  display: flex;
+  
+}
+#btn_prev , #btn_next {
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+}
+.input-group {
+  float: right;
+  margin-top: -9%;
+}
+
 @media only screen and (max-width: 800px) {
   .container {
     width: 100%;

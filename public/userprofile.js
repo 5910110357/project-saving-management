@@ -5,7 +5,7 @@ window.addEventListener('load', function () {
   const userTotal = document.getElementsByClassName('detail-amount-user');
 
   //setUserDetail(name, email, amount, userTotal);
-  initailUserTransaction();
+  //initailUserTransaction();
 
   if (localStorage.FBIdToken) {
     // getUserCredentail(localStorage.AutenticatedUser, localStorage.pofile);
@@ -20,6 +20,7 @@ window.addEventListener('load', function () {
 
 function getUserProfile(user) {
   const pofile = JSON.parse(user);
+  console.log(pofile);
   const name = document.getElementById('user-name');
   const personaml_id = document.getElementById('user-personal-number');
   const date = document.getElementById('user-date');
@@ -37,7 +38,8 @@ function getUserProfile(user) {
   address.innerHTML = `${pofile.address}`;
   telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
   sex.innerHTML = `${pofile.sex}`;
-  dividend.innerHTML = `${pofile.dividend} บาท`;
+  //dividend.innerHTML = `${pofile.dividend} บาท`;
+  //return {user, name, pofile};
 }
 
 function format(mask, number) {
@@ -128,7 +130,7 @@ function getMonthFormat(month) {
     `${new Date().getFullYear()}-${month + ''.length > 1 ? month : '0' + month}`
   ).format('MMM');
 }
-function initailUserTransaction() {
+/*function initailUserTransaction() {
   const month = document.getElementsByClassName('month');
   const totalMonth = dayjs(new Date().toISOString()).format('M') * 1;
   for (let i = 1; i <= totalMonth; i++) {
@@ -149,19 +151,38 @@ function setDocumentNotPaymentMonth(month) {
   let payMonth = document.getElementById(`${month}`);
   payMonth.innerHTML = 'ไม่มีการชำระ';
   payMonth.classList.add('danger');
-}
+}*/
 function logout() {
   firebase.auth().signOut();
   localStorage.clear();
   window.location.href = '/index.html';
 }
 
-//list
-/*
-function listtrasactions() {
-  document.getElementsByClassName('user-profile-coatianer')[0].classList.add('hide');
-  document.getElementsByClassName('user-profile-coatianer')[0].classList.add('active');
-  document.getElementsByClassName('list-menu')[0].classList.remove('hide');
-  document.getElementsByClassName('list-menu')[0].classList.remove('active');
-} */
+//Dropdown
+function dropdown() {
+  document.getElementById("myTransaction").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown')) {
+  var myDropdown = document.getElementById("myTransaction");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+function dropdownReport() {
+  document.getElementById("myReport").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropdown_report')) {
+  var myDropdownReport = document.getElementById("myReport");
+    if (myDropdownReport.classList.contains('show')) {
+      myDropdownReport.classList.remove('show');
+    }
+  }
+}
 
