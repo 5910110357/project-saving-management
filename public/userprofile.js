@@ -15,9 +15,56 @@ window.addEventListener('load', function () {
     // getUserCredentail(localStorage.user, localStorage.user);
     getUserProfile(localStorage.user);
     getTransactions(localStorage.user);
+    //rePassword(localStorage.user);
   }
 });
+function random() {
+  //generates random id;
+  let guid = () => {
+  let s4 = () => {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+  }
+  //return id of format 'aaaaaaaa'
+  let result = s4() + s4();
+  return result;
+}
 
+console.log(guid());
+let password =  guid() ;
+return {password};
+};
+function rePassword(pofile) {
+  let randomPassword = random();
+  console.log(pofile.id);
+  db.doc(`/users/${pofile.id}`).get()
+    .then((data) => {
+      if(data.exists){
+        if (confirm("ยืนยันการรีเซ็ตรหัสผ่านของสมาชิก ") == true) {
+          db.doc(`/users/${data.id}`)
+          .update({
+            otp: randomPassword.password,
+            password: ''
+         })
+         .then(() => {
+          window.alert(`รีเซ็ตรหัสผ่านเรียบร้อย   กรุณาแจ้งรหัสผ่านแก่สมาชิก รหัส (${randomPassword.password})`);
+            window.location.href = '/member.html';
+         })
+        } else {
+          alert("ยกเลิก")
+        }
+      }
+    })
+    .then(() => {
+      console.log("success!");
+      
+      
+    })
+    .catch((error) => {
+      console.error("reset password Profile ", error);
+    })
+}
 function getUserProfile(user) {
   const pofile = JSON.parse(user);
   console.log(pofile);
@@ -40,6 +87,9 @@ function getUserProfile(user) {
   sex.innerHTML = `${pofile.sex}`;
   //dividend.innerHTML = `${pofile.dividend} บาท`;
   //return {user, name, pofile};
+  document.getElementById('repassword').onclick
+      = function() {rePassword(pofile)};
+  
 }
 
 function format(mask, number) {
@@ -75,14 +125,14 @@ function getTransactions(user) {
     })
     .then(() => {
       // console.log(transactionsDate);
-      checkPayment(transactionsDate);
+      //checkPayment(transactionsDate);
     })
     .catch((err) => {
       console.error(err);
     });
 }
 
-function checkPayment(transaction) {
+/*function checkPayment(transaction) {
   const monthVisible = document.getElementsByClassName('month');
   const months = dayjs(new Date().toISOString()).format('M') * 1;
   console.log(months);
@@ -129,29 +179,8 @@ function getMonthFormat(month) {
   return dayjs(
     `${new Date().getFullYear()}-${month + ''.length > 1 ? month : '0' + month}`
   ).format('MMM');
-}
-/*function initailUserTransaction() {
-  const month = document.getElementsByClassName('month');
-  const totalMonth = dayjs(new Date().toISOString()).format('M') * 1;
-  for (let i = 1; i <= totalMonth; i++) {
-    month[i - 1].innerHTML = 'ไม่มีการชำระ';
-    month[i - 1].classList.add('month-hide');
-    month[i - 1].classList.add('danger');
-  }
-}
-
-function setDocumentPaymentMonth(month) {
-  let payMonth = document.getElementById(`${month}`);
-  payMonth.classList.remove('danger');
-  // console.log(month);
-  payMonth.innerHTML = 'จ่ายแล้ว';
-}
-function setDocumentNotPaymentMonth(month) {
-  // console.log(month);
-  let payMonth = document.getElementById(`${month}`);
-  payMonth.innerHTML = 'ไม่มีการชำระ';
-  payMonth.classList.add('danger');
 }*/
+
 function logout() {
   firebase.auth().signOut();
   localStorage.clear();

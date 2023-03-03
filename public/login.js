@@ -78,7 +78,7 @@ function login(event) {
                     newUser = data.docs[0].data();
                     newUser.id = data.docs[0].id;
                     console.log(newUser.id);
-                    alert('yes');
+                    //alert('yes');
                     localStorage.setItem('newUser', JSON.stringify(newUser));
                     window.location.href = '/home.html';
                   }

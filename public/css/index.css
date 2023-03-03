@@ -171,7 +171,7 @@ body {
         font-size: 30px;
     }
     .header h2 {
-        font-size: 20px;
+        font-size: 18px;
     }
     .detail1 p {
         top: 0px;
@@ -229,5 +229,117 @@ body {
         width: 10%;
         margin-left: 80%;
         margin-top: -11%;
+    }
+  }
+  @media only screen and (max-width:800px) {
+    /* For ipad: */
+    .header, .detail1, .detail2, .detail3
+    {
+      width: 100%;
+    }
+    .detail1 p {
+        width: 90%;
+        margin-top: 5%;
+        font-size: 25px;
+        line-height: 30px;
+    }
+    .detail2 #manual {
+        width: 80%;
+        height:60px;
+        font-size: 20px;
+        margin-top: 6%;
+        margin-left: 10%;
+    }
+    .detail2 #login {
+        width: 80%;
+        height:60px;
+        font-size: 20px;
+        margin-top: 6%;
+        margin-left: 10%;
+        margin-bottom: 7%;
+    }
+    .detail3 {
+        width: 100%; 
+        margin-left: 0%;
+    }
+    
+    .detail3 #qrCode {
+        width: 50%;
+        margin-top: 3%;
+        margin-bottom: 7%;
+       margin-left: 25%;
+    }
+    .detail3 p {
+        font-size: 20px;
+        text-align: center;
+        margin-left: 4%;
+    }
+    .develop  p{
+        width: 25%;
+        font-size: 15px;
+    }
+    .logo {
+        float: left;
+        margin-top: -6%;
+    }
+    #logoCoe {
+        float: left;
+        width: 7%;
+        margin-left: 70%;
+    }
+    #logoPsu {
+        float: center;
+        width: 10%;
+        margin-left: 80%;
+        margin-top: -11%;
+    }
+  }
+  @media only screen and (max-width:1110px) {
+    /* For ipad: */
+
+    .detail1 p {
+        width: 80%;
+        margin-top: 5%;
+        font-size: 18px;
+        line-height: 30px;
+    }
+    .detail2 #manual {
+        width: 80%;
+        height:60px;
+        font-size: 20px;
+        margin-top: 20%;
+        margin-left: 10%;
+    }
+    .detail2 #login {
+        width: 80%;
+        height:60px;
+        font-size: 20px;
+        margin-top: 14%;
+        margin-left: 10%;
+        margin-bottom: 20%;
+    }
+    .detail3 p {
+        margin-left: 12%;
+    }
+    .detail3 #qrCode {
+        width: 50%;
+        margin-top: 10%;
+        margin-bottom: 15%;
+       margin-left: 25%;
+    }
+    .logo {
+        float: left;
+        margin-top: -8%;
+    }
+    #logoCoe {
+        float: left;
+        width: 7%;
+        margin-left: 70%;
+    }
+    #logoPsu {
+        float: center;
+        width: 10%;
+        margin-left: 80%;
+        margin-top: -10%;
     }
   }

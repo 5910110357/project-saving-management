@@ -89,7 +89,7 @@ window.addEventListener('load', async function () {
       personalId: userDetail.personal_id,
       type: 'withdrawn',
       amount_withdraw: userDetail.amount_withdraw * 1,
-      amount_total: userDetail.amount*1 - userDetail.userDetail.amount *1,
+      amount_total: userDetail.amount*1 - userDetail.amount_withdraw *1,
       date: new Date().toISOString(),
       note: userDetail.note
     };

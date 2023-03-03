@@ -285,9 +285,12 @@ async function insertTable(users, num) {
     }) */
 
     //ปุ่มcancel
-   
+    const [startOfMonthDate, endOfMonthDate] =  getDate()
       const collections 
-      = await db.collection('money_borrow').get();
+      = await db.collection('money_borrow')
+                .where("date", ">=", startOfMonthDate )
+                .where("date", "<=", endOfMonthDate )
+                .get();
       let sumAmount = collections.docs.map(doc => doc.data().amount);
       let sumId = collections.docs.map(doc => doc.id);
       
@@ -299,6 +302,7 @@ async function insertTable(users, num) {
     btn_cancel.setAttribute('data-amount', users[i].amount)
     btn_cancel.setAttribute('budgets-amount', sumAmount)
     btn_cancel.setAttribute('budgets-amount-id', sumId)
+    console.log(sumId);
     cell7.appendChild(btn_cancel)
     btn_cancel.addEventListener('click', (e)=> {
       let id = e.target.getAttribute('data-id');
@@ -328,7 +332,20 @@ async function insertTable(users, num) {
     
   }
 }
+function getDate() {
 
+  // Get moth and years
+  const dateString = new Date().toLocaleString("en-AU", { timeZone: "Asia/Bangkok" });
+
+  const [day,month , year] = dateString.trim().split(",")[0].split("/")
+
+  const totalDays =  new Date(year, month, 0).getDate()
+  
+  //console.log(month);
+
+  return [`${year}-${month}-01`, `${year}-${month}-${totalDays}`]
+
+}
 function listOrderButton() {
   document.getElementsByClassName('list-menu')[0].classList.remove('hide');
   document.getElementsByClassName('list-menu')[0].classList.remove('active');

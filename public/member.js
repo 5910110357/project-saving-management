@@ -9,7 +9,7 @@ window.addEventListener('load', async function () {
   const amountTotal = document.getElementsByClassName('detail-amount'); //งบประมาณทั้งหมด
   document.getElementById('form1').addEventListener('input', changeValueSearch);
 
-  
+    
   setUserDetail(name, email, amountTotal);
   initailUserTable();
   await getMonthlyBudgetDeposit() // เงินรวมยอดรายเดือนฝาก

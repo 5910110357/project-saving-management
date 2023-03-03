@@ -114,8 +114,8 @@ function signup() {
         return db.doc(`/users/${userDetail.personal_id}`).get();
       })
       
-      .then((token) => {
-        localStorage.setItem('user', JSON.stringify(token));
+      .then(() => {
+        //localStorage.setItem('user', JSON.stringify(token));
         window.alert(`ลงทะเบียนเรียบร้อย   กรุณาแจ้งรหัสผ่านแก่สมาชิก รหัส (${userDetail.password})`);
         window.location.href = '/member.html';
       })

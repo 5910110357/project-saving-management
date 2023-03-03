@@ -35,7 +35,7 @@ async  function getUserProfile(user) {
     address.innerHTML = `${pofile.address}`;
     telnumber.innerHTML = `${format('XXX-XXX XXXX' , pofile.telNumber)}`;
     sex.innerHTML = `${pofile.sex}`;
-    dividend.innerHTML = `${pofile.dividend} บาท`;
+    //dividend.innerHTML = `${pofile.dividend} บาท`;
   }
   
   function format(mask, number) {

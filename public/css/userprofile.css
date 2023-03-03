@@ -69,7 +69,7 @@ font-weight: bold;
   padding: 12px 1px;
   margin-top: 10px;
   margin-bottom: 20px;
-  margin-left: -780px;
+  margin-left: 700px;
   border-radius: 15px;
   outline: none;
   background-color: #f50303;
@@ -80,6 +80,24 @@ font-weight: bold;
 }
 .logout_btn:hover {
   background-color: rgb(245, 160, 160);
+}
+.repassword_btn {
+  margin-top: -140px;
+  margin-right: -90px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-family: 'Quicksand';
+  background-color: rgb(106, 105, 105);
+  border: solid 1px rgb(253, 255, 253);
+  border-radius: 15px;
+  color: rgb(240, 244, 240);
+  outline: none;
+  padding: 0.5em 0.5em;
+}
+.repassword_btn:hover {
+  background-color: rgb(4, 4, 4);
+  border: solid 1px rgb(28, 230, 68);
+  color: whitesmoke;
 }
 .menu {
   width: 30%;

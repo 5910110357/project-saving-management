@@ -93,7 +93,7 @@ async function getUserValueTable() {
       personalId: userDetail.personal_id,
       type: 'borrow',
       amount: userDetail.amount_borrow *1,
-      amount_total: (userDetail.amount_borrow*0.25) *1,
+      amount_total: userDetail.amount_borrow*1 + (userDetail.amount_borrow*0.25) *1,
       date: new Date().toISOString()
     };
    console.log(userDetail);
@@ -104,7 +104,7 @@ async function getUserValueTable() {
     amount_loan: userDetail.amount,
     amount: userDetail.amount_borrow *1,
     amount_payment: userDetail.amount_borrow*1  + (userDetail.amount_borrow*0.25) *1,
-    total_amount_pay: userDetail.amount_borrow*1 + (userDetail.amount_borrow*0.25) *1,
+    total_amount_pay: userDetail.amount_borrow*1  + (userDetail.amount_borrow*0.25) *1,
     date: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     dateLoan: userDetail.dateLoan
