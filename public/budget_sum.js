@@ -530,23 +530,24 @@ async function selectMonth(year,m) {
     console.log(Total);
     amount_Total[0].innerHTML = Total.toLocaleString();
     amount_loanRemain[0].innerHTML = sumLoan.toLocaleString();
-    
+    amount_withdraw[0].innerHTML =  sumWithdraw.toLocaleString();
+    amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
     let [DateStart, DateEnd] = getDate();
     if(DateStart != startOfMonthDate && DateEnd != endOfMonthDate){
       console.log(DateStart);
       console.log(startOfMonthDate);
         inputLoan.classList.add('hide');
         amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
-        amount_withdraw[0].innerHTML =  sumWithdraw.toLocaleString();
+        
+        
         amount_total_sum[0].innerHTML = (Total - sumWithdraw - sumAmountLoan ).toLocaleString();
     }
     else {
       inputLoan.classList.remove('hide');
       if(sumAmountLoan){
         amount_total_loan[0].innerHTML = sumAmountLoan.toLocaleString();
-        amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
-        amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
+        //amount_total[0].innerHTML = (Total - sumWithdraw).toLocaleString();
+        //amount_withdraw[0].innerHTML = sumWithdraw.toLocaleString();
         amount_total_sum[0].innerHTML = (Total - sumWithdraw - sumAmountLoan).toLocaleString();
         document.getElementsByClassName("submit")[0].classList.add('hide');
         document.getElementsByClassName("edit")[0].classList.remove('hide');
@@ -555,8 +556,8 @@ async function selectMonth(year,m) {
       }
       else{
         amount_total_loan[0].innerHTML = '';
-        amount_total[0].innerHTML = '';
-        amount_withdraw[0].innerHTML = '';
+        //amount_total[0].innerHTML = '';
+        //amount_withdraw[0].innerHTML = '';
         amount_total_sum[0].innerHTML = '';
         document.getElementById('submited').onclick 
            = function() {submit(year, month, Total, sumLoan, m, sumWithdraw)};
