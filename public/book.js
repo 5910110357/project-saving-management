@@ -114,7 +114,7 @@ async function submit() {
         return budgetQ.doc(data.docs[0].id).update({
           
           amount: data.docs[0].data().amount - userDetail.amount * 1,
-          date: new Date().toISOString()
+          update: new Date().toISOString()
         });
     })
     
@@ -337,7 +337,7 @@ async function cancel() {
       db.collection('money_borrow').doc(collectionuserQueue.id)
         .update({
           amount: amountids + amountQueue * 1,
-          date: new Date().toISOString()
+          update: new Date().toISOString()
         }); 
     }
     for(const collectionids of ids.docs) {
@@ -354,30 +354,6 @@ async function cancel() {
           console.error("Error removing document: ", error);
         })
       }
-      
-
-     /*try{
-      const ids = await db.collection('queues')
-                  .where('personalId', '==', user.id)
-                  .get();
-      for(const collection of ids.docs) {
-        console.log(collection.id);
-
-        db.collection('queues').doc(collection.id).delete()
-        .then(() => {
-          alert("ลบสำเร็จ");
-          window.location.href = './booK_a_loan.html'
-        })
-         //return db.collection('money_borrow').get();
-        .catch((error) => {
-          console.error("Error removing document: ", error);
-        })
-      }
-     }
-     catch (error) {
-      console.log(error);
-    }*/
-      
      
   }
 }

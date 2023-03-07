@@ -83,7 +83,7 @@ window.onclick = function(e) {
   }
 }
 
- //Budgets
+ //Budgets งบประมาณ
  async function getMonthlyBudgetDeposit() {
   const [startOfMonthDate, endOfMonthDate] =  getDate()
 
@@ -220,7 +220,7 @@ async function getTotalBudget() {
 }
 
 
-//table
+//เลือกปีเลือกเดือน
 function initailUserTable(perPage = 5) {
   let listYear = [];
 
@@ -257,87 +257,7 @@ function initailUserTable(perPage = 5) {
       console.error(err);
     });
 }
-/*function createPaginateButton(totalPage) {
-  for (let i = 1; i <= totalPage; i++) {
-    let el = document.createElement('li');
-    let a = document.createElement('a');
 
-    setListElement(el, a, i);
-  }
-}
-function clearListElement() {
-    let el = document.getElementById('myLinks')
-    
-    for(let i=0; i<5; i++) {
-      let button = el.getElementsByTagName('button')[0];
-      button.parentNode.removeChild(button);
-    }
-}
-
-function setListElement(el, a, i) {
-  el.classList.add('page-item');
-  el.onclick = queryFromFirbaseWithOffset(i);
-  a.classList.add('page-link');
-  a.innerText = `${i}`;
-  a.href = '#';
-  el.append(a);
-  document.getElementById('pagination').appendChild(el);
-}
-function queryFromFirbaseWithOffset(i) {
-  return function () {
-    let indexOf = (i - 1) * pageSize;
-    let last;
-    let listYear = [];
-    db.collection('budgets')
-    .orderBy('updatedAt', 'desc')
-      .get()
-      .then((data) => {
-        last = data.docs[indexOf];
-        console.log(last);
-        return;
-      })
-      .then(() => {
-        db.collection('budgets')
-          .orderBy('updatedAt', 'desc')
-          .startAt(last)
-          .limit(5)
-          .get()
-          .then((data) => {
-            clearListElement();
-            data.docs.forEach((doc) => {
-              listYear.push({
-                id: doc.id
-              });
-            });
-            return;
-          })
-          .then(() => {
-            insertTable(listYear, indexOf);
-          });
-      });
-  };
-}
-
-function insertTable(listYear, d) {
-  console.log(listYear);
-  for (let i = 0; i < listYear.length; i++, d++) {
-    let icon = document.createElement('i');
-    icon.classList.add('fa');
-    icon.classList.add('fa-list-ul');
-    const newNode = document.createElement("button");
-    newNode.className = 'btnYear';
-    const list = document.getElementById('myLinks');
-    list.insertBefore(newNode, list.children[-1]);
-
-    // Create a text node:
-    const textNode = document.createTextNode(listYear[i].id);
-    //console.log(listYear[i].id);
-    //console.log(d+1);
-    newNode.appendChild(textNode);
-    newNode.onclick = function() {getMonthOfYear(listYear[i].id)};
-    
-  }
-}*/
 function Paginate(totalYear){ 
   let maxPages = totalYear;
  
@@ -396,26 +316,15 @@ let numPage = Math.ceil(maxPages.length / records_per_page);
     newNode.appendChild(textNode);
     newNode.onclick = function() {getMonthOfYear(maxPages[i].id)};
   }
-  //page_span.innerHTML = page;
-
-  /*if (page == 1) {
-      btn_prev.style.visibility = "hidden";
-  } else {
-      btn_prev.style.visibility = "visible";
-  }
-
-  if (page == numPage || page != 1) {
-      btn_next.style.visibility = "hidden";
-  } else {
-      btn_next.style.visibility = "visible";
-  }*/
-  
+ 
 }
+
+//เลือกปี ส่งปีมาให้เลือกเดือนต่อ
 async function getMonthOfYear(year) {
   var x = document.getElementById("myLink").classList.toggle("show");
   
   document.getElementById('myYears').innerHTML = year;
-  document.getElementById('January').onclick = function() {selectMonth(year,"01")};
+  document.getElementById('January').onclick = function() {selectMonth(year,"01")}; //เลือกเดือน ส่งปีกับเดือน
   document.getElementById('February').onclick = function() {selectMonth(year, "02")};
   document.getElementById('March').onclick = function() {selectMonth(year, "03")};
   document.getElementById('April').onclick = function() {selectMonth(year, "04")};
@@ -430,7 +339,7 @@ async function getMonthOfYear(year) {
   //document.getElementById('AllYear').onclick = function() {selectMonth(year, "12")};
 }
 
-async function selectMonth(year,m) {
+async function selectMonth(year,m) { //ส่งปีกัยเดือนมา
   console.log(m);
   console.log(year);
   

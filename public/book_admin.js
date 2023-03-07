@@ -263,26 +263,6 @@ async function insertTable(users, num) {
       localStorage.setItem('pofile', personalId);
       window.location.href = '/borrow.html';
     })
-    /*
-    //ปุ่มสำเร็จ
-    let btn_success = document.createElement('button')
-    btn_success.textContent = "สำเร็จ"
-    btn_success.setAttribute('class', 'btn-success')
-    btn_success.setAttribute('data-id', users[i].id)
-    cell6.appendChild(btn_success)
-    btn_success.addEventListener('click', (e)=> {
-      let id = e.target.getAttribute('data-id');
-      console.log(id);
-      //deleteDoc(doc(db, 'queues', id))
-      db.collection('queues').doc(id).delete()
-        .then(() => {
-          alert("ทำรายการสำเร็จ");
-          window.location.href = './booK_admin.html'
-        })
-        .catch((error) => {
-          console.error("Error removing document: ", error);
-        })
-    }) */
 
     //ปุ่มcancel
     const [startOfMonthDate, endOfMonthDate] =  getDate()
@@ -317,12 +297,12 @@ async function insertTable(users, num) {
         db.collection('money_borrow').doc(budgets_amount_id)
         .update({
           amount: (data_amount *1) + (budgets_amount * 1),
-          date: new Date().toISOString()
+          update: new Date().toISOString()
         }); 
         db.collection('queues').doc(id).delete()
         .then(() => {
           alert("ยกเลิกรายการสำเร็จ");
-          window.location.href = './booK_admin.html'
+          window.location.href = './book_admin.html'
         })
          //return db.collection('money_borrow').get();
         .catch((error) => {
