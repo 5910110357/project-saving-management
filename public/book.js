@@ -140,7 +140,7 @@ async function submit() {
       window.alert('จองเรียบร้อย');
         listOrderButton()
         getUserProfile(localStorage.user)
-        window.location.href = './booK_a_loan.html'
+        window.location.href = './book_a_loan.html'
       }
     })
     .catch((err) => {
@@ -310,7 +310,7 @@ function setUserOrdernumber(user) {
       });
   }
 }
-
+//ปุ่มยกเลิก
 async function cancel() {
   if (localStorage.user) {
     const user = JSON.parse(localStorage.user);
@@ -347,7 +347,7 @@ async function cancel() {
       db.collection('queues').doc(collectionids.id).delete()
         .then(() => {
           alert("ยกเลิกสำเร็จ");
-          window.location.href = './booK_a_loan.html'
+          window.location.href = './book_a_loan.html'
         })
          //return db.collection('money_borrow').get();
         .catch((error) => {
